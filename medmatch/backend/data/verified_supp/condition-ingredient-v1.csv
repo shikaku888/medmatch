@@ -1,0 +1,138 @@
+ingredient_id,ingredient,condition_id,condition,canonical_condition_id,canonical_condition,relationship,evidence,dose,pmids,source,source_url
+ashwagandha,Ashwagandha,anxiety,Anxiety,anxiety,Anxiety,therapeutic-dose,,300-600 mg KSM-66,31517876,evidence-engine.clinical_doses,
+ashwagandha,Ashwagandha,anxiety-depression,Anxiety Depression,anxiety-depression,Anxiety Depression,reviewed-on-site,,,28654669; 23439798; 22364157; 28445426; 33864354; 11794633; 22293292; 31517876,condition-protocol,/conditions/anxiety-depression/
+ashwagandha,Ashwagandha,anxiety-stress,Anxiety Stress,anxiety,Anxiety,reviewed-on-site,,,31517876; 36017529; 27055824,site-page,/ashwagandha/for-anxiety-stress/
+ashwagandha,Ashwagandha,sleep,Sleep,sleep,Sleep,therapeutic-dose,,125-300 mg,32540634,evidence-engine.clinical_doses,
+ashwagandha,Ashwagandha,sleep,Sleep,sleep,Sleep,reviewed-on-site,,,34559859; 32818573,site-page,/ashwagandha/for-sleep/
+ashwagandha,Ashwagandha,stress,Stress,stress,Stress,therapeutic-dose,,300-600 mg KSM-66 extract,23439798,evidence-engine.clinical_doses,
+ashwagandha,Ashwagandha,stress,Stress,stress,Stress,reviewed-on-site,,,23439798; 28445426; 31623400,condition-protocol,/conditions/stress/
+berberine,Berberine,blood-sugar,Blood Sugar,blood-sugar,Blood Sugar,reviewed-on-site,,,38016844; 34956436; 18397984,site-page,/berberine/for-blood-sugar/
+berberine,Berberine,pcos,Pcos,pcos,Pcos,reviewed-on-site,,,,condition-protocol,/conditions/pcos/
+biotin,Biotin,hair-growth,Hair Growth,hair-health,Hair Health,reviewed-on-site,,,28879195,site-page,/biotin/for-hair-growth/
+biotin,Biotin,hair-maintenance,Hair Maintenance,hair-health,Hair Health,therapeutic-dose,,2500-5000 mcg,,evidence-engine.clinical_doses,
+biotin,Biotin,nails,Nails,nails,Nails,reviewed-on-site,,,8477615; 28879195,site-page,/biotin/for-nails/
+calcium,Calcium,bones-osteoporosis,Bones Osteoporosis,osteoporosis,Osteoporosis / Bone Health,reviewed-on-site,,,29279934; 26510847; 21505219,site-page,/calcium/for-bones-osteoporosis/
+calcium,Calcium,muscle-cramps,Muscle Cramps,muscle-cramps,Muscle Cramps,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/leg-cramps-at-night/
+calcium,Calcium,osteoporosis,Osteoporosis,osteoporosis,Osteoporosis / Bone Health,therapeutic-dose,,1000-1200 mg,,evidence-engine.clinical_doses,
+calcium,Calcium,women-over-50,Women Over 50,women-over-50,Women Over 50,reviewed-on-site,,,29279934; 21505219,site-page,/calcium/for-women-over-50/
+chondroitin,Chondroitin,joint-pain,Joint Pain,joint-pain,Joint Pain,reviewed-on-site,,,,condition-protocol,/conditions/joint-pain/
+chondroitin,Chondroitin,osteoarthritis,Osteoarthritis,osteoarthritis,Osteoarthritis,reviewed-on-site,,,25589511; 30575881,site-page,/chondroitin/for-osteoarthritis/
+collagen,Collagen,joint-pain,Joint Pain,joint-pain,Joint Pain,reviewed-on-site,,,,condition-protocol,/conditions/joint-pain/
+collagen,Collagen,skin,Skin,skin,Skin,reviewed-on-site,,,23949208; 37432180; 24401291; 31627309,site-page,/collagen/for-skin/
+coq10,CoQ10,afternoon-energy-crash,Afternoon Energy Crash,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/afternoon-crash/
+coq10,CoQ10,always-tired,Always Tired,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/always-tired/
+coq10,CoQ10,fatigue,Fatigue,fatigue,Fatigue & Low Energy,reviewed-on-site,,,22777991; 25282031; 28925645,condition-protocol,/conditions/fatigue/
+coq10,CoQ10,heart-failure,Heart Failure,heart-failure,Heart Failure,therapeutic-dose,,200-400 mg,,evidence-engine.clinical_doses,
+coq10,CoQ10,heart-palpitations,Heart Palpitations,heart-palpitations,Heart Palpitations,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/heart-palpitations/
+coq10,CoQ10,statin-support,Statin Support,statin-support,Statin Support,therapeutic-dose,,100-200 mg,30371340,evidence-engine.clinical_doses,
+coq10,CoQ10,statins,Statins,statins,Statins,reviewed-on-site,,,30371340; 32179207; 25282031,site-page,/coq10/for-statins/
+creatine,Creatine,brain,Brain,brain,Brain,reviewed-on-site,,,35984306; 38418482; 39070254; 28615996,site-page,/creatine/for-brain/
+creatine,Creatine,muscle-building,Muscle Building,muscle-building,Muscle Building,reviewed-on-site,,,37432300; 28615996; 34199420; 33557850,site-page,/creatine/best-for-muscle-building/
+creatine,Creatine,women,Women,women,Women,reviewed-on-site,,,28615996; 42141930; 40371844; 35984306; 39070254,site-page,/creatine/best-for-women/
+curcumin,Curcumin,joint-pain,Joint Pain,joint-pain,Joint Pain,reviewed-on-site,,,38036015; 33500785; 36804260,site-page,/curcumin/for-joint-pain/
+electrolytes,Electrolytes,athletic,Athletic,athletic,Athletic,therapeutic-dose,,500-1500 mg sodium per hour of exercise,,evidence-engine.clinical_doses,
+electrolytes,Electrolytes,fasting-keto,Fasting Keto,fasting-keto,Fasting Keto,therapeutic-dose,,2000-5000 mg sodium per day,,evidence-engine.clinical_doses,
+folate,Folate / Methylfolate,always-tired,Always Tired,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/always-tired/
+folate,Folate / Methylfolate,depression,Depression,depression,Depression,reviewed-on-site,,,24813065; 27035404,site-page,/methylfolate/for-depression/
+folate,Folate / Methylfolate,feeling-depressed,Feeling Depressed,depression,Depression,deficiency-symptom,strong,,22950138,matrix.deficiency_symptoms,/symptoms/feeling-depressed/
+glucosamine,Glucosamine,joint-pain,Joint Pain,joint-pain,Joint Pain,reviewed-on-site,,,,condition-protocol,/conditions/joint-pain/
+glucosamine,Glucosamine,osteoarthritis,Osteoarthritis,osteoarthritis,Osteoarthritis,reviewed-on-site,,,20525840; 15846645; 25589511,site-page,/glucosamine/for-osteoarthritis/
+iron,Iron,afternoon-energy-crash,Afternoon Energy Crash,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/afternoon-crash/
+iron,Iron,always-tired,Always Tired,fatigue,Fatigue & Low Energy,deficiency-symptom,strong,,17344500,matrix.deficiency_symptoms,/symptoms/always-tired/
+iron,Iron,anemia-low-ferritin,Anemia Low Ferritin,anemia-low-ferritin,Anemia Low Ferritin,reviewed-on-site,,,29032957; 37979057; 38864796,site-page,/iron/for-anemia-low-ferritin/
+iron,Iron,brain-fog,Brain Fog,brain-fog,Brain Fog,deficiency-symptom,moderate,,17344500,matrix.deficiency_symptoms,/symptoms/brain-fog/
+iron,Iron,deficiency,Deficiency,deficiency,Deficiency,therapeutic-dose,,25-65 mg elemental,,evidence-engine.clinical_doses,
+iron,Iron,fatigue,Fatigue,fatigue,Fatigue & Low Energy,reviewed-on-site,,,22777991; 25282031; 28925645,condition-protocol,/conditions/fatigue/
+iron,Iron,hair-falling-out,Hair Falling Out,hair-health,Hair Health,deficiency-symptom,strong,,,matrix.deficiency_symptoms,/symptoms/hair-falling-out/
+iron,Iron,heavy-periods,Heavy Periods,heavy-periods,Heavy Periods,deficiency-symptom,strong,,,matrix.deficiency_symptoms,/symptoms/heavy-periods/
+iron,Iron,pregnancy,Pregnancy,pregnancy,Pregnancy,therapeutic-dose,,27-60 mg elemental,,evidence-engine.clinical_doses,
+iron,Iron,restless-legs,Restless Legs,restless-legs,Restless Legs,deficiency-symptom,strong,,17557425,matrix.deficiency_symptoms,/symptoms/restless-legs/
+iron,Iron,women,Women,women,Women,reviewed-on-site,,,38042684; 29032957,site-page,/iron/for-women/
+l-theanine,L-Theanine,anxiety,Anxiety,anxiety,Anxiety,therapeutic-dose,,200-400 mg,31623400,evidence-engine.clinical_doses,
+l-theanine,L-Theanine,anxiety-stress,Anxiety Stress,anxiety,Anxiety,reviewed-on-site,,,31623400; 26797633,site-page,/l-theanine/for-anxiety-stress/
+l-theanine,L-Theanine,sleep,Sleep,sleep,Sleep,therapeutic-dose,,200-400 mg,22214254,evidence-engine.clinical_doses,
+l-theanine,L-Theanine,stress,Stress,stress,Stress,reviewed-on-site,,,23439798; 28445426; 31623400,condition-protocol,/conditions/stress/
+magnesium,Magnesium,afternoon-energy-crash,Afternoon Energy Crash,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/afternoon-crash/
+magnesium,Magnesium,always-tired,Always Tired,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/always-tired/
+magnesium,Magnesium,anxiety,Anxiety,anxiety,Anxiety,deficiency-symptom,strong,,28445426,matrix.deficiency_symptoms,/symptoms/anxiety-natural-relief/
+magnesium,Magnesium,anxiety,Anxiety,anxiety,Anxiety,therapeutic-dose,,248-450 mg elemental,28445426,evidence-engine.clinical_doses,
+magnesium,Magnesium,anxiety,Anxiety,anxiety,Anxiety,reviewed-on-site,,,28445426; 28654669; 33864354; 20929532,site-page,/magnesium/best-for-anxiety/
+magnesium,Magnesium,anxiety-depression,Anxiety Depression,anxiety-depression,Anxiety Depression,reviewed-on-site,,,28654669; 23439798; 22364157; 28445426; 33864354; 11794633; 22293292; 31517876,condition-protocol,/conditions/anxiety-depression/
+magnesium,Magnesium,bloating,Bloating,bloating,Bloating,reviewed-on-site,,,24100754; 25070051,condition-protocol,/conditions/bloating/
+magnesium,Magnesium,brain-fog,Brain Fog,brain-fog,Brain Fog,deficiency-symptom,moderate,,20152124,matrix.deficiency_symptoms,/symptoms/brain-fog/
+magnesium,Magnesium,cant-sleep,Can'T Sleep,sleep,Sleep,deficiency-symptom,strong,,35184264,matrix.deficiency_symptoms,/symptoms/cant-sleep/
+magnesium,Magnesium,eye-twitching,Eye Twitching,eye-twitching,Eye Twitching,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/eye-twitching/
+magnesium,Magnesium,fatigue,Fatigue,fatigue,Fatigue & Low Energy,reviewed-on-site,,,22777991; 25282031; 28925645,condition-protocol,/conditions/fatigue/
+magnesium,Magnesium,feeling-depressed,Feeling Depressed,depression,Depression,deficiency-symptom,moderate,,28654669,matrix.deficiency_symptoms,/symptoms/feeling-depressed/
+magnesium,Magnesium,heart-palpitations,Heart Palpitations,heart-palpitations,Heart Palpitations,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/heart-palpitations/
+magnesium,Magnesium,migraines,Migraines,migraines,Migraines,therapeutic-dose,,400-600 mg elemental,27416013,evidence-engine.clinical_doses,
+magnesium,Magnesium,muscle-cramps,Muscle Cramps,muscle-cramps,Muscle Cramps,deficiency-symptom,moderate,,32967846,matrix.deficiency_symptoms,/symptoms/leg-cramps-at-night/
+magnesium,Magnesium,muscle-cramps,Muscle Cramps,muscle-cramps,Muscle Cramps,therapeutic-dose,,300-400 mg elemental,32967846,evidence-engine.clinical_doses,
+magnesium,Magnesium,muscle-cramps,Muscle Cramps,muscle-cramps,Muscle Cramps,reviewed-on-site,,,32956536; 34719399; 22972143,site-page,/magnesium/best-for-muscle-cramps/
+magnesium,Magnesium,sleep,Sleep,sleep,Sleep,therapeutic-dose,,320-400 mg elemental,33865376,evidence-engine.clinical_doses,
+magnesium,Magnesium,sleep,Sleep,sleep,Sleep,reviewed-on-site,,,11794633; 22293292; 35184264; 39064758; 33865376,site-page,/magnesium/best-for-sleep/
+magnesium,Magnesium,stress,Stress,stress,Stress,reviewed-on-site,,,23439798; 28445426; 31623400,condition-protocol,/conditions/stress/
+multivitamin,Multivitamin,women,Women,women,Women,reviewed-on-site,,,35727271,site-page,/multivitamins/for-women/
+myo-inositol,Myo-Inositol,pcos,Pcos,pcos,Pcos,reviewed-on-site,,,38163998; 36099162,site-page,/myo-inositol/for-pcos/
+nac,NAC,liver-glutathione,Liver Glutathione,liver-glutathione,Liver Glutathione,reviewed-on-site,,,34171332; 22308119; 34208683,site-page,/nac/for-liver-glutathione/
+nac,NAC,mental-health,Mental Health,mental-health,Mental Health,reviewed-on-site,,,30426004; 25957927; 34171332,site-page,/nac/for-mental-health/
+nac,NAC,pcos,Pcos,pcos,Pcos,reviewed-on-site,,,,condition-protocol,/conditions/pcos/
+omega-3,Omega-3 (EPA/DHA),anxiety-depression,Anxiety Depression,anxiety-depression,Anxiety Depression,reviewed-on-site,,,28654669; 23439798; 22364157; 28445426; 33864354; 11794633; 22293292; 31517876,condition-protocol,/conditions/anxiety-depression/
+omega-3,Omega-3 (EPA/DHA),brain,Brain,brain,Brain,reviewed-on-site,,,26305649; 31228970; 25411277; 26025463,site-page,/omega-3/best-for-brain/
+omega-3,Omega-3 (EPA/DHA),brain-fog,Brain Fog,brain-fog,Brain Fog,deficiency-symptom,moderate,,25877495,matrix.deficiency_symptoms,/symptoms/brain-fog/
+omega-3,Omega-3 (EPA/DHA),cardiovascular,Cardiovascular,cardiovascular,Cardiovascular,therapeutic-dose,,2000-4000 mg EPA+DHA,,evidence-engine.clinical_doses,
+omega-3,Omega-3 (EPA/DHA),depression,Depression,depression,Depression,therapeutic-dose,,1000-2000 mg EPA+DHA,,evidence-engine.clinical_doses,
+omega-3,Omega-3 (EPA/DHA),feeling-depressed,Feeling Depressed,depression,Depression,deficiency-symptom,strong,,31383846,matrix.deficiency_symptoms,/symptoms/feeling-depressed/
+omega-3,Omega-3 (EPA/DHA),joint-pain,Joint Pain,joint-pain,Joint Pain,reviewed-on-site,,,17335973; 22835600; 28067815,site-page,/omega-3/best-for-joint-pain/
+omega-3,Omega-3 (EPA/DHA),pcos,Pcos,pcos,Pcos,reviewed-on-site,,,,condition-protocol,/conditions/pcos/
+omega-3,Omega-3 (EPA/DHA),stress,Stress,stress,Stress,reviewed-on-site,,,23439798; 28445426; 31623400,condition-protocol,/conditions/stress/
+omega-3,Omega-3 (EPA/DHA),triglycerides,Triglycerides,triglycerides,Triglycerides,reviewed-on-site,,,30415628; 34172393; 36313109,site-page,/omega-3/best-for-triglycerides/
+probiotics,Probiotics,antibiotic-associated,Antibiotic Associated,antibiotic-associated,Antibiotic Associated,therapeutic-dose,,10-20 billion CFU,,evidence-engine.clinical_doses,
+probiotics,Probiotics,antibiotic-diarrhea,Antibiotic Diarrhea,antibiotic-diarrhea,Antibiotic Diarrhea,reviewed-on-site,,,25745995; 26216624; 8149426,site-page,/probiotics/best-for-antibiotic-diarrhea/
+probiotics,Probiotics,bloating,Bloating,bloating,Bloating,reviewed-on-site,,,16863564; 24825775; 24100754; 25070051,site-page,/probiotics/best-for-bloating/
+probiotics,Probiotics,ibs,Ibs,ibs,Ibs,therapeutic-dose,,10-50 billion CFU,,evidence-engine.clinical_doses,
+probiotics,Probiotics,ibs,Ibs,ibs,Ibs,reviewed-on-site,,,16863564; 24825775; 19927012,site-page,/probiotics/best-for-ibs/
+probiotics,Probiotics,immune,Immune,immune-support,Immune Support,therapeutic-dose,,10-20 billion CFU,19240660,evidence-engine.clinical_doses,
+probiotics,Probiotics,immune-support,Immune Support,immune-support,Immune Support,reviewed-on-site,,,19240660; 18536871; 28202713; 28515951; 27378206; 23440782; 25927096,site-page,/probiotics/best-for-immune-support/
+probiotics,Probiotics,travel,Travel,travel,Travel,reviewed-on-site,,,17298915,site-page,/probiotics/best-for-travel/
+probiotics,Probiotics,travelers-diarrhea,Travelers Diarrhea,travelers-diarrhea,Travelers Diarrhea,therapeutic-dose,,250-500 mg S. boulardii,17298915,evidence-engine.clinical_doses,
+probiotics,Probiotics,vaginal-health,Vaginal Health,vaginal-health,Vaginal Health,therapeutic-dose,,2-5 billion CFU,14651462,evidence-engine.clinical_doses,
+probiotics,Probiotics,vaginal-health,Vaginal Health,vaginal-health,Vaginal Health,reviewed-on-site,,,14651462,site-page,/probiotics/best-for-vaginal-health/
+protein,Protein,glp1,Glp1,glp1,Glp1,reviewed-on-site,,,35441470; 28642676; 28698222; 22150425; 35658024,site-page,/protein/best-for-glp1/
+protein,Protein,weight-loss,Weight Loss,weight-loss,Weight Loss,reviewed-on-site,,,28698222; 28642676; 25926512; 23107545,site-page,/protein/best-for-weight-loss/
+same,SAMe,anxiety-depression,Anxiety Depression,anxiety-depression,Anxiety Depression,reviewed-on-site,,,28654669; 23439798; 22364157; 28445426; 33864354; 11794633; 22293292; 31517876,condition-protocol,/conditions/anxiety-depression/
+same,SAMe,depression,Depression,depression,Depression,reviewed-on-site,,,38199136; 16021987,site-page,/same/for-depression/
+selenium,Selenium,thyroid,Thyroid,thyroid,Thyroid,reviewed-on-site,,,38243784; 23744563,site-page,/selenium/for-thyroid/
+tongkat-ali,Tongkat Ali,stress-cortisol,Stress Cortisol,stress,Stress,therapeutic-dose,,200-200 mg standardized extract,23705671,evidence-engine.clinical_doses,
+tongkat-ali,Tongkat Ali,testosterone,Testosterone,testosterone,Testosterone,therapeutic-dose,,200-400 mg standardized extract,36013514,evidence-engine.clinical_doses,
+tongkat-ali,Tongkat Ali,testosterone,Testosterone,testosterone,Testosterone,reviewed-on-site,,,36013514; 33541567; 28259255; 23705671,site-page,/tongkat-ali/for-testosterone/
+vitamin-b12,Vitamin B12,afternoon-energy-crash,Afternoon Energy Crash,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/afternoon-crash/
+vitamin-b12,Vitamin B12,always-tired,Always Tired,fatigue,Fatigue & Low Energy,deficiency-symptom,strong,,33973003,matrix.deficiency_symptoms,/symptoms/always-tired/
+vitamin-b12,Vitamin B12,brain-fog,Brain Fog,brain-fog,Brain Fog,deficiency-symptom,strong,,33973003,matrix.deficiency_symptoms,/symptoms/brain-fog/
+vitamin-b12,Vitamin B12,deficiency,Deficiency,deficiency,Deficiency,therapeutic-dose,,1000-2000 mcg,,evidence-engine.clinical_doses,
+vitamin-b12,Vitamin B12,energy-fatigue,Energy Fatigue,fatigue,Fatigue & Low Energy,reviewed-on-site,,,28925645; 38034222,site-page,/b12/for-energy-fatigue/
+vitamin-b12,Vitamin B12,fatigue,Fatigue,fatigue,Fatigue & Low Energy,reviewed-on-site,,,22777991; 25282031; 28925645,condition-protocol,/conditions/fatigue/
+vitamin-b12,Vitamin B12,feeling-depressed,Feeling Depressed,depression,Depression,deficiency-symptom,moderate,,23538074,matrix.deficiency_symptoms,/symptoms/feeling-depressed/
+vitamin-b12,Vitamin B12,pcos,Pcos,pcos,Pcos,reviewed-on-site,,,,condition-protocol,/conditions/pcos/
+vitamin-b12,Vitamin B12,tingling-hands-feet,Tingling Hands & Feet,tingling-hands-feet,Tingling Hands & Feet,deficiency-symptom,strong,,,matrix.deficiency_symptoms,/symptoms/tingling-hands-feet/
+vitamin-b12,Vitamin B12,vegans-vegetarians,Vegans Vegetarians,vegans-vegetarians,Vegans Vegetarians,reviewed-on-site,,,38794680; 28925645,site-page,/b12/for-vegans-vegetarians/
+vitamin-b6,Vitamin B6,anxiety,Anxiety,anxiety,Anxiety,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/anxiety-natural-relief/
+vitamin-b6,Vitamin B6,feeling-depressed,Feeling Depressed,depression,Depression,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/feeling-depressed/
+vitamin-c,Vitamin C,immune-support,Immune Support,immune-support,Immune Support,reviewed-on-site,,,28202713; 28515951; 27378206; 23440782; 25927096,condition-protocol,/conditions/immune-support/
+vitamin-c,Vitamin C,immune-system,Immune System,immune-support,Immune Support,reviewed-on-site,,,23440782; 29099763; 8623000,site-page,/vitamin-c/for-immune-system/
+vitamin-d,Vitamin D,always-tired,Always Tired,fatigue,Fatigue & Low Energy,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/always-tired/
+vitamin-d,Vitamin D,anxiety-depression,Anxiety Depression,anxiety-depression,Anxiety Depression,reviewed-on-site,,,28654669; 23439798; 22364157; 28445426; 33864354; 11794633; 22293292; 31517876,condition-protocol,/conditions/anxiety-depression/
+vitamin-d,Vitamin D,brain-fog,Brain Fog,brain-fog,Brain Fog,deficiency-symptom,moderate,,25098535,matrix.deficiency_symptoms,/symptoms/brain-fog/
+vitamin-d,Vitamin D,deficiency-correction,Deficiency Correction,deficiency-correction,Deficiency Correction,therapeutic-dose,,2000-5000 IU,,evidence-engine.clinical_doses,
+vitamin-d,Vitamin D,depression,Depression,depression,Depression,reviewed-on-site,,,41758559; 28654669,site-page,/vitamin-d/best-for-depression/
+vitamin-d,Vitamin D,fatigue,Fatigue,fatigue,Fatigue & Low Energy,reviewed-on-site,,,22777991; 25282031; 28925645,condition-protocol,/conditions/fatigue/
+vitamin-d,Vitamin D,feeling-depressed,Feeling Depressed,depression,Depression,deficiency-symptom,strong,,23377209,matrix.deficiency_symptoms,/symptoms/feeling-depressed/
+vitamin-d,Vitamin D,hair-falling-out,Hair Falling Out,hair-health,Hair Health,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/hair-falling-out/
+vitamin-d,Vitamin D,immune-support,Immune Support,immune-support,Immune Support,reviewed-on-site,,,28202713; 28515951; 27378206; 23440782; 25927096,condition-protocol,/conditions/immune-support/
+vitamin-d,Vitamin D,immunity,Immunity,immune-support,Immune Support,therapeutic-dose,,1000-4000 IU,,evidence-engine.clinical_doses,
+vitamin-d,Vitamin D,immunity,Immunity,immune-support,Immune Support,reviewed-on-site,,,40969681; 41387808; 35281034; 41830039,site-page,/vitamin-d/best-for-immunity/
+vitamin-d,Vitamin D,pcos,Pcos,pcos,Pcos,reviewed-on-site,,,,condition-protocol,/conditions/pcos/
+zinc,Zinc,feeling-depressed,Feeling Depressed,depression,Depression,deficiency-symptom,moderate,,23137545,matrix.deficiency_symptoms,/symptoms/feeling-depressed/
+zinc,Zinc,hair-falling-out,Hair Falling Out,hair-health,Hair Health,deficiency-symptom,moderate,,,matrix.deficiency_symptoms,/symptoms/hair-falling-out/
+zinc,Zinc,immune-cold,Immune Cold,immune-support,Immune Support,reviewed-on-site,,,29186856; 27378206; 9361579,site-page,/zinc/for-immune-cold/
+zinc,Zinc,immune-support,Immune Support,immune-support,Immune Support,reviewed-on-site,,,28202713; 28515951; 27378206; 23440782; 25927096,condition-protocol,/conditions/immune-support/

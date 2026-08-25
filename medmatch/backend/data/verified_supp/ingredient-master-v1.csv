@@ -1,0 +1,28 @@
+ingredient,slug,page,catalog_size,clinical_dose_target,top_pick,top_brand,top_pick_cost_per_day,cost_per_day_min,cost_per_day_median,top_pick_certification,category_has_certified_option,nhanes_deficient_pct,faers_total_events,faers_serious_pct,faers_risk_level,faers_top_reaction
+Vitamin D3,vitamin-d3,/vitamin-d/,7,1000-2000 IU,Nature Made Vitamin D3 2000 IU,Nature Made,0.07,0.07,0.11,USP Verified,yes,22.1,3425,71.4,elevated,CHOKING
+Magnesium (Glycinate),magnesium-glycinate,/magnesium/,6,200-400 mg elemental,Vitamin Shoppe Magnesium Glycinate 400mg,The Vitamin Shoppe,0.24,0.18,0.51,None,yes,2.5,1798,70.1,elevated,Diarrhoea
+Vitamin B12,vitamin-b12,/b12/best-overall/,5,1000-2000 mcg,Nature Made Vitamin B12 1000 mcg Sublingual Fast Dissolve,Nature Made,0.1,0.1,0.28,USP Verified,yes,3.2,682,71.4,elevated,CHOKING
+Iron (Bisglycinate),iron-bisglycinate,/iron/best-overall/,4,25-65 mg elemental,Solgar Gentle Iron (Iron Bisglycinate) 25 mg,Solgar,0.15,0.14,0.27,None,yes,3.5,1072,67.4,elevated,Diarrhoea
+Methylfolate,methylfolate,/methylfolate/best-overall/,3,,Jarrow Formulas Methyl Folate 400 mcg,Jarrow Formulas,0.17,0.15,0.17,None,yes,0.2,404,65.6,elevated,NAUSEA
+Calcium (Citrate),calcium-citrate,/calcium/best-overall/,4,500-600 mg,Citracal Maximum Plus Calcium Citrate with Vitamin D3,Citracal (Bayer),0.17,0.17,0.2,None,no,,4143,77.9,elevated,CHOKING
+Omega-3 (EPA/DHA),omega-3,/omega-3/,6,1000-1000 mg EPA+DHA combined,Sports Research Triple Strength Omega-3 (1250mg),Sports Research,0.45,0.31,0.71,"IFOS 5-Star, MSC Certified",yes,,2068,69.8,elevated,CHOKING
+CoQ10,coq10,/coq10/best-overall/,5,100-200 mg,Qunol Ultra CoQ10 100mg (Water & Fat Soluble),Qunol,0.42,0.32,0.67,None,no,,409,69.7,elevated,Diarrhoea
+Creatine,creatine,/creatine/,6,3-5 g/day,Optimum Nutrition Micronized Creatine Monohydrate (120 servings),Optimum Nutrition,0.27,0.16,0.44,Banned Substance Tested,yes,,366,44,elevated,BLOOD CREATINE PHOSPHOKINASE INCREASED
+Probiotics,probiotics,/probiotics/,7,1-100 billion CFU,"Culturelle Daily Probiotic (10B CFU, 30ct)",Culturelle,0.77,0.28,0.82,None,no,,1162,69.5,elevated,Diarrhoea
+Ashwagandha,ashwagandha,/ashwagandha/,4,300-600 mg KSM-66 extract,"Nootropics Depot KSM-66 Ashwagandha (300mg, 90ct)",Nootropics Depot,0.22,0.19,0.33,Third-Party Tested,yes,,166,62.7,elevated,Diarrhoea
+L-Theanine,l-theanine,/l-theanine/best-overall/,3,200-400 mg,NOW Foods L-Theanine 200mg with Inositol (120ct),NOW Foods,0.22,0.22,0.32,None,yes,,50,76,elevated,Anxiety
+Biotin,biotin,/biotin/best-overall/,3,2500-5000 mcg,Nature Made Biotin 2500 mcg Extra Strength,Nature Made,0.06,0.06,0.11,USP Verified,yes,,862,64.3,elevated,Alopecia
+Tongkat Ali,tongkat-ali,/tongkat-ali/best-overall/,4,200-400 mg standardized extract,"Nootropics Depot Tongkat Ali 2% Eurycomanone (200mg, 120ct)",Nootropics Depot,0.25,0.25,0.65,Third-Party Tested (HPTLC),yes,,6,66.7,elevated,Urinary retention
+Vitamin C,vitamin-c,/vitamin-c/best-overall/,4,,Nature Made Vitamin C 1000 mg Extra Strength,Nature Made,0.1,0.09,0.12,USP Verified,yes,,1837,70.5,elevated,Nausea
+Zinc,zinc,/zinc/best-overall/,3,,NOW Foods Zinc Glycinate 30mg (120ct),NOW Foods,0.12,0.12,0.23,None,yes,,959,75.6,elevated,CHOKING
+Collagen,collagen,/supplements/collagen/,3,,Sports Research Collagen Peptides (Unflavored),Sports Research,0.61,0.61,0.96,"Informed Sport, Non-GMO Verified",yes,,417,59,elevated,Nausea
+Protein,protein,/protein/,5,,Optimum Nutrition Gold Standard 100% Whey Isolate,Optimum Nutrition,0.85,0.85,1.42,Informed Sport Certified,yes,,189,62.4,elevated,DIARRHOEA
+Multivitamin,multivitamin,/multivitamins/,3,,NATURELO One Daily Multivitamin for Women,NATURELO,0.47,0.47,1.03,None,yes,,3766,72.1,elevated,CHOKING
+Berberine,berberine,/berberine/best-overall/,3,,NOW Supplements Berberine Glucose Support,NOW Foods,0.63,0.63,0.73,None,yes,,,,,
+Curcumin,curcumin,/curcumin/best-overall/,3,,Nature Made Turmeric Curcumin 500mg,Nature Made,0.21,0.21,0.5,USP Verified,yes,,,,,
+NAC,nac,/nac/best-overall/,3,,NOW Supplements NAC 600mg,NOW Foods,0.28,0.15,0.19,None,no,,,,,
+Glucosamine,glucosamine,/glucosamine/best-overall/,2,,Doctor's Best Glucosamine Sulfate 750mg,Doctor's Best,0.12,0.12,0.25,None,no,,,,,
+Chondroitin,chondroitin,/chondroitin/best-overall/,2,,Doctor's Best Glucosamine Chondroitin MSM,Doctor's Best,0.33,0.33,0.38,None,no,,,,,
+SAMe,same,/same/best-overall/,3,,Doctor's Best SAMe 400mg,Doctor's Best,0.57,0.57,0.59,None,no,,,,,
+Selenium,selenium,/selenium/best-overall/,2,,NOW Supplements Selenium 200mcg,NOW Foods,0.04,0.04,0.11,None,no,,,,,
+Myo-Inositol,myo-inositol,/myo-inositol/best-overall/,2,,Wholesome Story Myo-Inositol & D-Chiro Inositol 40:1,Wholesome Story,1,0.78,1,None,yes,,,,,

@@ -1,0 +1,2542 @@
+[
+  {
+    "id": "hypericum",
+    "name": "Hierba de San Juan",
+    "scientific": "Hypericum perforatum",
+    "aliases": [
+      "hipérico",
+      "corazoncillo",
+      "St. John's Wort"
+    ],
+    "article": "/noticias/suplementos-herbales-disfuncion-erectil-metaanalisis/"
+  },
+  {
+    "id": "curcuma",
+    "name": "Cúrcuma / Curcumina",
+    "scientific": "Curcuma longa",
+    "aliases": [
+      "turmeric",
+      "palillo"
+    ],
+    "article": "/noticias/curcuma-salud-periodontal-metaanalisis/"
+  },
+  {
+    "id": "ginkgo",
+    "name": "Ginkgo",
+    "scientific": "Ginkgo biloba",
+    "aliases": [
+      "ginkgo biloba",
+      "árbol de los cuarenta escudos"
+    ],
+    "article": null
+  },
+  {
+    "id": "ajo",
+    "name": "Ajo",
+    "scientific": "Allium sativum",
+    "aliases": [
+      "garlic"
+    ],
+    "article": null
+  },
+  {
+    "id": "ginseng",
+    "name": "Ginseng",
+    "scientific": "Panax ginseng",
+    "aliases": [
+      "ginseng coreano",
+      "ginseng asiático",
+      "Korean ginseng"
+    ],
+    "article": null
+  },
+  {
+    "id": "valeriana",
+    "name": "Valeriana",
+    "scientific": "Valeriana officinalis",
+    "aliases": [
+      "valerian"
+    ],
+    "article": null
+  },
+  {
+    "id": "equinacea",
+    "name": "Equinácea",
+    "scientific": "Echinacea purpurea",
+    "aliases": [
+      "echinacea"
+    ],
+    "article": null
+  },
+  {
+    "id": "kava",
+    "name": "Kava",
+    "scientific": "Piper methysticum",
+    "aliases": [
+      "kava-kava"
+    ],
+    "article": null
+  },
+  {
+    "id": "jengibre",
+    "name": "Jengibre",
+    "scientific": "Zingiber officinale",
+    "aliases": [
+      "ginger",
+      "kión"
+    ],
+    "article": null
+  },
+  {
+    "id": "berberina",
+    "name": "Berberina",
+    "scientific": "Berberis vulgaris / Coptis chinensis",
+    "aliases": [
+      "berberine"
+    ],
+    "article": "/noticias/berberina-grasa-visceral-obesidad-ensayo-jama/"
+  },
+  {
+    "id": "una_de_gato",
+    "name": "Uña de Gato",
+    "scientific": "Uncaria tomentosa",
+    "aliases": [
+      "cat's claw"
+    ],
+    "article": "/noticias/una-de-gato-aterosclerosis-estudio/"
+  },
+  {
+    "id": "ayahuasca",
+    "name": "Ayahuasca",
+    "scientific": "Banisteriopsis caapi + Psychotria viridis",
+    "aliases": [
+      "yagé"
+    ],
+    "article": "/noticias/ayahuasca-terapeutica-revision-evalua-su-potencial-en-depresion-y-ansiedad/"
+  },
+  {
+    "id": "chanca_piedra",
+    "name": "Chanca Piedra",
+    "scientific": "Phyllanthus niruri",
+    "aliases": [
+      "stone breaker",
+      "quebra pedra"
+    ],
+    "article": "/noticias/chanca-piedra-proteccion-renal-diabetes-estudio/"
+  },
+  {
+    "id": "sangre_de_drago",
+    "name": "Sangre de Drago",
+    "scientific": "Croton lechleri",
+    "aliases": [
+      "dragon's blood",
+      "sangre de grado"
+    ],
+    "article": "/noticias/sangre-de-drago-anticoagulante-natural-loureirin/"
+  },
+  {
+    "id": "saw_palmetto",
+    "name": "Saw Palmetto",
+    "scientific": "Serenoa repens",
+    "aliases": [
+      "palma enana americana",
+      "sabal"
+    ],
+    "article": null
+  },
+  {
+    "id": "te_verde",
+    "name": "Té verde (EGCG)",
+    "scientific": "Camellia sinensis",
+    "aliases": [
+      "green tea",
+      "matcha"
+    ],
+    "article": "/noticias/curcumina-te-verde-egcg-bdnf-estado-animo-ensayo/"
+  },
+  {
+    "id": "hoja_de_coca",
+    "name": "Hoja de Coca",
+    "scientific": "Erythroxylum coca",
+    "aliases": [
+      "coca leaf"
+    ],
+    "article": "/noticias/masticar-hoja-de-coca-reduce-el-cortisol-en-mineros-andinos-segun-estudio-piloto/"
+  },
+  {
+    "id": "guayusa",
+    "name": "Guayusa",
+    "scientific": "Ilex guayusa",
+    "aliases": [],
+    "article": "/noticias/guayusa-guarana-compuestos-naturales-rendimiento-cognitivo/"
+  },
+  {
+    "id": "guarana",
+    "name": "Guaraná",
+    "scientific": "Paullinia cupana",
+    "aliases": [
+      "guarana"
+    ],
+    "article": "/noticias/guayusa-guarana-compuestos-naturales-rendimiento-cognitivo/"
+  },
+  {
+    "id": "maca",
+    "name": "Maca",
+    "scientific": "Lepidium meyenii",
+    "aliases": [
+      "maca peruana",
+      "maca andina",
+      "Peruvian maca"
+    ],
+    "article": null
+  },
+  {
+    "id": "melon_amargo",
+    "name": "Melón Amargo",
+    "scientific": "Momordica charantia",
+    "aliases": [
+      "bitter melon",
+      "cundeamor",
+      "balsamina"
+    ],
+    "article": "/noticias/melon-amargo-diabetes-tipo-2-evidencia/"
+  },
+  {
+    "id": "achiote",
+    "name": "Achiote / Bixina",
+    "scientific": "Bixa orellana",
+    "aliases": [
+      "annatto",
+      "bija",
+      "urucú",
+      "onoto"
+    ],
+    "article": "/noticias/bixina-achiote-potencial-farmacologico-revision/"
+  },
+  {
+    "id": "sacha_inchi",
+    "name": "Sacha Inchi",
+    "scientific": "Plukenetia volubilis",
+    "aliases": [
+      "maní del inca",
+      "Inca peanut"
+    ],
+    "article": "/noticias/sacha-inchi-curcumina-sinergia-anticancer/"
+  },
+  {
+    "id": "chiric_sanango",
+    "name": "Chiric Sanango",
+    "scientific": "Brunfelsia grandiflora",
+    "aliases": [
+      "chiricaspi",
+      "manacá"
+    ],
+    "article": "/noticias/chiric-sanango-planta-amazonica-adicciones-takiwasi/"
+  },
+  {
+    "id": "aguaymanto",
+    "name": "Aguaymanto",
+    "scientific": "Physalis peruviana",
+    "aliases": [
+      "uchuva",
+      "golden berry",
+      "cape gooseberry"
+    ],
+    "article": null
+  },
+  {
+    "id": "camu_camu",
+    "name": "Camu Camu",
+    "scientific": "Myrciaria dubia",
+    "aliases": [
+      "camu-camu"
+    ],
+    "article": "/noticias/frutas-amazonicas-potencial-anticancer-revision/"
+  },
+  {
+    "id": "graviola",
+    "name": "Graviola",
+    "scientific": "Annona muricata",
+    "aliases": [
+      "guanábana",
+      "soursop"
+    ],
+    "article": "/noticias/frutas-amazonicas-potencial-anticancer-revision/"
+  },
+  {
+    "id": "espino_blanco",
+    "name": "Espino Blanco",
+    "scientific": "Crataegus monogyna",
+    "aliases": [
+      "hawthorn",
+      "majuelo"
+    ],
+    "article": null
+  },
+  {
+    "id": "hercampuri",
+    "name": "Hercampuri",
+    "scientific": "Gentianella alborosea",
+    "aliases": [
+      "hircampuri",
+      "té amargo"
+    ],
+    "article": null
+  },
+  {
+    "id": "carqueja",
+    "name": "Carqueja",
+    "scientific": "Baccharis trimera",
+    "aliases": [
+      "carqueja amarga"
+    ],
+    "article": null
+  },
+  {
+    "id": "manayupa",
+    "name": "Manayupa",
+    "scientific": "Desmodium molliculum",
+    "aliases": [
+      "pata de perro",
+      "amor seco"
+    ],
+    "article": null
+  },
+  {
+    "id": "muna",
+    "name": "Muña",
+    "scientific": "Minthostachys mollis",
+    "aliases": [
+      "muña andina",
+      "tipo"
+    ],
+    "article": null
+  },
+  {
+    "id": "pasuchaca",
+    "name": "Pasuchaca",
+    "scientific": "Geranium dielsianum",
+    "aliases": [
+      "pasuchaka"
+    ],
+    "article": null
+  },
+  {
+    "id": "arandano",
+    "name": "Arándano",
+    "scientific": "Vaccinium myrtillus",
+    "aliases": [
+      "bilberry",
+      "blueberry",
+      "mirtilo"
+    ],
+    "article": null
+  },
+  {
+    "id": "tarwi",
+    "name": "Tarwi / Chocho",
+    "scientific": "Lupinus mutabilis",
+    "aliases": [
+      "lupino andino",
+      "chocho"
+    ],
+    "article": "/noticias/tarwi-chocho-microbioma-seguridad-alimentaria-andino/"
+  },
+  {
+    "id": "ashwagandha",
+    "name": "Ashwagandha",
+    "scientific": "Withania somnifera",
+    "aliases": [
+      "ginseng indio",
+      "bufera",
+      "Indian ginseng"
+    ],
+    "article": null
+  },
+  {
+    "id": "rhodiola",
+    "name": "Rhodiola",
+    "scientific": "Rhodiola rosea",
+    "aliases": [
+      "raíz de oro",
+      "golden root",
+      "roseroot"
+    ],
+    "article": null
+  },
+  {
+    "id": "cardo_mariano",
+    "name": "Cardo Mariano",
+    "scientific": "Silybum marianum",
+    "aliases": [
+      "milk thistle",
+      "silimarina"
+    ],
+    "article": null
+  },
+  {
+    "id": "cimicifuga",
+    "name": "Cimicífuga",
+    "scientific": "Actaea racemosa",
+    "aliases": [
+      "black cohosh",
+      "cohosh negro"
+    ],
+    "article": null
+  },
+  {
+    "id": "dong_quai",
+    "name": "Dong Quai",
+    "scientific": "Angelica sinensis",
+    "aliases": [
+      "angélica china",
+      "dang gui",
+      "female ginseng"
+    ],
+    "article": null
+  },
+  {
+    "id": "matricaria",
+    "name": "Matricaria",
+    "scientific": "Tanacetum parthenium",
+    "aliases": [
+      "feverfew",
+      "altamisa"
+    ],
+    "article": null
+  },
+  {
+    "id": "onagra",
+    "name": "Onagra",
+    "scientific": "Oenothera biennis",
+    "aliases": [
+      "evening primrose",
+      "aceite de onagra"
+    ],
+    "article": null
+  },
+  {
+    "id": "romero",
+    "name": "Romero",
+    "scientific": "Rosmarinus officinalis",
+    "aliases": [
+      "rosemary",
+      "ácido rosmarínico"
+    ],
+    "article": null
+  },
+  {
+    "id": "salvia",
+    "name": "Salvia",
+    "scientific": "Salvia officinalis",
+    "aliases": [
+      "sage",
+      "salvia común"
+    ],
+    "article": null
+  },
+  {
+    "id": "pasiflora",
+    "name": "Pasiflora",
+    "scientific": "Passiflora incarnata",
+    "aliases": [
+      "passion flower",
+      "maracuyá silvestre",
+      "flor de la pasión"
+    ],
+    "article": null
+  },
+  {
+    "id": "regaliz",
+    "name": "Regaliz",
+    "scientific": "Glycyrrhiza glabra",
+    "aliases": [
+      "licorice",
+      "orozuz",
+      "palo dulce"
+    ],
+    "article": null
+  },
+  {
+    "id": "diente_de_leon",
+    "name": "Diente de León",
+    "scientific": "Taraxacum officinale",
+    "aliases": [
+      "dandelion",
+      "amargón"
+    ],
+    "article": null
+  },
+  {
+    "id": "aloe_vera",
+    "name": "Aloe Vera",
+    "scientific": "Aloe barbadensis miller",
+    "aliases": [
+      "sábila",
+      "aloe"
+    ],
+    "article": null
+  },
+  {
+    "id": "canela",
+    "name": "Canela",
+    "scientific": "Cinnamomum verum",
+    "aliases": [
+      "cinnamon",
+      "canela de Ceilán"
+    ],
+    "article": null
+  },
+  {
+    "id": "fenogreco",
+    "name": "Fenogreco",
+    "scientific": "Trigonella foenum-graecum",
+    "aliases": [
+      "fenugreek",
+      "alholva"
+    ],
+    "article": null
+  },
+  {
+    "id": "lino",
+    "name": "Linaza",
+    "scientific": "Linum usitatissimum",
+    "aliases": [
+      "flax",
+      "linseed",
+      "semilla de lino"
+    ],
+    "article": null
+  },
+  {
+    "id": "ortiga",
+    "name": "Ortiga",
+    "scientific": "Urtica dioica",
+    "aliases": [
+      "nettle",
+      "stinging nettle"
+    ],
+    "article": null
+  },
+  {
+    "id": "saw_palmetto_2",
+    "name": "Saúco",
+    "scientific": "Sambucus nigra",
+    "aliases": [
+      "elderberry",
+      "elder",
+      "sauco"
+    ],
+    "article": null
+  },
+  {
+    "id": "hiperico_andino",
+    "name": "Boldo",
+    "scientific": "Peumus boldus",
+    "aliases": [
+      "boldo chileno"
+    ],
+    "article": null
+  },
+  {
+    "id": "cascara_sagrada",
+    "name": "Cáscara Sagrada",
+    "scientific": "Rhamnus purshiana",
+    "aliases": [
+      "cascara",
+      "sacred bark"
+    ],
+    "article": null
+  },
+  {
+    "id": "senna",
+    "name": "Sen",
+    "scientific": "Senna alexandrina",
+    "aliases": [
+      "senna",
+      "casia",
+      "hoja de sen"
+    ],
+    "article": null
+  },
+  {
+    "id": "pygeum",
+    "name": "Pygeum",
+    "scientific": "Prunus africana",
+    "aliases": [
+      "ciruelo africano",
+      "pygeum africanum"
+    ],
+    "article": null
+  },
+  {
+    "id": "tribulus",
+    "name": "Tribulus",
+    "scientific": "Tribulus terrestris",
+    "aliases": [
+      "abrojo",
+      "puncture vine"
+    ],
+    "article": null
+  },
+  {
+    "id": "astragalo",
+    "name": "Astrágalo",
+    "scientific": "Astragalus membranaceus",
+    "aliases": [
+      "astragalus",
+      "huang qi"
+    ],
+    "article": null
+  },
+  {
+    "id": "schisandra",
+    "name": "Schisandra",
+    "scientific": "Schisandra chinensis",
+    "aliases": [
+      "baya de los cinco sabores",
+      "wu wei zi"
+    ],
+    "article": null
+  },
+  {
+    "id": "cordyceps",
+    "name": "Cordyceps",
+    "scientific": "Cordyceps sinensis",
+    "aliases": [
+      "hongo cordyceps",
+      "yartsa gunbu"
+    ],
+    "article": null
+  },
+  {
+    "id": "reishi",
+    "name": "Reishi",
+    "scientific": "Ganoderma lucidum",
+    "aliases": [
+      "lingzhi",
+      "hongo reishi"
+    ],
+    "article": null
+  },
+  {
+    "id": "melisa",
+    "name": "Melisa",
+    "scientific": "Melissa officinalis",
+    "aliases": [
+      "lemon balm",
+      "toronjil",
+      "hierba luisa"
+    ],
+    "article": null
+  },
+  {
+    "id": "gotu_kola",
+    "name": "Gotu Kola",
+    "scientific": "Centella asiatica",
+    "aliases": [
+      "centella asiática",
+      "hierba del tigre"
+    ],
+    "article": null
+  },
+  {
+    "id": "noni",
+    "name": "Noni",
+    "scientific": "Morinda citrifolia",
+    "aliases": [
+      "mora de la India",
+      "Indian mulberry"
+    ],
+    "article": null
+  },
+  {
+    "id": "moringa",
+    "name": "Moringa",
+    "scientific": "Moringa oleifera",
+    "aliases": [
+      "árbol milagroso",
+      "drumstick tree"
+    ],
+    "article": null
+  },
+  {
+    "id": "chia",
+    "name": "Chía",
+    "scientific": "Salvia hispanica",
+    "aliases": [
+      "chia seeds",
+      "semillas de chía"
+    ],
+    "article": null
+  },
+  {
+    "id": "tilo",
+    "name": "Tilo",
+    "scientific": "Tilia platyphyllos",
+    "aliases": [
+      "linden",
+      "flor de tilo",
+      "lime tree"
+    ],
+    "article": null
+  },
+  {
+    "id": "oregano",
+    "name": "Orégano",
+    "scientific": "Origanum vulgare",
+    "aliases": [
+      "oregano oil",
+      "aceite de orégano"
+    ],
+    "article": null
+  },
+  {
+    "id": "tomillo",
+    "name": "Tomillo",
+    "scientific": "Thymus vulgaris",
+    "aliases": [
+      "thyme",
+      "timol"
+    ],
+    "article": null
+  },
+  {
+    "id": "cola_de_caballo",
+    "name": "Cola de Caballo",
+    "scientific": "Equisetum arvense",
+    "aliases": [
+      "horsetail",
+      "equiseto"
+    ],
+    "article": null
+  },
+  {
+    "id": "hamamelis",
+    "name": "Hamamelis",
+    "scientific": "Hamamelis virginiana",
+    "aliases": [
+      "witch hazel"
+    ],
+    "article": null
+  },
+  {
+    "id": "yacon",
+    "name": "Yacón",
+    "scientific": "Smallanthus sonchifolius",
+    "aliases": [
+      "yacón andino",
+      "jícama del Perú"
+    ],
+    "article": null
+  },
+  {
+    "id": "huamanpinta",
+    "name": "Huamanpinta",
+    "scientific": "Chuquiraga spinosa",
+    "aliases": [
+      "huamanpinta andina"
+    ],
+    "article": null
+  },
+  {
+    "id": "matico",
+    "name": "Matico",
+    "scientific": "Buddleja globosa",
+    "aliases": [
+      "pañil",
+      "matico chileno"
+    ],
+    "article": null
+  },
+  {
+    "id": "tara",
+    "name": "Tara",
+    "scientific": "Caesalpinia spinosa",
+    "aliases": [
+      "taya",
+      "guarango"
+    ],
+    "article": null
+  },
+  {
+    "id": "stevia",
+    "name": "Stevia",
+    "scientific": "Stevia rebaudiana",
+    "aliases": [
+      "estevia",
+      "hierba dulce"
+    ],
+    "article": null
+  },
+  {
+    "id": "cat_de_vallesia",
+    "name": "Verbena",
+    "scientific": "Verbena officinalis",
+    "aliases": [
+      "hierba sagrada",
+      "vervain"
+    ],
+    "article": null
+  },
+  {
+    "id": "chancapiedra_grande",
+    "name": "Toronjil Cuyano",
+    "scientific": "Melissa officinalis",
+    "aliases": [
+      "melissa",
+      "toronjil"
+    ],
+    "article": null
+  },
+  {
+    "id": "acai",
+    "name": "Açaí",
+    "scientific": "Euterpe oleracea",
+    "aliases": [
+      "asaí",
+      "acai berry"
+    ],
+    "article": "/noticias/frutas-amazonicas-potencial-anticancer-revision/"
+  },
+  {
+    "id": "llanten",
+    "name": "Llantén",
+    "scientific": "Plantago major",
+    "aliases": [
+      "plantain",
+      "hierba del soldado"
+    ],
+    "article": null
+  },
+  {
+    "id": "hierba_buena",
+    "name": "Hierbabuena",
+    "scientific": "Mentha spicata",
+    "aliases": [
+      "spearmint",
+      "menta verde"
+    ],
+    "article": null
+  },
+  {
+    "id": "menta",
+    "name": "Menta",
+    "scientific": "Mentha piperita",
+    "aliases": [
+      "peppermint",
+      "menta piperita"
+    ],
+    "article": null
+  },
+  {
+    "id": "calendula",
+    "name": "Caléndula",
+    "scientific": "Calendula officinalis",
+    "aliases": [
+      "marigold",
+      "mercadela"
+    ],
+    "article": null
+  },
+  {
+    "id": "damiana",
+    "name": "Damiana",
+    "scientific": "Turnera diffusa",
+    "aliases": [
+      "hierba del pastor",
+      "hierba de la pastora"
+    ],
+    "article": null
+  },
+  {
+    "id": "alcachofa",
+    "name": "Alcachofa",
+    "scientific": "Cynara scolymus",
+    "aliases": [
+      "artichoke",
+      "alcachofera"
+    ],
+    "article": null
+  },
+  {
+    "id": "valeriana_andina",
+    "name": "Neem",
+    "scientific": "Azadirachta indica",
+    "aliases": [
+      "nimbo",
+      "nim"
+    ],
+    "article": null
+  },
+  {
+    "id": "nopal",
+    "name": "Nopal",
+    "scientific": "Opuntia ficus-indica",
+    "aliases": [
+      "tuna",
+      "prickly pear",
+      "cactus nopal"
+    ],
+    "article": null
+  },
+  {
+    "id": "omega_3",
+    "name": "Omega-3 (EPA/DHA)",
+    "scientific": "Aceite de pescado",
+    "aliases": [
+      "fish oil",
+      "aceite de krill",
+      "EPA",
+      "DHA"
+    ],
+    "article": null
+  },
+  {
+    "id": "coq10",
+    "name": "Coenzima Q10",
+    "scientific": "Ubiquinona",
+    "aliases": [
+      "CoQ10",
+      "ubiquinol"
+    ],
+    "article": null
+  },
+  {
+    "id": "melatonina",
+    "name": "Melatonina",
+    "scientific": "N-acetil-5-metoxitriptamina",
+    "aliases": [
+      "melatonin"
+    ],
+    "article": null
+  },
+  {
+    "id": "vitamina_d",
+    "name": "Vitamina D",
+    "scientific": "Colecalciferol",
+    "aliases": [
+      "vitamina D3",
+      "vitamin D",
+      "calciferol"
+    ],
+    "article": null
+  },
+  {
+    "id": "vitamina_k",
+    "name": "Vitamina K",
+    "scientific": "Filoquinona / Menaquinona",
+    "aliases": [
+      "vitamina K2",
+      "vitamin K",
+      "MK-7"
+    ],
+    "article": null
+  },
+  {
+    "id": "magnesio",
+    "name": "Magnesio",
+    "scientific": "Mg",
+    "aliases": [
+      "magnesium",
+      "citrato de magnesio",
+      "glicinato de magnesio"
+    ],
+    "article": null
+  },
+  {
+    "id": "zinc_supl",
+    "name": "Zinc (suplemento)",
+    "scientific": "Zn",
+    "aliases": [
+      "zinc picolinato",
+      "zinc bisglicinato"
+    ],
+    "article": null
+  },
+  {
+    "id": "hierro_supl",
+    "name": "Hierro (suplemento)",
+    "scientific": "Fe",
+    "aliases": [
+      "iron supplement",
+      "sulfato ferroso",
+      "hierro bisglicinato"
+    ],
+    "article": null
+  },
+  {
+    "id": "probioticos",
+    "name": "Probióticos",
+    "scientific": "Lactobacillus / Bifidobacterium",
+    "aliases": [
+      "probiotics",
+      "flora intestinal"
+    ],
+    "article": null
+  },
+  {
+    "id": "creatina",
+    "name": "Creatina",
+    "scientific": "Monohidrato de creatina",
+    "aliases": [
+      "creatine",
+      "creatine monohydrate"
+    ],
+    "article": null
+  },
+  {
+    "id": "5htp",
+    "name": "5-HTP",
+    "scientific": "5-Hidroxitriptófano",
+    "aliases": [
+      "griffonia",
+      "Griffonia simplicifolia"
+    ],
+    "article": null
+  },
+  {
+    "id": "glutamina",
+    "name": "Glutamina",
+    "scientific": "L-Glutamina",
+    "aliases": [
+      "glutamine"
+    ],
+    "article": null
+  },
+  {
+    "id": "boldo",
+    "name": "Boldo",
+    "scientific": "Peumus boldus",
+    "aliases": [
+      "boldea",
+      "boldu"
+    ],
+    "article": null
+  },
+  {
+    "id": "muicle",
+    "name": "Muicle",
+    "scientific": "Justicia spicigera",
+    "aliases": [
+      "muitle",
+      "hierba del añil"
+    ],
+    "article": null
+  },
+  {
+    "id": "epazote",
+    "name": "Epazote",
+    "scientific": "Dysphania ambrosioides",
+    "aliases": [
+      "paico",
+      "wormseed",
+      "chenopodium"
+    ],
+    "article": null
+  },
+  {
+    "id": "hierba_luisa",
+    "name": "Hierba Luisa",
+    "scientific": "Cymbopogon citratus",
+    "aliases": [
+      "lemongrass",
+      "cedrón",
+      "verbena de Indias"
+    ],
+    "article": null
+  },
+  {
+    "id": "muña_negra",
+    "name": "Muña negra",
+    "scientific": "Minthostachys setosa",
+    "aliases": [
+      "tipo andino"
+    ],
+    "article": null
+  },
+  {
+    "id": "huacatay",
+    "name": "Huacatay",
+    "scientific": "Tagetes minuta",
+    "aliases": [
+      "black mint",
+      "chinchilla"
+    ],
+    "article": null
+  },
+  {
+    "id": "mullaca",
+    "name": "Mullaca",
+    "scientific": "Muehlenbeckia volcanica",
+    "aliases": [
+      "complejo mullaca"
+    ],
+    "article": null
+  },
+  {
+    "id": "sachaculantro",
+    "name": "Sacha culantro",
+    "scientific": "Eryngium foetidum",
+    "aliases": [
+      "culantro cimarrón",
+      "cilantro de monte",
+      "recao"
+    ],
+    "article": null
+  },
+  {
+    "id": "toronjil",
+    "name": "Toronjil",
+    "scientific": "Melissa officinalis",
+    "aliases": [
+      "lemon balm",
+      "melisa andina"
+    ],
+    "article": null
+  },
+  {
+    "id": "coca_mate",
+    "name": "Coca (mate)",
+    "scientific": "Erythroxylum coca",
+    "aliases": [
+      "coca tea",
+      "mate de coca"
+    ],
+    "article": null
+  },
+  {
+    "id": "ajenjo",
+    "name": "Ajenjo",
+    "scientific": "Artemisia absinthium",
+    "aliases": [
+      "wormwood",
+      "artemisa"
+    ],
+    "article": null
+  },
+  {
+    "id": "ruda",
+    "name": "Ruda",
+    "scientific": "Ruta graveolens",
+    "aliases": [
+      "rue",
+      "ruda macho"
+    ],
+    "article": null
+  },
+  {
+    "id": "zarzaparrilla",
+    "name": "Zarzaparrilla",
+    "scientific": "Smilax regelii",
+    "aliases": [
+      "sarsaparilla",
+      "cuculmeca"
+    ],
+    "article": null
+  },
+  {
+    "id": "ratania",
+    "name": "Ratania",
+    "scientific": "Krameria lappacea",
+    "aliases": [
+      "rhatany",
+      "mapato"
+    ],
+    "article": null
+  },
+  {
+    "id": "quina",
+    "name": "Quina",
+    "scientific": "Cinchona officinalis",
+    "aliases": [
+      "cinchona",
+      "cascarilla",
+      "quinaquina"
+    ],
+    "article": null
+  },
+  {
+    "id": "barbasco",
+    "name": "Barbasco",
+    "scientific": "Lonchocarpus urucu",
+    "aliases": [
+      "cube root",
+      "rotenona natural"
+    ],
+    "article": null
+  },
+  {
+    "id": "nigella",
+    "name": "Nigella / Comino negro",
+    "scientific": "Nigella sativa",
+    "aliases": [
+      "black seed",
+      "kalonji",
+      "ajenuz"
+    ],
+    "article": null
+  },
+  {
+    "id": "kratom",
+    "name": "Kratom",
+    "scientific": "Mitragyna speciosa",
+    "aliases": [
+      "biak-biak",
+      "kratón"
+    ],
+    "article": null
+  },
+  {
+    "id": "cannabis",
+    "name": "Cannabis / CBD",
+    "scientific": "Cannabis sativa",
+    "aliases": [
+      "CBD",
+      "cannabidiol",
+      "marihuana medicinal",
+      "hemp"
+    ],
+    "article": null
+  },
+  {
+    "id": "efedra",
+    "name": "Efedra / Ma Huang",
+    "scientific": "Ephedra sinica",
+    "aliases": [
+      "ephedra",
+      "ma huang",
+      "efedrina natural"
+    ],
+    "article": null
+  },
+  {
+    "id": "milenrama",
+    "name": "Milenrama",
+    "scientific": "Achillea millefolium",
+    "aliases": [
+      "yarrow",
+      "mil hojas"
+    ],
+    "article": null
+  },
+  {
+    "id": "arnica",
+    "name": "Árnica",
+    "scientific": "Arnica montana",
+    "aliases": [
+      "arnica montana",
+      "tabaco de montaña"
+    ],
+    "article": null
+  },
+  {
+    "id": "uva_ursi",
+    "name": "Gayuba / Uva ursi",
+    "scientific": "Arctostaphylos uva-ursi",
+    "aliases": [
+      "bearberry",
+      "uva de oso"
+    ],
+    "article": null
+  },
+  {
+    "id": "hierba_de_dios",
+    "name": "Salvia divinorum",
+    "scientific": "Salvia divinorum",
+    "aliases": [
+      "ska pastora",
+      "hierba María"
+    ],
+    "article": null
+  },
+  {
+    "id": "ginseng_americano",
+    "name": "Ginseng americano",
+    "scientific": "Panax quinquefolius",
+    "aliases": [
+      "American ginseng",
+      "ginseng del norte"
+    ],
+    "article": null
+  },
+  {
+    "id": "te_rojo",
+    "name": "Té rojo / Rooibos",
+    "scientific": "Aspalathus linearis",
+    "aliases": [
+      "rooibos",
+      "red bush tea"
+    ],
+    "article": null
+  },
+  {
+    "id": "gymnema",
+    "name": "Gymnema",
+    "scientific": "Gymnema sylvestre",
+    "aliases": [
+      "gurmar",
+      "destroyer of sugar"
+    ],
+    "article": null
+  },
+  {
+    "id": "psyllium",
+    "name": "Psyllium / Ispágula",
+    "scientific": "Plantago ovata",
+    "aliases": [
+      "psyllium husk",
+      "ispaghula",
+      "metamucil"
+    ],
+    "article": null
+  },
+  {
+    "id": "cardo_santo",
+    "name": "Cardo santo",
+    "scientific": "Cnicus benedictus",
+    "aliases": [
+      "blessed thistle",
+      "cardo bendito"
+    ],
+    "article": null
+  },
+  {
+    "id": "fumaria",
+    "name": "Fumaria",
+    "scientific": "Fumaria officinalis",
+    "aliases": [
+      "fumitory",
+      "palomilla"
+    ],
+    "article": null
+  },
+  {
+    "id": "borraja",
+    "name": "Borraja",
+    "scientific": "Borago officinalis",
+    "aliases": [
+      "borage",
+      "aceite de borraja"
+    ],
+    "article": null
+  },
+  {
+    "id": "agnocasto",
+    "name": "Agnocasto / Sauzgatillo",
+    "scientific": "Vitex agnus-castus",
+    "aliases": [
+      "chasteberry",
+      "vitex",
+      "pimienta de monje"
+    ],
+    "article": null
+  },
+  {
+    "id": "harpagofito",
+    "name": "Harpagofito / Garra del diablo",
+    "scientific": "Harpagophytum procumbens",
+    "aliases": [
+      "devil's claw",
+      "uña del diablo"
+    ],
+    "article": null
+  },
+  {
+    "id": "eucalipto",
+    "name": "Eucalipto",
+    "scientific": "Eucalyptus globulus",
+    "aliases": [
+      "eucalyptus"
+    ],
+    "article": null
+  },
+  {
+    "id": "malva",
+    "name": "Malva",
+    "scientific": "Malva sylvestris",
+    "aliases": [
+      "mallow",
+      "malva silvestre"
+    ],
+    "article": null
+  },
+  {
+    "id": "sauco",
+    "name": "Saúco",
+    "scientific": "Sambucus nigra",
+    "aliases": [
+      "elderberry",
+      "elder",
+      "baya de saúco"
+    ],
+    "article": null
+  },
+  {
+    "id": "same",
+    "name": "SAMe",
+    "scientific": "S-Adenosilmetionina",
+    "aliases": [
+      "SAM-e",
+      "ademetionina"
+    ],
+    "article": null
+  },
+  {
+    "id": "l_teanina",
+    "name": "L-Teanina",
+    "scientific": "L-Theanine",
+    "aliases": [
+      "theanine",
+      "suntheanine"
+    ],
+    "article": null
+  },
+  {
+    "id": "triptofano",
+    "name": "Triptófano",
+    "scientific": "L-Tryptophan",
+    "aliases": [
+      "L-tryptophan"
+    ],
+    "article": null
+  },
+  {
+    "id": "biotina",
+    "name": "Biotina",
+    "scientific": "Vitamina B7",
+    "aliases": [
+      "biotin",
+      "vitamina H",
+      "B7"
+    ],
+    "article": null
+  },
+  {
+    "id": "selenio",
+    "name": "Selenio",
+    "scientific": "Se",
+    "aliases": [
+      "selenium",
+      "selenometionina"
+    ],
+    "article": null
+  },
+  {
+    "id": "cromo",
+    "name": "Cromo",
+    "scientific": "Cr",
+    "aliases": [
+      "chromium",
+      "picolinato de cromo",
+      "chromium picolinate"
+    ],
+    "article": null
+  },
+  {
+    "id": "glucosamina",
+    "name": "Glucosamina",
+    "scientific": "Glucosamine",
+    "aliases": [
+      "glucosamine sulfate",
+      "sulfato de glucosamina"
+    ],
+    "article": null
+  },
+  {
+    "id": "condroitina",
+    "name": "Condroitina",
+    "scientific": "Chondroitin sulfate",
+    "aliases": [
+      "chondroitin",
+      "sulfato de condroitina"
+    ],
+    "article": null
+  },
+  {
+    "id": "acido_alfa_lipoico",
+    "name": "Ácido alfa-lipoico",
+    "scientific": "Alpha-lipoic acid",
+    "aliases": [
+      "ALA",
+      "ácido tióctico"
+    ],
+    "article": null
+  },
+  {
+    "id": "clorela",
+    "name": "Clorela",
+    "scientific": "Chlorella vulgaris",
+    "aliases": [
+      "chlorella"
+    ],
+    "article": null
+  },
+  {
+    "id": "espirulina",
+    "name": "Espirulina",
+    "scientific": "Arthrospira platensis",
+    "aliases": [
+      "spirulina"
+    ],
+    "article": null
+  },
+  {
+    "id": "colina",
+    "name": "Colina / Fosfatidilcolina",
+    "scientific": "Choline",
+    "aliases": [
+      "choline",
+      "lecithin",
+      "lecitina"
+    ],
+    "article": null
+  },
+  {
+    "id": "nad",
+    "name": "NAD+ / NMN",
+    "scientific": "Nicotinamide mononucleotide",
+    "aliases": [
+      "NMN",
+      "nicotinamida",
+      "NAD precursor"
+    ],
+    "article": null
+  },
+  {
+    "id": "boswellia",
+    "name": "Boswellia / Incienso",
+    "scientific": "Boswellia serrata",
+    "aliases": [
+      "Indian frankincense",
+      "incienso indio",
+      "ácido boswélico"
+    ],
+    "article": null
+  },
+  {
+    "id": "ephedra",
+    "name": "Efedra / Ma Huang",
+    "scientific": "Ephedra sinica",
+    "aliases": [
+      "ma huang",
+      "ephedrine",
+      "efedrina"
+    ],
+    "article": null
+  },
+  {
+    "id": "yohimbe",
+    "name": "Yohimbe",
+    "scientific": "Pausinystalia yohimbe",
+    "aliases": [
+      "yohimbina",
+      "yohimbine",
+      "quebrachine"
+    ],
+    "article": null
+  },
+  {
+    "id": "belladonna",
+    "name": "Belladona",
+    "scientific": "Atropa belladonna",
+    "aliases": [
+      "deadly nightshade",
+      "atropa"
+    ],
+    "article": null
+  },
+  {
+    "id": "areca",
+    "name": "Nuez de Areca / Betel",
+    "scientific": "Areca catechu",
+    "aliases": [
+      "betel nut",
+      "nuez de betel",
+      "areca nut",
+      "supari"
+    ],
+    "article": null
+  },
+  {
+    "id": "pelargonium",
+    "name": "Pelargonio / Umckaloabo",
+    "scientific": "Pelargonium sidoides",
+    "aliases": [
+      "umckaloabo",
+      "rabano del cabo"
+    ],
+    "article": null
+  },
+  {
+    "id": "andrographis",
+    "name": "Andrographis",
+    "scientific": "Andrographis paniculata",
+    "aliases": [
+      "chiretta del rey",
+      "kalmegh"
+    ],
+    "article": null
+  },
+  {
+    "id": "eleuterococo",
+    "name": "Eleuterococo / Ginseng siberiano",
+    "scientific": "Eleutherococcus senticosus",
+    "aliases": [
+      "Siberian ginseng",
+      "eleuthero"
+    ],
+    "article": null
+  },
+  {
+    "id": "cissus",
+    "name": "Cissus",
+    "scientific": "Cissus quadrangularis",
+    "aliases": [
+      "veldt grape",
+      "uva rupestre"
+    ],
+    "article": null
+  },
+  {
+    "id": "forskohlii",
+    "name": "Forskohlii / Coleus",
+    "scientific": "Coleus forskohlii",
+    "aliases": [
+      "forskolin",
+      "coleus"
+    ],
+    "article": null
+  },
+  {
+    "id": "bacopa",
+    "name": "Bacopa / Brahmi",
+    "scientific": "Bacopa monnieri",
+    "aliases": [
+      "brahmi",
+      "water hyssop"
+    ],
+    "article": null
+  },
+  {
+    "id": "mucuna",
+    "name": "Mucuna / Ojo de buey",
+    "scientific": "Mucuna pruriens",
+    "aliases": [
+      "velvet bean",
+      "cowhage",
+      "kapikacchu"
+    ],
+    "article": null
+  },
+  {
+    "id": "triphala",
+    "name": "Triphala",
+    "scientific": "Terminalia chebula + Terminalia bellirica + Phyllanthus emblica",
+    "aliases": [
+      "tres frutos",
+      "haritaki"
+    ],
+    "article": null
+  },
+  {
+    "id": "shatavari",
+    "name": "Shatavari",
+    "scientific": "Asparagus racemosus",
+    "aliases": [
+      "esparrago indio",
+      "shatamull"
+    ],
+    "article": null
+  },
+  {
+    "id": "amla",
+    "name": "Amla / Grosella india",
+    "scientific": "Phyllanthus emblica",
+    "aliases": [
+      "amalaki",
+      "Indian gooseberry",
+      "emblica"
+    ],
+    "article": null
+  },
+  {
+    "id": "guduchi",
+    "name": "Guduchi / Giloy",
+    "scientific": "Tinospora cordifolia",
+    "aliases": [
+      "giloy",
+      "heart-leaved moonseed"
+    ],
+    "article": null
+  },
+  {
+    "id": "neem",
+    "name": "Neem",
+    "scientific": "Azadirachta indica",
+    "aliases": [
+      "nimbo",
+      "nim",
+      "margosa"
+    ],
+    "article": null
+  },
+  {
+    "id": "tulsi",
+    "name": "Tulsi / Albahaca sagrada",
+    "scientific": "Ocimum tenuiflorum",
+    "aliases": [
+      "holy basil",
+      "albahaca santa"
+    ],
+    "article": null
+  },
+  {
+    "id": "shankhpushpi",
+    "name": "Shankhpushpi",
+    "scientific": "Convolvulus pluricaulis",
+    "aliases": [
+      "speedwheel",
+      "bindweed azul"
+    ],
+    "article": null
+  },
+  {
+    "id": "trikatu",
+    "name": "Trikatu",
+    "scientific": "Zingiber officinale + Piper nigrum + Piper longum",
+    "aliases": [
+      "pimienta larga",
+      "tres picantes"
+    ],
+    "article": null
+  },
+  {
+    "id": "punarnava",
+    "name": "Punarnava",
+    "scientific": "Boerhavia diffusa",
+    "aliases": [
+      "spreading hogweed",
+      "boerhavia"
+    ],
+    "article": null
+  },
+  {
+    "id": "devil_claw",
+    "name": "Garra del Diablo",
+    "scientific": "Harpagophytum zeyheri",
+    "aliases": [
+      "harpagophytum",
+      "secondary devil's claw"
+    ],
+    "article": null
+  },
+  {
+    "id": "buchu",
+    "name": "Buchu",
+    "scientific": "Agathosma betulina",
+    "aliases": [
+      "bookoo",
+      "bucco",
+      "diosma"
+    ],
+    "article": null
+  },
+  {
+    "id": "tea_tree",
+    "name": "Arbol del te",
+    "scientific": "Melaleuca alternifolia",
+    "aliases": [
+      "tea tree oil",
+      "aceite de melaleuca"
+    ],
+    "article": null
+  },
+  {
+    "id": "wild_yam",
+    "name": "Name silvestre",
+    "scientific": "Dioscorea villosa",
+    "aliases": [
+      "wild yam",
+      "colico root"
+    ],
+    "article": null
+  },
+  {
+    "id": "black_walnut",
+    "name": "Nogal negro",
+    "scientific": "Juglans nigra",
+    "aliases": [
+      "black walnut",
+      "nogal americano"
+    ],
+    "article": null
+  },
+  {
+    "id": "pau_darco",
+    "name": "Lapacho / Taheebo",
+    "scientific": "Tabebuia impetiginosa",
+    "aliases": [
+      "pau d'arco",
+      "taheebo",
+      "ipe roxo"
+    ],
+    "article": null
+  },
+  {
+    "id": "ratama",
+    "name": "Retama / Cytisus",
+    "scientific": "Cytisus scoparius",
+    "aliases": [
+      "scotch broom",
+      "retama de escobas"
+    ],
+    "article": null
+  },
+  {
+    "id": "coltsfoot",
+    "name": "Tusilago / Farfara",
+    "scientific": "Tussilago farfara",
+    "aliases": [
+      "coltsfoot",
+      "una de caballo"
+    ],
+    "article": null
+  },
+  {
+    "id": "comfrey",
+    "name": "Consuelda",
+    "scientific": "Symphytum officinale",
+    "aliases": [
+      "comfrey",
+      "knitbone",
+      "soldacostilla"
+    ],
+    "article": null
+  },
+  {
+    "id": "petasites",
+    "name": "Petasites / Sombrero del diablo",
+    "scientific": "Petasites hybridus",
+    "aliases": [
+      "butterbur",
+      "petasites"
+    ],
+    "article": null
+  },
+  {
+    "id": "lobelia",
+    "name": "Lobelia",
+    "scientific": "Lobelia inflata",
+    "aliases": [
+      "Indian tobacco",
+      "pukeweed",
+      "asthma weed"
+    ],
+    "article": null
+  },
+  {
+    "id": "pennyroyal",
+    "name": "Poleo",
+    "scientific": "Mentha pulegium",
+    "aliases": [
+      "pennyroyal",
+      "mosquito plant",
+      "poleo menta"
+    ],
+    "article": null
+  },
+  {
+    "id": "blue_cohosh",
+    "name": "Cohosh azul",
+    "scientific": "Caulophyllum thalictroides",
+    "aliases": [
+      "blue cohosh",
+      "papoose root"
+    ],
+    "article": null
+  },
+  {
+    "id": "chaparral",
+    "name": "Chaparral / Gobernadora",
+    "scientific": "Larrea tridentata",
+    "aliases": [
+      "creosote bush",
+      "gobernadora",
+      "hediondilla"
+    ],
+    "article": null
+  },
+  {
+    "id": "germander",
+    "name": "Germandro",
+    "scientific": "Teucrium chamaedrys",
+    "aliases": [
+      "germander",
+      "teucrio"
+    ],
+    "article": null
+  },
+  {
+    "id": "sassafras",
+    "name": "Sasafras",
+    "scientific": "Sassafras albidum",
+    "aliases": [
+      "sassafras",
+      "ague tree"
+    ],
+    "article": null
+  },
+  {
+    "id": "wormwood",
+    "name": "Ajenjo / Artemisa",
+    "scientific": "Artemisia absinthium",
+    "aliases": [
+      "absinthe wormwood",
+      "grand wormwood"
+    ],
+    "article": null
+  },
+  {
+    "id": "periwinkle",
+    "name": "Vinca / Bigaro menor",
+    "scientific": "Vinca minor",
+    "aliases": [
+      "lesser periwinkle",
+      "vinca",
+      "hierba doncella"
+    ],
+    "article": null
+  },
+  {
+    "id": "sweet_annie",
+    "name": "Artemisia anual",
+    "scientific": "Artemisia annua",
+    "aliases": [
+      "sweet wormwood",
+      "qinghao"
+    ],
+    "article": null
+  },
+  {
+    "id": "spilanthes",
+    "name": "Spilanthes / Paracress",
+    "scientific": "Acmella oleracea",
+    "aliases": [
+      "toothache plant",
+      "paracress",
+      "jambu"
+    ],
+    "article": null
+  },
+  {
+    "id": "mimosa",
+    "name": "Mimosa / Dormilona",
+    "scientific": "Mimosa pudica",
+    "aliases": [
+      "sensitive plant",
+      "dormilona",
+      "shameplant"
+    ],
+    "article": null
+  },
+  {
+    "id": "perilla",
+    "name": "Perilla",
+    "scientific": "Perilla frutescens",
+    "aliases": [
+      "shiso",
+      "beefsteak plant"
+    ],
+    "article": null
+  },
+  {
+    "id": "jiaogulan",
+    "name": "Jiaogulan",
+    "scientific": "Gynostemma pentaphyllum",
+    "aliases": [
+      "southern ginseng",
+      "xiancao",
+      "herb of immortality"
+    ],
+    "article": null
+  },
+  {
+    "id": "berberis_aquifolium",
+    "name": "Mahonia / Uva de Oregon",
+    "scientific": "Berberis aquifolium",
+    "aliases": [
+      "Oregon grape",
+      "mahonia"
+    ],
+    "article": null
+  },
+  {
+    "id": "picrorrhiza",
+    "name": "Picrorrhiza / Kutki",
+    "scientific": "Picrorhiza kurroa",
+    "aliases": [
+      "kutki",
+      "katuki"
+    ],
+    "article": null
+  },
+  {
+    "id": "sutherlandia",
+    "name": "Sutherlandia / Planta del cancer",
+    "scientific": "Sutherlandia frutescens",
+    "aliases": [
+      "cancer bush",
+      "kankerbos"
+    ],
+    "article": null
+  },
+  {
+    "id": "rauvolfia",
+    "name": "Rauvolfia / Rauwolfia",
+    "scientific": "Rauvolfia serpentina",
+    "aliases": [
+      "serpentwood",
+      "sarpagandha",
+      "Indian snakeroot"
+    ],
+    "article": null
+  },
+  {
+    "id": "datura",
+    "name": "Datura / Toloache",
+    "scientific": "Datura stramonium",
+    "aliases": [
+      "jimsonweed",
+      "thornapple",
+      "toloache"
+    ],
+    "article": null
+  },
+  {
+    "id": "henbane",
+    "name": "Beleno negro",
+    "scientific": "Hyoscyamus niger",
+    "aliases": [
+      "black henbane",
+      "stinking nightshade"
+    ],
+    "article": null
+  },
+  {
+    "id": "raiz_angelica",
+    "name": "Angelica europea",
+    "scientific": "Angelica archangelica",
+    "aliases": [
+      "garden angelica",
+      "Norwegian angelica"
+    ],
+    "article": null
+  },
+  {
+    "id": "centaurea",
+    "name": "Centaurea menor",
+    "scientific": "Centaurium erythraea",
+    "aliases": [
+      "centaury",
+      "bitterherb"
+    ],
+    "article": null
+  },
+  {
+    "id": "rehmannia",
+    "name": "Rehmannia",
+    "scientific": "Rehmannia glutinosa",
+    "aliases": [
+      "Chinese foxglove",
+      "di huang"
+    ],
+    "article": null
+  },
+  {
+    "id": "dang_shen",
+    "name": "Dang Shen / Codonopsis",
+    "scientific": "Codonopsis pilosula",
+    "aliases": [
+      "poor man's ginseng",
+      "bonnet bellflower"
+    ],
+    "article": null
+  },
+  {
+    "id": "fo_ti",
+    "name": "Fo-ti / He Shou Wu",
+    "scientific": "Polygonum multiflorum",
+    "aliases": [
+      "he shou wu",
+      "fleeceflower root"
+    ],
+    "article": null
+  },
+  {
+    "id": "bai_shao",
+    "name": "Bai Shao / Peonia blanca",
+    "scientific": "Paeonia lactiflora",
+    "aliases": [
+      "white peony root",
+      "bai shao yao"
+    ],
+    "article": null
+  },
+  {
+    "id": "huang_qi",
+    "name": "Huang Qi / Astragalo chino",
+    "scientific": "Astragalus propinquus",
+    "aliases": [
+      "milk vetch root",
+      "huangqi"
+    ],
+    "article": null
+  },
+  {
+    "id": "wu_wei_zi",
+    "name": "Wu Wei Zi / Schisandra roja",
+    "scientific": "Schisandra sphenanthera",
+    "aliases": [
+      "southern schisandra",
+      "red schisandra berry"
+    ],
+    "article": null
+  },
+  {
+    "id": "tian_ma",
+    "name": "Tian Ma / Gastrodia",
+    "scientific": "Gastrodia elata",
+    "aliases": [
+      "gastrodia",
+      "heaven hemp"
+    ],
+    "article": null
+  },
+  {
+    "id": "ku_shen",
+    "name": "Ku Shen / Sophora amarilla",
+    "scientific": "Sophora flavescens",
+    "aliases": [
+      "ku shen",
+      "shrubby sophora"
+    ],
+    "article": null
+  },
+  {
+    "id": "kudzu",
+    "name": "Kudzu / Pueraria",
+    "scientific": "Pueraria montana var. lobata",
+    "aliases": [
+      "kudzu vine",
+      "Japanese arrowroot",
+      "gegen"
+    ],
+    "article": null
+  },
+  {
+    "id": "magnolia_bark",
+    "name": "Corteza de Magnolia",
+    "scientific": "Magnolia officinalis",
+    "aliases": [
+      "hou po",
+      "Chinese magnolia"
+    ],
+    "article": null
+  },
+  {
+    "id": "danshen",
+    "name": "Dan Shen / Salvia roja",
+    "scientific": "Salvia miltiorrhiza",
+    "aliases": [
+      "red sage",
+      "Chinese sage",
+      "tan shen"
+    ],
+    "article": null
+  },
+  {
+    "id": "san_qi",
+    "name": "San Qi / Ginseng notoginseng",
+    "scientific": "Panax notoginseng",
+    "aliases": [
+      "notoginseng",
+      "tian qi",
+      "pseudoginseng"
+    ],
+    "article": null
+  },
+  {
+    "id": "chai_hu",
+    "name": "Chai Hu / Bupleurum",
+    "scientific": "Bupleurum chinense",
+    "aliases": [
+      "Chinese thoroughwax",
+      "hare's ear root"
+    ],
+    "article": null
+  },
+  {
+    "id": "ban_lan_gen",
+    "name": "Ban Lan Gen / Isatis",
+    "scientific": "Isatis indigotica",
+    "aliases": [
+      "Chinese indigo",
+      "woad root",
+      "banlangen"
+    ],
+    "article": null
+  },
+  {
+    "id": "gou_qi_zi",
+    "name": "Gou Qi Zi / Goji chino",
+    "scientific": "Lycium barbarum",
+    "aliases": [
+      "wolfberry",
+      "Chinese wolfberry"
+    ],
+    "article": null
+  },
+  {
+    "id": "huang_lian",
+    "name": "Huang Lian / Coptis",
+    "scientific": "Coptis chinensis",
+    "aliases": [
+      "Chinese goldthread",
+      "coptis root"
+    ],
+    "article": null
+  },
+  {
+    "id": "chuan_xiong",
+    "name": "Chuan Xiong / Ligusticum",
+    "scientific": "Ligusticum chuanxiong",
+    "aliases": [
+      "Szechuan lovage",
+      "ligusticum"
+    ],
+    "article": null
+  },
+  {
+    "id": "yi_mu_cao",
+    "name": "Yi Mu Cao / Leonuro",
+    "scientific": "Leonurus japonicus",
+    "aliases": [
+      "Chinese motherwort",
+      "leonurus"
+    ],
+    "article": null
+  },
+  {
+    "id": "helichrysum",
+    "name": "Siempreviva / Helicriso",
+    "scientific": "Helichrysum italicum",
+    "aliases": [
+      "immortelle",
+      "curry plant"
+    ],
+    "article": null
+  },
+  {
+    "id": "patchouli",
+    "name": "Pachuli",
+    "scientific": "Pogostemon cablin",
+    "aliases": [
+      "patchouli",
+      "patchouly"
+    ],
+    "article": null
+  },
+  {
+    "id": "vitex_negundo",
+    "name": "Vitex negundo",
+    "scientific": "Vitex negundo",
+    "aliases": [
+      "five-leaved chaste tree",
+      "nirgundi"
+    ],
+    "article": null
+  },
+  {
+    "id": "cedron_arbol",
+    "name": "Cedron arbol",
+    "scientific": "Aloysia citrodora",
+    "aliases": [
+      "lemon verbena",
+      "verbena limonera"
+    ],
+    "article": null
+  },
+  {
+    "id": "cryptolepis",
+    "name": "Cryptolepis",
+    "scientific": "Cryptolepis sanguinolenta",
+    "aliases": [
+      "cryptolepis",
+      "nibima"
+    ],
+    "article": null
+  },
+  {
+    "id": "huangbai",
+    "name": "Huang Bai / Phellodendron",
+    "scientific": "Phellodendron amurense",
+    "aliases": [
+      "amur cork tree",
+      "Chinese corktree"
+    ],
+    "article": null
+  },
+  {
+    "id": "ze_xie",
+    "name": "Ze Xie / Alisma",
+    "scientific": "Alisma orientale",
+    "aliases": [
+      "Asian water plantain",
+      "Oriental alisma"
+    ],
+    "article": null
+  },
+  {
+    "id": "yi_yi_ren",
+    "name": "Yi Yi Ren / Coix",
+    "scientific": "Coix lacryma-jobi",
+    "aliases": [
+      "job's tears",
+      "coixseed",
+      "adlay"
+    ],
+    "article": null
+  },
+  {
+    "id": "long_dan_cao",
+    "name": "Genciana china",
+    "scientific": "Gentiana scabra",
+    "aliases": [
+      "rough gentian",
+      "long dan cao"
+    ],
+    "article": null
+  },
+  {
+    "id": "huang_jing",
+    "name": "Huang Jing / Polygonatum",
+    "scientific": "Polygonatum sibiricum",
+    "aliases": [
+      "Siberian Solomon's seal",
+      "huang jing"
+    ],
+    "article": null
+  },
+  {
+    "id": "nu_zhen_zi",
+    "name": "Nu Zhen Zi / Ligustro",
+    "scientific": "Ligustrum lucidum",
+    "aliases": [
+      "glossy privet fruit",
+      "privet berry"
+    ],
+    "article": null
+  },
+  {
+    "id": "tu_si_zi",
+    "name": "Tu Si Zi / Cuscuta",
+    "scientific": "Cuscuta chinensis",
+    "aliases": [
+      "Chinese dodder",
+      "dodder seed"
+    ],
+    "article": null
+  },
+  {
+    "id": "bai_zhi",
+    "name": "Bai Zhi / Angelica china",
+    "scientific": "Angelica dahurica",
+    "aliases": [
+      "Dahurian angelica root",
+      "bai zhi"
+    ],
+    "article": null
+  },
+  {
+    "id": "pu_gong_ying",
+    "name": "Pu Gong Ying / Diente de Leon chino",
+    "scientific": "Taraxacum mongolicum",
+    "aliases": [
+      "Mongolian dandelion",
+      "pu gong ying"
+    ],
+    "article": null
+  },
+  {
+    "id": "bai_hua_she",
+    "name": "Hedyotis / Oldenlandia",
+    "scientific": "Hedyotis diffusa",
+    "aliases": [
+      "spreading hedyotis",
+      "bai hua she she cao"
+    ],
+    "article": null
+  },
+  {
+    "id": "tansy",
+    "name": "Tanaceto",
+    "scientific": "Tanacetum vulgare",
+    "aliases": [
+      "tansy",
+      "hierba lombriguera",
+      "boton de oro"
+    ],
+    "article": null
+  },
+  {
+    "id": "poke_root",
+    "name": "Fitolaca / Uva de America",
+    "scientific": "Phytolacca americana",
+    "aliases": [
+      "pokeweed",
+      "fitolaca"
+    ],
+    "article": null
+  },
+  {
+    "id": "uncaria_guianensis",
+    "name": "Una de Gato roja",
+    "scientific": "Uncaria guianensis",
+    "aliases": [
+      "gambia cat's claw",
+      "paraguayo"
+    ],
+    "article": null
+  },
+  {
+    "id": "espuela_caballero",
+    "name": "Espuela de Caballero",
+    "scientific": "Delphinium consolida",
+    "aliases": [
+      "larkspur",
+      "field larkspur"
+    ],
+    "article": null
+  },
+  {
+    "id": "plumbago",
+    "name": "Plumbago / Jazmin azul",
+    "scientific": "Plumbago zeylanica",
+    "aliases": [
+      "white leadwort",
+      "chitrak"
+    ],
+    "article": null
+  },
+  {
+    "id": "nauclea",
+    "name": "Nauclea",
+    "scientific": "Nauclea latifolia",
+    "aliases": [
+      "african peach",
+      "pin cushion tree"
+    ],
+    "article": null
+  },
+  {
+    "id": "trema",
+    "name": "Trema / Olmo africano",
+    "scientific": "Trema orientalis",
+    "aliases": [
+      "charcoal tree"
+    ],
+    "article": null
+  },
+  {
+    "id": "cat_thyme",
+    "name": "Tomillo del gato",
+    "scientific": "Teucrium marum",
+    "aliases": [
+      "cat thyme",
+      "teucrio"
+    ],
+    "article": null
+  },
+  {
+    "id": "cat_valerian",
+    "name": "Valeriana celtica",
+    "scientific": "Valeriana celtica",
+    "aliases": [
+      "celtic nard",
+      "nardo celta"
+    ],
+    "article": null
+  },
+  {
+    "id": "lavanda",
+    "name": "Lavanda",
+    "scientific": "Lavandula angustifolia",
+    "aliases": [
+      "lavender",
+      "espliego",
+      "alhucema"
+    ],
+    "article": null
+  },
+  {
+    "id": "cajuput",
+    "name": "Cajeput / Melaleuca menor",
+    "scientific": "Melaleuca cajuputi",
+    "aliases": [
+      "cajeput oil",
+      "paperbark tree"
+    ],
+    "article": null
+  },
+  {
+    "id": "yi_zhi_ren",
+    "name": "Yi Zhi Ren / Alpinia",
+    "scientific": "Alpinia oxyphylla",
+    "aliases": [
+      "sharp leaf galangal",
+      "oxyphylla seed"
+    ],
+    "article": null
+  },
+  {
+    "id": "zhi_mu",
+    "name": "Zhi Mu / Anemarrhena",
+    "scientific": "Anemarrhena asphodeloides",
+    "aliases": [
+      "anemarrhena",
+      "zhi mu root"
+    ],
+    "article": null
+  },
+  {
+    "id": "huai_hua",
+    "name": "Huai Hua / Sophora japonica",
+    "scientific": "Sophora japonica",
+    "aliases": [
+      "pagodatree",
+      "Japanese pagoda tree"
+    ],
+    "article": null
+  },
+  {
+    "id": "ge_gen",
+    "name": "Ge Gen / Kudzu flor",
+    "scientific": "Pueraria lobata",
+    "aliases": [
+      "kudzu flower",
+      "arrowroot pueraria"
+    ],
+    "article": null
+  },
+  {
+    "id": "wuling_zhi",
+    "name": "Wu Ling Zhi / Trogopterus",
+    "scientific": "Trogopterus xanthipes",
+    "aliases": [
+      "flying squirrel feces",
+      "wu ling zhi"
+    ],
+    "article": null
+  }
+]

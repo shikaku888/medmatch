@@ -1,0 +1,17 @@
+population,population_id,ingredient_id,ingredient,deficiency_prevalence,mechanism,compounds_with,source,source_url
+Adults 65+,elderly,calcium,Calcium,30-40%,Reduced absorption + vitamin D deficiency,ppi,matrix.population_risks,
+Adults 65+,elderly,vitamin-b12,Vitamin B12,10-30%,Atrophic gastritis reduces acid + intrinsic factor,"ppi,metformin",matrix.population_risks,
+Adults 65+,elderly,vitamin-d,Vitamin D,40-60%,Reduced skin synthesis + less outdoor exposure,,matrix.population_risks,
+Gastric Bypass (RNY),bariatric-rny,calcium,Calcium,50-60%,Duodenal bypass + vitamin D malabsorption,,matrix.population_risks,/protocols/bariatric/gastric-bypass/
+Gastric Bypass (RNY),bariatric-rny,iron,Iron,20-55%,Duodenum bypassed — primary absorption site lost,,matrix.population_risks,/protocols/bariatric/gastric-bypass/
+Gastric Bypass (RNY),bariatric-rny,vitamin-b12,Vitamin B12,33-70%,Intrinsic factor production eliminated,metformin,matrix.population_risks,/protocols/bariatric/gastric-bypass/
+Gastric Bypass (RNY),bariatric-rny,vitamin-d,Vitamin D,50-60%,Fat malabsorption reduces D3 uptake,,matrix.population_risks,/protocols/bariatric/gastric-bypass/
+Menstruating Women,menstruating,iron,Iron,10-30%,Monthly blood loss depletes iron stores,,matrix.population_risks,/symptoms/heavy-periods/
+Pregnant Women,pregnant,folate,Folate / Methylfolate,Critical,Neural tube formation requires folate by day 28,,matrix.population_risks,/protocols/prenatal/
+Pregnant Women,pregnant,iron,Iron,20-55%,Increased demand + blood volume expansion,ppi,matrix.population_risks,/protocols/prenatal/
+Pregnant Women,pregnant,vitamin-b12,Vitamin B12,10-30%,Increased demand for fetal neurological development,metformin,matrix.population_risks,/protocols/prenatal/
+Pregnant Women,pregnant,vitamin-d,Vitamin D,40-60%,Fetal bone development + immune programming,,matrix.population_risks,/protocols/prenatal/
+Vegans/Vegetarians,vegan,iron,Iron,20-40%,Non-heme iron has 2-20% absorption vs 15-35% heme,,matrix.population_risks,/protocols/vegan/
+Vegans/Vegetarians,vegan,omega-3,Omega-3 (EPA/DHA),Common,No EPA/DHA in plant diet; ALA conversion is 5-10%,,matrix.population_risks,/protocols/vegan/
+Vegans/Vegetarians,vegan,vitamin-b12,Vitamin B12,40-90%,No dietary B12 in plant foods,,matrix.population_risks,/protocols/vegan/
+Vegans/Vegetarians,vegan,zinc,Zinc,20-30%,Phytates in plant foods inhibit zinc absorption,,matrix.population_risks,/protocols/vegan/

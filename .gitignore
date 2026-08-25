@@ -1,0 +1,23 @@
+# Dependencies / builds
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Runtime data (regenerable / user-local)
+medmatch/backend/medmatch.db
+medmatch/backend/medmatch.db-shm
+medmatch/backend/medmatch.db-wal
+personalized-product-scanner/data_storage.json
+
+# Secrets
+.env
+.env.local
+
+# OS
+Thumbs.db
+.DS_Store

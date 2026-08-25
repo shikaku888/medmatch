@@ -1,0 +1,895 @@
+[
+  {
+    "id": "anticoagulantes",
+    "name": "Anticoagulantes",
+    "drugs": [
+      "warfarina",
+      "acenocumarol",
+      "heparina",
+      "enoxaparina"
+    ],
+    "aliases": [
+      "blood thinners",
+      "Coumadin",
+      "Sintrom"
+    ]
+  },
+  {
+    "id": "antiplaquetarios",
+    "name": "Antiplaquetarios",
+    "drugs": [
+      "aspirina",
+      "clopidogrel",
+      "ticagrelor",
+      "prasugrel"
+    ],
+    "aliases": [
+      "antiagregantes",
+      "Plavix"
+    ]
+  },
+  {
+    "id": "antihipertensivos",
+    "name": "Antihipertensivos",
+    "drugs": [
+      "losartán",
+      "enalapril",
+      "amlodipino",
+      "valsartán",
+      "lisinopril",
+      "ramipril",
+      "verapamil",
+      "nifedipine",
+      "diltiazem",
+      "captopril"
+    ],
+    "aliases": [
+      "para la presión",
+      "IECA",
+      "ARA-II",
+      "calcioantagonistas"
+    ]
+  },
+  {
+    "id": "antidiabeticos",
+    "name": "Antidiabéticos",
+    "drugs": [
+      "metformina",
+      "glibenclamida",
+      "sitagliptina",
+      "empagliflozina",
+      "insulina",
+      "glipizide",
+      "glimepiride",
+      "repaglinide"
+    ],
+    "aliases": [
+      "hipoglucemiantes",
+      "Glucophage"
+    ]
+  },
+  {
+    "id": "isrs",
+    "name": "Antidepresivos ISRS",
+    "drugs": [
+      "fluoxetina",
+      "sertralina",
+      "paroxetina",
+      "escitalopram",
+      "citalopram"
+    ],
+    "aliases": [
+      "SSRI",
+      "Prozac",
+      "Zoloft",
+      "Antidepressive Agents"
+    ]
+  },
+  {
+    "id": "imao",
+    "name": "Inhibidores de MAO",
+    "drugs": [
+      "fenelzina",
+      "tranilcipromina",
+      "selegilina",
+      "moclobemida"
+    ],
+    "aliases": [
+      "MAOI",
+      "IMAO"
+    ]
+  },
+  {
+    "id": "benzodiacepinas",
+    "name": "Benzodiacepinas",
+    "drugs": [
+      "diazepam",
+      "alprazolam",
+      "clonazepam",
+      "lorazepam",
+      "midazolam",
+      "triazolam"
+    ],
+    "aliases": [
+      "ansiolíticos",
+      "Valium",
+      "Rivotril"
+    ]
+  },
+  {
+    "id": "estatinas",
+    "name": "Estatinas",
+    "drugs": [
+      "atorvastatina",
+      "rosuvastatina",
+      "simvastatina",
+      "pravastatina"
+    ],
+    "aliases": [
+      "para el colesterol",
+      "Lipitor",
+      "Crestor"
+    ]
+  },
+  {
+    "id": "inmunosupresores",
+    "name": "Inmunosupresores",
+    "drugs": [
+      "ciclosporina",
+      "tacrolimus",
+      "sirolimus",
+      "micofenolato",
+      "azathioprine"
+    ],
+    "aliases": [
+      "para trasplantes"
+    ]
+  },
+  {
+    "id": "antirretrovirales",
+    "name": "Antirretrovirales",
+    "drugs": [
+      "indinavir",
+      "ritonavir",
+      "nevirapina",
+      "efavirenz"
+    ],
+    "aliases": [
+      "ARV",
+      "antiVIH"
+    ]
+  },
+  {
+    "id": "anticonceptivos",
+    "name": "Anticonceptivos orales",
+    "drugs": [
+      "etinilestradiol",
+      "levonorgestrel",
+      "desogestrel"
+    ],
+    "aliases": [
+      "píldora anticonceptiva",
+      "ACO"
+    ]
+  },
+  {
+    "id": "digoxina",
+    "name": "Digoxina",
+    "drugs": [
+      "digoxina"
+    ],
+    "aliases": [
+      "digitálicos",
+      "Lanoxin"
+    ]
+  },
+  {
+    "id": "teofilina",
+    "name": "Teofilina",
+    "drugs": [
+      "teofilina",
+      "aminofilina"
+    ],
+    "aliases": [
+      "broncodilatador"
+    ]
+  },
+  {
+    "id": "omeprazol",
+    "name": "Inhibidores de bomba de protones",
+    "drugs": [
+      "omeprazol",
+      "esomeprazol",
+      "pantoprazol",
+      "lansoprazol"
+    ],
+    "aliases": [
+      "IBP",
+      "antiácidos"
+    ]
+  },
+  {
+    "id": "aines",
+    "name": "AINEs",
+    "drugs": [
+      "ibuprofeno",
+      "naproxeno",
+      "diclofenaco",
+      "celecoxib",
+      "indomethacin",
+      "ketoprofen",
+      "meloxicam"
+    ],
+    "aliases": [
+      "antiinflamatorios no esteroideos"
+    ]
+  },
+  {
+    "id": "litio",
+    "name": "Litio",
+    "drugs": [
+      "litio",
+      "carbonato de litio"
+    ],
+    "aliases": [
+      "estabilizador del ánimo"
+    ]
+  },
+  {
+    "id": "anticonvulsivantes",
+    "name": "Anticonvulsivantes",
+    "drugs": [
+      "carbamazepina",
+      "fenitoína",
+      "ácido valproico",
+      "lamotrigina",
+      "phenobarbital",
+      "primidone"
+    ],
+    "aliases": [
+      "antiepilépticos"
+    ]
+  },
+  {
+    "id": "quimioterapia",
+    "name": "Quimioterapia",
+    "drugs": [
+      "irinotecan",
+      "imatinib",
+      "ciclofosfamida",
+      "docetaxel",
+      "cisplatin",
+      "doxorubicin",
+      "fluorouracil",
+      "paclitaxel",
+      "vincristine"
+    ],
+    "aliases": [
+      "antineoplásicos",
+      "citostáticos"
+    ]
+  },
+  {
+    "id": "tiroideos",
+    "name": "Hormonas tiroideas",
+    "drugs": [
+      "levotiroxina",
+      "liotironina"
+    ],
+    "aliases": [
+      "Synthroid",
+      "Eutirox",
+      "tiroideos"
+    ]
+  },
+  {
+    "id": "corticosteroides",
+    "name": "Corticosteroides",
+    "drugs": [
+      "prednisona",
+      "prednisolona",
+      "dexametasona",
+      "hidrocortisona",
+      "corticosterone",
+      "methylprednisolone"
+    ],
+    "aliases": [
+      "corticoides",
+      "esteroides"
+    ]
+  },
+  {
+    "id": "antifungicos",
+    "name": "Antifúngicos azólicos",
+    "drugs": [
+      "ketoconazol",
+      "itraconazol",
+      "fluconazol",
+      "voriconazol"
+    ],
+    "aliases": [
+      "antimicóticos"
+    ]
+  },
+  {
+    "id": "antibioticos",
+    "name": "Antibióticos",
+    "drugs": [
+      "amoxicilina",
+      "ciprofloxacino",
+      "metronidazol",
+      "claritromicina",
+      "doxiciclina",
+      "tetracycline",
+      "doxycycline",
+      "minocycline"
+    ],
+    "aliases": [
+      "antibacterianos"
+    ]
+  },
+  {
+    "id": "diureticos",
+    "name": "Diuréticos",
+    "drugs": [
+      "furosemida",
+      "hidroclorotiazida",
+      "espironolactona",
+      "torasemida"
+    ],
+    "aliases": [
+      "Lasix",
+      "para retención de líquidos"
+    ]
+  },
+  {
+    "id": "opioides",
+    "name": "Opioides",
+    "drugs": [
+      "tramadol",
+      "codeína",
+      "morfina",
+      "oxicodona",
+      "fentanilo",
+      "fentanyl",
+      "hydromorphone"
+    ],
+    "aliases": [
+      "analgésicos opiáceos"
+    ]
+  },
+  {
+    "id": "glp1",
+    "name": "Agonistas GLP-1",
+    "drugs": [
+      "semaglutida",
+      "liraglutida",
+      "dulaglutida",
+      "tirzepatida"
+    ],
+    "aliases": [
+      "Ozempic",
+      "Wegovy",
+      "Mounjaro",
+      "para bajar de peso"
+    ]
+  },
+  {
+    "id": "antiarritmicos",
+    "name": "Antiarrítmicos",
+    "drugs": [
+      "amiodarona",
+      "flecainida",
+      "propafenona",
+      "sotalol",
+      "adenosine",
+      "quinidine",
+      "procainamide"
+    ],
+    "aliases": [
+      "para arritmias"
+    ]
+  },
+  {
+    "id": "betabloqueantes",
+    "name": "Betabloqueantes",
+    "drugs": [
+      "atenolol",
+      "metoprolol",
+      "propranolol",
+      "bisoprolol",
+      "carvedilol",
+      "nadolol"
+    ],
+    "aliases": [
+      "beta-blockers"
+    ]
+  },
+  {
+    "id": "anestesicos",
+    "name": "Anestésicos",
+    "drugs": [
+      "propofol",
+      "sevoflurano",
+      "lidocaína",
+      "ketamina"
+    ],
+    "aliases": [
+      "anestesia"
+    ]
+  },
+  {
+    "id": "isrsn",
+    "name": "Antidepresivos IRSN",
+    "drugs": [
+      "venlafaxina",
+      "duloxetina",
+      "desvenlafaxina"
+    ],
+    "aliases": [
+      "SNRI",
+      "Effexor",
+      "Cymbalta"
+    ]
+  },
+  {
+    "id": "antipsicoticos",
+    "name": "Antipsicóticos",
+    "drugs": [
+      "haloperidol",
+      "quetiapina",
+      "risperidona",
+      "olanzapina",
+      "aripiprazol",
+      "chlorpromazine",
+      "clozapine"
+    ],
+    "aliases": [
+      "neurolépticos",
+      "Antipsychotic Agents"
+    ]
+  },
+  {
+    "id": "antihistaminicos",
+    "name": "Antihistamínicos",
+    "drugs": [
+      "cetirizina",
+      "loratadina",
+      "fexofenadina",
+      "difenhidramina",
+      "desloratadina",
+      "hydroxyzine",
+      "promethazine"
+    ],
+    "aliases": [
+      "antialérgicos",
+      "Zyrtec",
+      "Claritin",
+      "Allegra",
+      "Benadryl"
+    ]
+  },
+  {
+    "id": "bifosfonatos",
+    "name": "Bifosfonatos",
+    "drugs": [
+      "alendronato",
+      "risedronato",
+      "ibandronato",
+      "ácido zoledrónico"
+    ],
+    "aliases": [
+      "para osteoporosis",
+      "Fosamax"
+    ]
+  },
+  {
+    "id": "antigotosos",
+    "name": "Antigotosos",
+    "drugs": [
+      "alopurinol",
+      "febuxostat",
+      "colchicina",
+      "probenecid"
+    ],
+    "aliases": [
+      "para la gota",
+      "Zyloprim"
+    ]
+  },
+  {
+    "id": "antiemeticos",
+    "name": "Antieméticos",
+    "drugs": [
+      "ondansetrón",
+      "metoclopramida",
+      "domperidona",
+      "granisetrón"
+    ],
+    "aliases": [
+      "para náuseas",
+      "Zofran"
+    ]
+  },
+  {
+    "id": "broncodilatadores",
+    "name": "Broncodilatadores",
+    "drugs": [
+      "salbutamol",
+      "formoterol",
+      "salmeterol",
+      "ipratropio",
+      "tiotropio"
+    ],
+    "aliases": [
+      "para asma",
+      "inhaladores",
+      "Ventolin",
+      "Spiriva"
+    ]
+  },
+  {
+    "id": "antiacidos_h2",
+    "name": "Antagonistas H2",
+    "drugs": [
+      "ranitidina",
+      "famotidina",
+      "cimetidina",
+      "nizatidina"
+    ],
+    "aliases": [
+      "antiácidos H2",
+      "Zantac",
+      "Pepcid"
+    ]
+  },
+  {
+    "id": "hipnoticos",
+    "name": "Hipnóticos no benzodiacepínicos",
+    "drugs": [
+      "zolpidem",
+      "zopiclona",
+      "eszopiclona",
+      "suvorexant",
+      "zaleplon"
+    ],
+    "aliases": [
+      "para dormir",
+      "Ambien",
+      "Z-drugs"
+    ]
+  },
+  {
+    "id": "antimigrañosos",
+    "name": "Antimigrañosos (triptanes)",
+    "drugs": [
+      "sumatriptán",
+      "rizatriptán",
+      "zolmitriptán",
+      "eletriptán",
+      "naratriptán"
+    ],
+    "aliases": [
+      "triptanes",
+      "Imitrex",
+      "para migraña"
+    ]
+  },
+  {
+    "id": "antidiabeticos_sglt2",
+    "name": "Inhibidores SGLT2",
+    "drugs": [
+      "dapagliflozina",
+      "canagliflozina",
+      "empagliflozina"
+    ],
+    "aliases": [
+      "gliflozinas",
+      "Jardiance",
+      "Farxiga",
+      "para diabetes tipo 2"
+    ]
+  },
+  {
+    "id": "relajantes_musculares",
+    "name": "Relajantes musculares",
+    "drugs": [
+      "ciclobenzaprina",
+      "tizanidina",
+      "baclofeno",
+      "metocarbamol",
+      "carisoprodol"
+    ],
+    "aliases": [
+      "miorrelajantes",
+      "Flexeril"
+    ]
+  },
+  {
+    "id": "antitusivos",
+    "name": "Antitusivos",
+    "drugs": [
+      "dextrometorfano",
+      "codeína",
+      "benzonatato",
+      "levodropropizina"
+    ],
+    "aliases": [
+      "para la tos",
+      "Robitussin"
+    ]
+  },
+  {
+    "id": "laxantes",
+    "name": "Laxantes osmóticos",
+    "drugs": [
+      "polietilenglicol",
+      "lactulosa",
+      "citrato de magnesio",
+      "bisacodilo"
+    ],
+    "aliases": [
+      "para estreñimiento",
+      "Miralax"
+    ]
+  },
+  {
+    "id": "antiparasitarios",
+    "name": "Antiparasitarios",
+    "drugs": [
+      "albendazol",
+      "mebendazol",
+      "ivermectina",
+      "praziquantel",
+      "metronidazol antiparasitario"
+    ],
+    "aliases": [
+      "antihelminticos",
+      "desparasitantes"
+    ]
+  },
+  {
+    "id": "vasodilatadores",
+    "name": "Vasodilatadores",
+    "drugs": [
+      "sildenafilo",
+      "tadalafilo",
+      "nitroglicerina",
+      "isosorbida",
+      "minoxidil"
+    ],
+    "aliases": [
+      "Viagra",
+      "Cialis",
+      "para disfunción eréctil",
+      "nitratos"
+    ]
+  },
+  {
+    "id": "anticolinergicos",
+    "name": "Anticolinérgicos",
+    "drugs": [
+      "atropina",
+      "escopolamina",
+      "oxibutinina",
+      "tolterodina",
+      "solifenacina"
+    ],
+    "aliases": [
+      "antimuscarínicos",
+      "para vejiga hiperactiva"
+    ]
+  },
+  {
+    "id": "paracetamol",
+    "name": "Paracetamol / Acetaminofén",
+    "drugs": [
+      "paracetamol",
+      "acetaminofén",
+      "acetaminofen"
+    ],
+    "aliases": [
+      "Tylenol",
+      "Doliprane",
+      "Tempra",
+      "analgésico",
+      "para el dolor",
+      "para la fiebre"
+    ]
+  },
+  {
+    "id": "triciclicos",
+    "name": "Antidepresivos tricíclicos",
+    "drugs": [
+      "amitriptilina",
+      "nortriptilina",
+      "imipramina",
+      "clomipramina",
+      "desipramina"
+    ],
+    "aliases": [
+      "ATC",
+      "Tryptanol",
+      "tricíclicos",
+      "Antidepressive Agents, Tricyclic"
+    ]
+  },
+  {
+    "id": "gabapentinoides",
+    "name": "Gabapentinoides",
+    "drugs": [
+      "gabapentina",
+      "pregabalina"
+    ],
+    "aliases": [
+      "Neurontin",
+      "Lyrica",
+      "para dolor neuropático",
+      "para fibromialgia"
+    ]
+  },
+  {
+    "id": "melatonina_rx",
+    "name": "Melatonina",
+    "drugs": [
+      "melatonina"
+    ],
+    "aliases": [
+      "melatonin",
+      "para dormir",
+      "regulador del sueño"
+    ]
+  },
+  {
+    "id": "macrolidos",
+    "name": "Macrólidos",
+    "drugs": [
+      "azitromicina",
+      "claritromicina",
+      "eritromicina"
+    ],
+    "aliases": [
+      "Zithromax",
+      "antibióticos macrólidos"
+    ]
+  },
+  {
+    "id": "antileucotrienos",
+    "name": "Antileucotrienos",
+    "drugs": [
+      "montelukast",
+      "zafirlukast"
+    ],
+    "aliases": [
+      "Singulair",
+      "para asma",
+      "para rinitis alérgica"
+    ]
+  },
+  {
+    "id": "alfa_bloqueantes",
+    "name": "Alfa-bloqueantes",
+    "drugs": [
+      "tamsulosina",
+      "doxazosina",
+      "terazosina",
+      "alfuzosina"
+    ],
+    "aliases": [
+      "Flomax",
+      "para próstata",
+      "para hiperplasia prostática"
+    ]
+  },
+  {
+    "id": "metotrexato_rx",
+    "name": "Metotrexato",
+    "drugs": [
+      "metotrexato",
+      "metotrexate"
+    ],
+    "aliases": [
+      "MTX",
+      "para artritis reumatoide",
+      "inmunosupresor",
+      "para psoriasis"
+    ]
+  },
+  {
+    "id": "estimulantes",
+    "name": "Central Nervous System Stimulants",
+    "drugs": [
+      "amphetamine",
+      "methylphenidate",
+      "lisdexamfetamine",
+      "dextroamphetamine",
+      "modafinil",
+      "3,4-methylenedioxyamphetamine"
+    ],
+    "aliases": [
+      "CNS stimulants",
+      "stimulants"
+    ]
+  },
+  {
+    "id": "vasopresores",
+    "name": "Vasopressors",
+    "drugs": [
+      "epinephrine",
+      "norepinephrine",
+      "dopamine",
+      "isoproterenol",
+      "phenylephrine"
+    ],
+    "aliases": [
+      "pressors",
+      "catecholamines"
+    ]
+  },
+  {
+    "id": "vitaminas_minerales",
+    "name": "Vitamins & Minerals",
+    "drugs": [
+      "vitamin c",
+      "ascorbic acid",
+      "vitamin e",
+      "selenium",
+      "calcium",
+      "magnesium",
+      "iron",
+      "copper",
+      "zinc",
+      "vitamin d",
+      "folic acid",
+      "cyanocobalamin",
+      "pyridoxine",
+      "thiamine"
+    ],
+    "aliases": [
+      "antioxidants",
+      "vitamins",
+      "minerals",
+      "multivitamin"
+    ]
+  },
+  {
+    "id": "aminoacidos_nutrientes",
+    "name": "Amino Acids & Nutrients",
+    "drugs": [
+      "glutathione",
+      "creatine",
+      "alpha-lipoic acid",
+      "methionine",
+      "acetylcysteine",
+      "tryptophan",
+      "leucine",
+      "glycine",
+      "cysteine",
+      "tyrosine",
+      "arginine",
+      "taurine"
+    ],
+    "aliases": [
+      "amino acids",
+      "nutrients",
+      "n-acetylcysteine"
+    ]
+  },
+  {
+    "id": "inmunoterapia",
+    "name": "Immunomodulators",
+    "drugs": [
+      "interferon alfa",
+      "interferon beta",
+      "interferon gamma",
+      "interleukin-2",
+      "aldesleukin",
+      "interleukin-10"
+    ],
+    "aliases": [
+      "interferons",
+      "interleukins",
+      "cytokines"
+    ]
+  }
+]

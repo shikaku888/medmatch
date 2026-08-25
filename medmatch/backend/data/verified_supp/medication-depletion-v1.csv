@@ -1,0 +1,22 @@
+medication,medication_id,ingredient_id,ingredient_depleted,relationship,severity,effect_size,us_users_millions,mechanism,pmids,source,source_url
+Statins (HMG-CoA Reductase Inhibitors),statin,vitamin-d,Vitamin D,depletes,low,,92,Cholesterol pathway disruption may reduce D3 synthesis,,matrix.depletions,/medications/statins/
+Statins (HMG-CoA Reductase Inhibitors),statin,coq10,CoQ10,depletes,high,16-54% reduction,92,Mevalonate pathway inhibition blocks CoQ10 synthesis,28686047,matrix.depletions,/medications/statins/
+SSRIs (Selective Serotonin Reuptake Inhibitors),ssri,vitamin-b12,Vitamin B12,depletes,moderate,,45,Associated with lower B12 levels in long-term users,,matrix.depletions,
+SSRIs (Selective Serotonin Reuptake Inhibitors),ssri,vitamin-d,Vitamin D,depletes,moderate,,45,Low D compounds depressive symptoms SSRI is treating,,matrix.depletions,
+SSRIs (Selective Serotonin Reuptake Inhibitors),ssri,coq10,CoQ10,depletes,low,,45,Some evidence of mitochondrial effects reducing CoQ10,,matrix.depletions,
+SSRIs (Selective Serotonin Reuptake Inhibitors),ssri,folate,Folate / Methylfolate,depletes,high,,45,Folate required for serotonin synthesis; depletion reduces SSRI efficacy,22950138,matrix.depletions,
+Metformin,metformin,folate,Folate / Methylfolate,depletes,moderate,,37,Secondary mechanism via B12-folate metabolic pathway,,matrix.depletions,/medications/metformin/
+Metformin,metformin,vitamin-b12,Vitamin B12,depletes,high,5.8-30% deficiency rate,37,Calcium-dependent ileal absorption disruption,26900641,matrix.depletions,/medications/metformin/
+Proton Pump Inhibitors (PPIs),ppi,calcium,Calcium,depletes,moderate,RR 1.30 hip fracture,33,Acid-dependent calcium solubilization impaired,16855264,matrix.depletions,/medications/ppis/calcium/
+Proton Pump Inhibitors (PPIs),ppi,iron,Iron,depletes,moderate,RR 2.56,33,Gastric acid required for ferric-to-ferrous reduction,27155887,matrix.depletions,/medications/ppis/iron/
+Proton Pump Inhibitors (PPIs),ppi,vitamin-c,Vitamin C,depletes,low,-12.3% plasma levels,33,Reduced ascorbic acid absorption at higher pH,15080570,matrix.depletions,/medications/ppis/vitamin-c/
+Proton Pump Inhibitors (PPIs),ppi,magnesium,Magnesium,depletes,high,OR 1.71,33,TRPM6/7 channel pH-sensitivity reduces intestinal absorption,25023992,matrix.depletions,/medications/ppis/magnesium/
+Proton Pump Inhibitors (PPIs),ppi,vitamin-b12,Vitamin B12,depletes,high,OR 1.65,33,Stomach acid required for B12 release from food proteins,23325883,matrix.depletions,/medications/ppis/b12/
+Oral Contraceptives,birth-control,vitamin-b6,Vitamin B6,depletes,moderate,23% increased depression risk,14,Increased tryptophan-kynurenine metabolism depletes B6,27680324,matrix.depletions,/medications/birth-control/
+Oral Contraceptives,birth-control,vitamin-b12,Vitamin B12,depletes,moderate,,14,Altered binding protein levels reduce available B12,,matrix.depletions,/medications/birth-control/
+Oral Contraceptives,birth-control,magnesium,Magnesium,depletes,moderate,,14,Increased urinary magnesium excretion,,matrix.depletions,/medications/birth-control/
+Oral Contraceptives,birth-control,zinc,Zinc,depletes,moderate,,14,Copper-zinc antagonism shifts toward copper dominance,,matrix.depletions,/medications/birth-control/
+Oral Contraceptives,birth-control,folate,Folate / Methylfolate,depletes,high,,14,Impaired folate metabolism; critical if pregnancy follows,,matrix.depletions,/medications/birth-control/
+birth-control + ssri,birth-control+ssri,folate,Folate / Methylfolate,drug-drug-compounded,,Both deplete folate via different mechanisms — compounding risk for depression,,,,matrix.compound_interactions,
+metformin + ppi,metformin+ppi,vitamin-b12,Vitamin B12,drug-drug-compounded,,34% greater B12 reduction than either alone,,,26900641,matrix.compound_interactions,
+statin + ppi,statin+ppi,coq10,CoQ10,drug-drug-compounded,,Statin depletes CoQ10; PPI may reduce absorption of CoQ10 supplements,,,,matrix.compound_interactions,

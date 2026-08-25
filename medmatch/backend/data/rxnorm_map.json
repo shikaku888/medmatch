@@ -1,0 +1,798 @@
+{
+  "acenocoumarol": {
+    "rxcui": "154",
+    "source": "exact"
+  },
+  "acetaminophen": {
+    "rxcui": "161",
+    "source": "exact"
+  },
+  "albendazole": {
+    "rxcui": "430",
+    "source": "exact"
+  },
+  "albuterol": {
+    "rxcui": "435",
+    "source": "exact"
+  },
+  "alendronate": {
+    "rxcui": "46041",
+    "source": "exact"
+  },
+  "alfuzosin": {
+    "rxcui": "17300",
+    "source": "exact"
+  },
+  "allopurinol": {
+    "rxcui": "519",
+    "source": "exact"
+  },
+  "alprazolam": {
+    "rxcui": "596",
+    "source": "exact"
+  },
+  "aminophylline": {
+    "rxcui": "689",
+    "source": "exact"
+  },
+  "amiodarone": {
+    "rxcui": "703",
+    "source": "exact"
+  },
+  "amitriptyline": {
+    "rxcui": "704",
+    "source": "exact"
+  },
+  "amlodipine": {
+    "rxcui": "17767",
+    "source": "exact"
+  },
+  "amoxicillin": {
+    "rxcui": "723",
+    "source": "exact"
+  },
+  "aripiprazole": {
+    "rxcui": "89013",
+    "source": "exact"
+  },
+  "aspirin": {
+    "rxcui": "1191",
+    "source": "exact"
+  },
+  "atenolol": {
+    "rxcui": "1202",
+    "source": "exact"
+  },
+  "atorvastatin": {
+    "rxcui": "83367",
+    "source": "exact"
+  },
+  "atropine": {
+    "rxcui": "1223",
+    "source": "exact"
+  },
+  "azithromycin": {
+    "rxcui": "18631",
+    "source": "exact"
+  },
+  "baclofen": {
+    "rxcui": "1292",
+    "source": "exact"
+  },
+  "benzonatate": {
+    "rxcui": "18993",
+    "source": "exact"
+  },
+  "bisacodyl": {
+    "rxcui": "1596",
+    "source": "exact"
+  },
+  "bisoprolol": {
+    "rxcui": "19484",
+    "source": "exact"
+  },
+  "canagliflozin": {
+    "rxcui": "1373458",
+    "source": "exact"
+  },
+  "carbamazepine": {
+    "rxcui": "2002",
+    "source": "exact"
+  },
+  "carisoprodol": {
+    "rxcui": "2101",
+    "source": "exact"
+  },
+  "carvedilol": {
+    "rxcui": "20352",
+    "source": "exact"
+  },
+  "celecoxib": {
+    "rxcui": "140587",
+    "source": "exact"
+  },
+  "cetirizine": {
+    "rxcui": "20610",
+    "source": "exact"
+  },
+  "cimetidine": {
+    "rxcui": "2541",
+    "source": "exact"
+  },
+  "ciprofloxacin": {
+    "rxcui": "2551",
+    "source": "exact"
+  },
+  "citalopram": {
+    "rxcui": "2556",
+    "source": "exact"
+  },
+  "clarithromycin": {
+    "rxcui": "21212",
+    "source": "exact"
+  },
+  "clomipramine": {
+    "rxcui": "2597",
+    "source": "exact"
+  },
+  "clonazepam": {
+    "rxcui": "2598",
+    "source": "exact"
+  },
+  "clopidogrel": {
+    "rxcui": "32968",
+    "source": "exact"
+  },
+  "codeine": {
+    "rxcui": "2670",
+    "source": "exact"
+  },
+  "colchicine": {
+    "rxcui": "2683",
+    "source": "exact"
+  },
+  "cyclobenzaprine": {
+    "rxcui": "21949",
+    "source": "exact"
+  },
+  "cyclophosphamide": {
+    "rxcui": "3002",
+    "source": "exact"
+  },
+  "cyclosporine": {
+    "rxcui": "3008",
+    "source": "exact"
+  },
+  "dapagliflozin": {
+    "rxcui": "1488564",
+    "source": "exact"
+  },
+  "desipramine": {
+    "rxcui": "3247",
+    "source": "exact"
+  },
+  "desloratadine": {
+    "rxcui": "275635",
+    "source": "exact"
+  },
+  "desogestrel": {
+    "rxcui": "22656",
+    "source": "exact"
+  },
+  "desvenlafaxine": {
+    "rxcui": "734064",
+    "source": "exact"
+  },
+  "dexamethasone": {
+    "rxcui": "3264",
+    "source": "exact"
+  },
+  "dextromethorphan": {
+    "rxcui": "3289",
+    "source": "exact"
+  },
+  "diazepam": {
+    "rxcui": "3322",
+    "source": "exact"
+  },
+  "diclofenac": {
+    "rxcui": "3355",
+    "source": "exact"
+  },
+  "digoxin": {
+    "rxcui": "3407",
+    "source": "exact"
+  },
+  "diphenhydramine": {
+    "rxcui": "3498",
+    "source": "exact"
+  },
+  "docetaxel": {
+    "rxcui": "72962",
+    "source": "exact"
+  },
+  "domperidone": {
+    "rxcui": "3626",
+    "source": "exact"
+  },
+  "doxazosin": {
+    "rxcui": "49276",
+    "source": "exact"
+  },
+  "doxycycline": {
+    "rxcui": "3640",
+    "source": "exact"
+  },
+  "dulaglutide": {
+    "rxcui": "1551291",
+    "source": "exact"
+  },
+  "duloxetine": {
+    "rxcui": "72625",
+    "source": "exact"
+  },
+  "efavirenz": {
+    "rxcui": "195085",
+    "source": "exact"
+  },
+  "eletriptan": {
+    "rxcui": "231049",
+    "source": "exact"
+  },
+  "empagliflozin": {
+    "rxcui": "1545653",
+    "source": "exact"
+  },
+  "enalapril": {
+    "rxcui": "3827",
+    "source": "exact"
+  },
+  "enoxaparin": {
+    "rxcui": "67108",
+    "source": "exact"
+  },
+  "erythromycin": {
+    "rxcui": "4053",
+    "source": "exact"
+  },
+  "escitalopram": {
+    "rxcui": "321988",
+    "source": "exact"
+  },
+  "esomeprazole": {
+    "rxcui": "283742",
+    "source": "exact"
+  },
+  "eszopiclone": {
+    "rxcui": "461016",
+    "source": "exact"
+  },
+  "ethinyl estradiol": {
+    "rxcui": "4124",
+    "source": "exact"
+  },
+  "famotidine": {
+    "rxcui": "4278",
+    "source": "exact"
+  },
+  "febuxostat": {
+    "rxcui": "73689",
+    "source": "exact"
+  },
+  "fentanyl": {
+    "rxcui": "4337",
+    "source": "exact"
+  },
+  "fexofenadine": {
+    "rxcui": "87636",
+    "source": "exact"
+  },
+  "flecainide": {
+    "rxcui": "4441",
+    "source": "exact"
+  },
+  "fluconazole": {
+    "rxcui": "4450",
+    "source": "exact"
+  },
+  "fluoxetine": {
+    "rxcui": "4493",
+    "source": "exact"
+  },
+  "formoterol": {
+    "rxcui": "25255",
+    "source": "exact"
+  },
+  "furosemide": {
+    "rxcui": "4603",
+    "source": "exact"
+  },
+  "gabapentin": {
+    "rxcui": "25480",
+    "source": "exact"
+  },
+  "glyburide": {
+    "rxcui": "4815",
+    "source": "exact"
+  },
+  "granisetron": {
+    "rxcui": "26237",
+    "source": "exact"
+  },
+  "haloperidol": {
+    "rxcui": "5093",
+    "source": "exact"
+  },
+  "heparin": {
+    "rxcui": "235473",
+    "source": "exact"
+  },
+  "hydrochlorothiazide": {
+    "rxcui": "5487",
+    "source": "exact"
+  },
+  "hydrocortisone": {
+    "rxcui": "5492",
+    "source": "exact"
+  },
+  "ibandronate": {
+    "rxcui": "115264",
+    "source": "exact"
+  },
+  "ibuprofen": {
+    "rxcui": "5640",
+    "source": "exact"
+  },
+  "imatinib": {
+    "rxcui": "282388",
+    "source": "exact"
+  },
+  "imipramine": {
+    "rxcui": "5691",
+    "source": "exact"
+  },
+  "indinavir": {
+    "rxcui": "114289",
+    "source": "exact"
+  },
+  "insulin": {
+    "rxcui": "253182",
+    "source": "exact"
+  },
+  "ipratropium": {
+    "rxcui": "7213",
+    "source": "exact"
+  },
+  "irinotecan": {
+    "rxcui": "51499",
+    "source": "exact"
+  },
+  "isosorbide": {
+    "rxcui": "6057",
+    "source": "exact"
+  },
+  "itraconazole": {
+    "rxcui": "28031",
+    "source": "exact"
+  },
+  "ivermectin": {
+    "rxcui": "6069",
+    "source": "exact"
+  },
+  "ketamine": {
+    "rxcui": "6130",
+    "source": "exact"
+  },
+  "ketoconazole": {
+    "rxcui": "6135",
+    "source": "exact"
+  },
+  "lactulose": {
+    "rxcui": "6218",
+    "source": "exact"
+  },
+  "lamotrigine": {
+    "rxcui": "28439",
+    "source": "exact"
+  },
+  "lansoprazole": {
+    "rxcui": "17128",
+    "source": "exact"
+  },
+  "levodropropizine": {
+    "rxcui": "52014",
+    "source": "exact"
+  },
+  "levonorgestrel": {
+    "rxcui": "6373",
+    "source": "exact"
+  },
+  "levothyroxine": {
+    "rxcui": "10582",
+    "source": "exact"
+  },
+  "lidocaine": {
+    "rxcui": "6387",
+    "source": "exact"
+  },
+  "liothyronine": {
+    "rxcui": "10814",
+    "source": "exact"
+  },
+  "liraglutide": {
+    "rxcui": "475968",
+    "source": "exact"
+  },
+  "lisinopril": {
+    "rxcui": "29046",
+    "source": "exact"
+  },
+  "lithium": {
+    "rxcui": "6448",
+    "source": "exact"
+  },
+  "lithium carbonate": {
+    "rxcui": "42351",
+    "source": "exact"
+  },
+  "loratadine": {
+    "rxcui": "28889",
+    "source": "exact"
+  },
+  "lorazepam": {
+    "rxcui": "6470",
+    "source": "exact"
+  },
+  "losartan": {
+    "rxcui": "52175",
+    "source": "exact"
+  },
+  "magnesium citrate": {
+    "rxcui": "52356",
+    "source": "exact"
+  },
+  "mebendazole": {
+    "rxcui": "6672",
+    "source": "exact"
+  },
+  "melatonin": {
+    "rxcui": "6711",
+    "source": "exact"
+  },
+  "metformin": {
+    "rxcui": "6809",
+    "source": "exact"
+  },
+  "methocarbamol": {
+    "rxcui": "6845",
+    "source": "exact"
+  },
+  "methotrexate": {
+    "rxcui": "6851",
+    "source": "exact"
+  },
+  "metoclopramide": {
+    "rxcui": "6915",
+    "source": "exact"
+  },
+  "metoprolol": {
+    "rxcui": "6918",
+    "source": "exact"
+  },
+  "metronidazole": {
+    "rxcui": "6922",
+    "source": "exact"
+  },
+  "midazolam": {
+    "rxcui": "6960",
+    "source": "exact"
+  },
+  "minoxidil": {
+    "rxcui": "6984",
+    "source": "exact"
+  },
+  "moclobemide": {
+    "rxcui": "30121",
+    "source": "exact"
+  },
+  "montelukast": {
+    "rxcui": "88249",
+    "source": "exact"
+  },
+  "morphine": {
+    "rxcui": "7052",
+    "source": "exact"
+  },
+  "mycophenolate": {
+    "rxcui": "265323",
+    "source": "exact"
+  },
+  "naproxen": {
+    "rxcui": "7258",
+    "source": "exact"
+  },
+  "naratriptan": {
+    "rxcui": "141366",
+    "source": "exact"
+  },
+  "nevirapine": {
+    "rxcui": "53654",
+    "source": "exact"
+  },
+  "nitroglycerin": {
+    "rxcui": "4917",
+    "source": "exact"
+  },
+  "nizatidine": {
+    "rxcui": "42319",
+    "source": "exact"
+  },
+  "nortriptyline": {
+    "rxcui": "7531",
+    "source": "exact"
+  },
+  "olanzapine": {
+    "rxcui": "61381",
+    "source": "exact"
+  },
+  "omeprazole": {
+    "rxcui": "7646",
+    "source": "exact"
+  },
+  "ondansetron": {
+    "rxcui": "26225",
+    "source": "exact"
+  },
+  "oxybutynin": {
+    "rxcui": "32675",
+    "source": "exact"
+  },
+  "oxycodone": {
+    "rxcui": "7804",
+    "source": "exact"
+  },
+  "pantoprazole": {
+    "rxcui": "40790",
+    "source": "exact"
+  },
+  "paroxetine": {
+    "rxcui": "32937",
+    "source": "exact"
+  },
+  "phenelzine": {
+    "rxcui": "8123",
+    "source": "exact"
+  },
+  "phenytoin": {
+    "rxcui": "8183",
+    "source": "exact"
+  },
+  "polyethylene glycol": {
+    "rxcui": "8516",
+    "source": "exact"
+  },
+  "prasugrel": {
+    "rxcui": "613391",
+    "source": "exact"
+  },
+  "pravastatin": {
+    "rxcui": "42463",
+    "source": "exact"
+  },
+  "praziquantel": {
+    "rxcui": "8628",
+    "source": "exact"
+  },
+  "prednisolone": {
+    "rxcui": "8638",
+    "source": "exact"
+  },
+  "prednisone": {
+    "rxcui": "8640",
+    "source": "exact"
+  },
+  "pregabalin": {
+    "rxcui": "187832",
+    "source": "exact"
+  },
+  "probenecid": {
+    "rxcui": "8698",
+    "source": "exact"
+  },
+  "propafenone": {
+    "rxcui": "8754",
+    "source": "exact"
+  },
+  "propofol": {
+    "rxcui": "8782",
+    "source": "exact"
+  },
+  "propranolol": {
+    "rxcui": "8787",
+    "source": "exact"
+  },
+  "quetiapine": {
+    "rxcui": "51272",
+    "source": "exact"
+  },
+  "ramipril": {
+    "rxcui": "35296",
+    "source": "exact"
+  },
+  "ranitidine": {
+    "rxcui": "9143",
+    "source": "exact"
+  },
+  "risedronate": {
+    "rxcui": "73056",
+    "source": "exact"
+  },
+  "risperidone": {
+    "rxcui": "35636",
+    "source": "exact"
+  },
+  "ritonavir": {
+    "rxcui": "85762",
+    "source": "exact"
+  },
+  "rizatriptan": {
+    "rxcui": "88014",
+    "source": "exact"
+  },
+  "rosuvastatin": {
+    "rxcui": "301542",
+    "source": "exact"
+  },
+  "salmeterol": {
+    "rxcui": "36117",
+    "source": "exact"
+  },
+  "scopolamine": {
+    "rxcui": "9601",
+    "source": "exact"
+  },
+  "selegiline": {
+    "rxcui": "9639",
+    "source": "exact"
+  },
+  "semaglutide": {
+    "rxcui": "1991302",
+    "source": "exact"
+  },
+  "sertraline": {
+    "rxcui": "36437",
+    "source": "exact"
+  },
+  "sevoflurane": {
+    "rxcui": "36453",
+    "source": "exact"
+  },
+  "sildenafil": {
+    "rxcui": "136411",
+    "source": "exact"
+  },
+  "simvastatin": {
+    "rxcui": "36567",
+    "source": "exact"
+  },
+  "sirolimus": {
+    "rxcui": "35302",
+    "source": "exact"
+  },
+  "sitagliptin": {
+    "rxcui": "593411",
+    "source": "exact"
+  },
+  "solifenacin": {
+    "rxcui": "322167",
+    "source": "exact"
+  },
+  "sotalol": {
+    "rxcui": "9947",
+    "source": "exact"
+  },
+  "spironolactone": {
+    "rxcui": "9997",
+    "source": "exact"
+  },
+  "sumatriptan": {
+    "rxcui": "37418",
+    "source": "exact"
+  },
+  "suvorexant": {
+    "rxcui": "1547099",
+    "source": "exact"
+  },
+  "tacrolimus": {
+    "rxcui": "42316",
+    "source": "exact"
+  },
+  "tadalafil": {
+    "rxcui": "358263",
+    "source": "exact"
+  },
+  "tamsulosin": {
+    "rxcui": "77492",
+    "source": "exact"
+  },
+  "terazosin": {
+    "rxcui": "37798",
+    "source": "exact"
+  },
+  "theophylline": {
+    "rxcui": "10438",
+    "source": "exact"
+  },
+  "ticagrelor": {
+    "rxcui": "1116632",
+    "source": "exact"
+  },
+  "tiotropium": {
+    "rxcui": "69120",
+    "source": "exact"
+  },
+  "tirzepatide": {
+    "rxcui": "2601723",
+    "source": "exact"
+  },
+  "tizanidine": {
+    "rxcui": "57258",
+    "source": "exact"
+  },
+  "tolterodine": {
+    "rxcui": "119565",
+    "source": "exact"
+  },
+  "torsemide": {
+    "rxcui": "38413",
+    "source": "exact"
+  },
+  "tramadol": {
+    "rxcui": "10689",
+    "source": "exact"
+  },
+  "tranylcypromine": {
+    "rxcui": "10734",
+    "source": "exact"
+  },
+  "valproic acid": {
+    "rxcui": "11118",
+    "source": "exact"
+  },
+  "valsartan": {
+    "rxcui": "69749",
+    "source": "exact"
+  },
+  "venlafaxine": {
+    "rxcui": "39786",
+    "source": "exact"
+  },
+  "voriconazole": {
+    "rxcui": "121243",
+    "source": "exact"
+  },
+  "warfarin": {
+    "rxcui": "11289",
+    "source": "exact"
+  },
+  "zafirlukast": {
+    "rxcui": "114970",
+    "source": "exact"
+  },
+  "zoledronic acid": {
+    "rxcui": "77655",
+    "source": "exact"
+  },
+  "zolmitriptan": {
+    "rxcui": "135775",
+    "source": "exact"
+  },
+  "zolpidem": {
+    "rxcui": "39993",
+    "source": "exact"
+  },
+  "zopiclone": {
+    "rxcui": "40001",
+    "source": "exact"
+  }
+}

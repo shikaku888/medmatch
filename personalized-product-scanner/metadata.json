@@ -1,0 +1,10 @@
+{
+  "name": "MedMatch AI — Drug & Supplement Interaction Checker",
+  "description": "Evidence-backed interaction checker with 7-layer clinical logic: multi-source query (SUPP.AI, DDInter, iDISK, DailyMed, FAERS), conflict resolution, CYP450 cascade inference, evidence grading, and safety overrides. US, UK, FR, DE, IT, ES.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

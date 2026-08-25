@@ -1,0 +1,40 @@
+ingredient_id,ingredient,form,verdict,absorption,bioavailability,best_for,avoid_for,clinical_dose,side_effects,pmids,source,source_url
+ashwagandha,Ashwagandha,Generic Powder,poor,"unstandardized, variable withanolide content",,,,,,,evidence-engine.forms,/ashwagandha/
+ashwagandha,Ashwagandha,Ksm 66,excellent,"standardized extract, well-studied",,,,,Generally well-tolerated. Cycle 8 weeks on / 2 weeks off.,,evidence-engine.forms,/ashwagandha/
+ashwagandha,Ashwagandha,Sensoril,good,standardized extract,,,,,More sedating than KSM-66 — better for evening/sleep use,,evidence-engine.forms,/ashwagandha/
+biotin,Biotin,D Biotin,adequate,high,,,,,,,evidence-engine.forms,/symptoms/hair-falling-out/
+calcium,Calcium,Carbonate,conditional,requires stomach acid,moderate,"cheapest, requires stomach acid","PPI users, bariatric patients",600mg,"Constipation, gas",,evidence-engine.forms + matrix.nutrient_forms,/calcium/citrate-vs-carbonate/
+calcium,Calcium,Citrate,excellent,high (acid-independent),high,"PPI users, bariatric patients, elderly",,600mg,Minimal,,evidence-engine.forms + matrix.nutrient_forms,/calcium/citrate-vs-carbonate/
+coq10,CoQ10,Ubiquinol,excellent,"high (72% higher than ubiquinone in one crossover, PMID 27128225)",high,"statin users, age 40+, fatigue",,200mg,None significant,,evidence-engine.forms + matrix.nutrient_forms,/medications/statins/
+coq10,CoQ10,Ubiquinone,good,moderate (body converts to ubiquinol),moderate,"younger adults, budget option",age 40+ (conversion efficiency drops),200mg,None significant,,evidence-engine.forms + matrix.nutrient_forms,/medications/statins/
+creatine,Creatine,Hcl,overhyped,Not proven superior to monohydrate,,,,,,,evidence-engine.forms,/creatine/forms-compared/
+creatine,Creatine,Monohydrate,excellent,>95% bioavailability,,,,,,,evidence-engine.forms,/creatine/forms-compared/
+electrolytes,Electrolytes,Powder Sugar Free,excellent,good — direct mineral absorption,,,,,None significant,,evidence-engine.forms,/electrolytes/
+electrolytes,Electrolytes,Powder With Sugar,good_for_athletes,enhanced by sodium-glucose co-transport (SGLT1),,,,,Added calories/sugar,,evidence-engine.forms,/electrolytes/
+folate,Folate / Methylfolate,Folic Acid,,,moderate,"cheapest, requires MTHFR conversion",MTHFR homozygous (40% reduced conversion),800mcg,,,matrix.nutrient_forms,
+folate,Folate / Methylfolate,L-Methylfolate (5-MTHF),,,high,"MTHFR variants, pregnancy, depression adjunct",,800mcg,,,matrix.nutrient_forms,
+iron,Iron,Bisglycinate,excellent,high (2-3x ferrous sulfate),high,"PPI users, sensitive stomachs, pregnancy",,25mg,37% vs 21% side effect rate (much lower than sulfate),24219879,evidence-engine.forms + matrix.nutrient_forms,/iron/ferrous-sulfate-vs-bisglycinate/
+iron,Iron,Carbonyl Iron,moderate,"slow, steady",,,,,"Lower peak absorption, lower toxicity risk",,evidence-engine.forms,
+iron,Iron,Ferrous Gluconate,moderate,moderate,,,,,Better tolerated than sulfate but less studied than bisglycinate,,evidence-engine.forms,/iron/ferrous-sulfate-vs-bisglycinate/
+iron,Iron,Ferrous Sulfate,poor_tolerability,moderate,moderate,"cheapest, widely available","PPI users (needs acid), GI sensitive",65mg,"Constipation (25%), nausea (20-30%), 15-25% discontinuation",,evidence-engine.forms + matrix.nutrient_forms,/iron/ferrous-sulfate-vs-bisglycinate/
+l-theanine,L-Theanine,Suntheanine,excellent,"rapidly absorbed, crosses blood-brain barrier",,,,,None significant at recommended doses,,evidence-engine.forms,/stacks/anxiety-sleep/
+magnesium,Magnesium,Citrate,good,high,high,"constipation, general deficiency",diarrhea-prone individuals,400mg,Osmotic laxative effect at higher doses,34111673,evidence-engine.forms + matrix.nutrient_forms,/magnesium/glycinate-vs-citrate/
+magnesium,Magnesium,Glycinate,excellent,high,high,"sleep, anxiety, general deficiency",laxative effect needed,400mg,Minimal GI effects,34111673,evidence-engine.forms + matrix.nutrient_forms,/magnesium/glycinate-vs-citrate/
+magnesium,Magnesium,L Threonate,good_specialized,high (crosses blood-brain barrier),high,"brain fog, cognitive function",general deficiency (low elemental Mg),2000mg,Low elemental magnesium content,20152124,evidence-engine.forms + matrix.nutrient_forms,/magnesium/forms-compared/
+magnesium,Magnesium,Malate,good,moderate-high,,,,,Minimal,,evidence-engine.forms,/magnesium/forms-compared/
+magnesium,Magnesium,Oxide,poor,~4%,,,,,Diarrhea common. Very low absorption.,,evidence-engine.forms,/magnesium/forms-compared/
+magnesium,Magnesium,Taurate,theoretical,moderate,moderate,"heart palpitations, cardiac health",,400mg,Minimal,,evidence-engine.forms + matrix.nutrient_forms,/magnesium/forms-compared/
+omega-3,Omega-3 (EPA/DHA),Ethyl Ester,poor_value,low (70% less than TG form),low,budget option,bioavailability 70% lower than TG form,2000mg EPA+DHA,"More fish burps, dissolves Styrofoam",,evidence-engine.forms + matrix.nutrient_forms,/omega-3/forms-compared/
+omega-3,Omega-3 (EPA/DHA),Triglyceride,excellent,high (70% better than ethyl ester),high,"depression, brain fog, general",,2000mg EPA+DHA,Fewer fish burps than EE,,evidence-engine.forms + matrix.nutrient_forms,/omega-3/forms-compared/
+probiotics,Probiotics,Generic Blend,unproven,unknown — strain survivability untested for most blends,,,,,Generally mild,,evidence-engine.forms,/probiotics/
+probiotics,Probiotics,Strain Specific,excellent,strain-dependent survivability,,,,,Generally mild GI adjustment in first 1-2 weeks,,evidence-engine.forms,/probiotics/
+tongkat-ali,Tongkat Ali,Raw Powder,poor,"unstandardized, unknown eurycomanone content",,,,,,,evidence-engine.forms,/tongkat-ali/
+tongkat-ali,Tongkat Ali,Standardized Extract,good,standardized extract well-studied,,,,,Generally well-tolerated. Insomnia at high doses. Cycle 8 weeks on / 2 weeks off.,,evidence-engine.forms,/tongkat-ali/
+vitamin-b12,Vitamin B12,Cyanocobalamin,adequate,moderate (requires conversion),moderate,"cheapest option, requires conversion","MTHFR variants, smokers",1000mcg,Contains trace cyanide (harmless at supplement doses),,evidence-engine.forms + matrix.nutrient_forms,/b12/methylcobalamin-vs-cyanocobalamin/
+vitamin-b12,Vitamin B12,Hydroxocobalamin,excellent,high (longer retention),,,,,None significant,,evidence-engine.forms,/b12/methylcobalamin-vs-cyanocobalamin/
+vitamin-b12,Vitamin B12,Methylcobalamin,excellent,high,high,"general, MTHFR variants, sublingual absorption",,1000mcg,None significant,,evidence-engine.forms + matrix.nutrient_forms,/b12/methylcobalamin-vs-cyanocobalamin/
+vitamin-b6,Vitamin B6,P5P (Pyridoxal-5-Phosphate),,,high,"active form, birth control users, MTHFR",,25mg,,,matrix.nutrient_forms,
+vitamin-c,Vitamin C,Ascorbic Acid,,,high,"iron absorption synergy, general",,1000mg,,,matrix.nutrient_forms,
+vitamin-d,Vitamin D,D2,poor,low,low,vegan only (mushroom-derived),general use (inferior to D3),2000IU,,,evidence-engine.forms + matrix.nutrient_forms,/vitamin-d/d2-vs-d3/
+vitamin-d,Vitamin D,D3,excellent,high (2-3x more effective than D2 at raising blood levels),high,"general deficiency, depression, immunity",,2000IU,,,evidence-engine.forms + matrix.nutrient_forms,/vitamin-d/d2-vs-d3/
+zinc,Zinc,Zinc Picolinate,,,high,"general deficiency, immune, hair loss",,15mg,,,matrix.nutrient_forms,
