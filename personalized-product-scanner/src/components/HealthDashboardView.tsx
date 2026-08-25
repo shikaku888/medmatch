@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { UserProfile, HealthAnalyticsData, ScanHistoryItem } from '../types';
+import React, { useState, useEffect, useMemo } from 'react';
+import { UserProfile, HealthAnalyticsData, ScanHistoryItem, MedMatchSeverity } from '../types';
 import { getTranslation } from '../i18n';
-import { 
-  Activity, 
-  ShieldCheck, 
-  AlertOctagon, 
-  Flame, 
-  FileText, 
-  Printer, 
-  Sparkles, 
+import {
+  Activity,
+  ShieldCheck,
+  AlertOctagon,
+  Flame,
+  FileText,
+  Printer,
+  Sparkles,
   CheckCircle,
-  HeartPulse
+  HeartPulse,
+  Pill,
+  GitBranch,
+  Zap,
+  Users,
+  Heart
 } from 'lucide-react';
 
 interface HealthDashboardViewProps {
@@ -60,6 +65,51 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
   const ultraProcessedPct = analytics?.ultraProcessedPercentage ?? 25;
   const safeRatio = analytics?.cleanProductRatio ?? 75;
 
+  // Interaction analytics — aggregated client-side from scan history (fullResult.medMatch).
+  const interactionStats = useMemo(() => {
+    const sevCount: Record<MedMatchSeverity | 'evidence', number> = { major: 0, moderate: 0, minor: 0, evidence: 0 };
+    const pairCount = new Map<string, { a: string; b: string; severity: MedMatchSeverity | null; count: number }>();
+    const beersCount = new Map<string, number>();
+    const depletionCount = new Map<string, number>();
+    let scansWithMedMatch = 0;
+    let qtScans = 0;
+    let cascadeScans = 0;
+
+    for (const h of history) {
+      const mm = h.fullResult?.medMatch;
+      if (!mm) continue;
+      scansWithMedMatch++;
+      for (const i of mm.interactions || []) {
+        if (i.severity) sevCount[i.severity] += 1;
+        else sevCount.evidence += 1;
+        const key = [i.a.label, i.b.label].sort().join(' × ');
+        const cur = pairCount.get(key) || { a: i.a.label, b: i.b.label, severity: i.severity, count: 0 };
+        cur.count += 1;
+        pairCount.set(key, cur);
+      }
+      if ((mm.qt_risk || []).some(q => q.qt_classes.length > 0)) qtScans += 1;
+      if ((mm.cascades || []).length > 0) cascadeScans += 1;
+      for (const b of mm.beers || []) beersCount.set(b.label, (beersCount.get(b.label) || 0) + 1);
+      for (const d of mm.depletions || []) depletionCount.set(d.ingredient, (depletionCount.get(d.ingredient) || 0) + 1);
+    }
+
+    const sevRankOf = (s: MedMatchSeverity | null) => (s === 'major' ? 0 : s === 'moderate' ? 1 : s === 'minor' ? 2 : 3);
+    const topPairs = [...pairCount.values()]
+      .sort((x, y) => y.count - x.count || sevRankOf(x.severity) - sevRankOf(y.severity))
+      .slice(0, 8);
+
+    return {
+      scansWithMedMatch,
+      total: sevCount.major + sevCount.moderate + sevCount.minor + sevCount.evidence,
+      sevCount,
+      topPairs,
+      qtScans,
+      cascadeScans,
+      beers: [...beersCount.entries()].sort((x, y) => y[1] - x[1]).slice(0, 5),
+      depletions: [...depletionCount.entries()].sort((x, y) => y[1] - x[1]).slice(0, 6),
+    };
+  }, [history]);
+
   return (
     <div id="health-dashboard-view" className="space-y-6">
       {/* Header Banner */}
@@ -87,6 +137,123 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
             <span>{t('clinicalReportBtn', 'Clinical Dietitian Report')}</span>
           </button>
         </div>
+      </div>
+
+      {/* INTERACTION ANALYTICS (MedMatch 7-layer engine, aggregated from history) */}
+      <div className="p-6 rounded-2xl bg-white border-2 border-teal-200 shadow-sm space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center space-x-2">
+            <Pill className="w-5 h-5 text-teal-700" />
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
+              Interaction Analytics — MedMatch Engine
+            </h3>
+          </div>
+          <span className="text-xs text-slate-500 font-medium">
+            {interactionStats.scansWithMedMatch} of {history.length} scans cross-checked against your medications
+          </span>
+        </div>
+
+        {interactionStats.scansWithMedMatch === 0 ? (
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500">
+            No medication cross-checks recorded yet — scan a product with medications on your profile, or use the
+            Medication Names scan mode, to populate interaction analytics.
+          </div>
+        ) : (
+          <>
+            {/* Severity distribution */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {([
+                { key: 'major', label: 'Major', cls: 'bg-rose-50 border-rose-200 text-rose-900', bar: 'bg-rose-500', icon: <AlertOctagon className="w-4 h-4 text-rose-600" /> },
+                { key: 'moderate', label: 'Moderate', cls: 'bg-amber-50 border-amber-200 text-amber-900', bar: 'bg-amber-500', icon: <AlertOctagon className="w-4 h-4 text-amber-600" /> },
+                { key: 'minor', label: 'Minor', cls: 'bg-sky-50 border-sky-200 text-sky-900', bar: 'bg-sky-500', icon: <Activity className="w-4 h-4 text-sky-600" /> },
+                { key: 'evidence', label: 'Evidence-only', cls: 'bg-indigo-50 border-indigo-200 text-indigo-900', bar: 'bg-indigo-500', icon: <GitBranch className="w-4 h-4 text-indigo-600" /> },
+              ] as const).map(m => (
+                <div key={m.key} className={`p-4 rounded-xl border space-y-1.5 ${m.cls}`}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-wider">{m.label}</span>
+                    {m.icon}
+                  </div>
+                  <span className="text-2xl font-black">{interactionStats.sevCount[m.key]}</span>
+                  <div className="w-full h-1.5 rounded-full bg-white/60 overflow-hidden">
+                    <div className={`h-full ${m.bar}`} style={{ width: `${Math.min(100, (interactionStats.sevCount[m.key] / Math.max(1, interactionStats.total)) * 100)}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Risk exposure tiles */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3.5 rounded-xl bg-rose-50/60 border border-rose-200 flex items-center space-x-2.5 text-xs text-rose-900">
+                <Heart className="w-4 h-4 text-rose-600 shrink-0" />
+                <span><strong>{interactionStats.qtScans}</strong> scan(s) flagged QT-prolongation risk</span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-orange-50/60 border border-orange-200 flex items-center space-x-2.5 text-xs text-orange-900">
+                <Users className="w-4 h-4 text-orange-600 shrink-0" />
+                <span><strong>{interactionStats.beers.length}</strong> Beers Criteria flag(s) recorded</span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-indigo-50/60 border border-indigo-200 flex items-center space-x-2.5 text-xs text-indigo-900">
+                <GitBranch className="w-4 h-4 text-indigo-600 shrink-0" />
+                <span><strong>{interactionStats.cascadeScans}</strong> scan(s) with multi-step enzyme cascades</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* Top interaction pairs */}
+              <div className="space-y-2">
+                <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Most frequent interaction pairs</h4>
+                {interactionStats.topPairs.length === 0 && (
+                  <p className="text-xs text-slate-400 italic">No interactions recorded.</p>
+                )}
+                {interactionStats.topPairs.map((p, i) => (
+                  <div key={i} className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs">
+                    <span className="font-semibold text-slate-800 truncate">
+                      {p.a} × {p.b}
+                    </span>
+                    <span className="shrink-0 ml-2 flex items-center space-x-2">
+                      {p.severity && (
+                        <span className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${
+                          p.severity === 'major' ? 'bg-rose-600 text-white' : p.severity === 'moderate' ? 'bg-amber-600 text-white' : 'bg-sky-500 text-white'
+                        }`}>
+                          {p.severity}
+                        </span>
+                      )}
+                      <span className="font-bold text-slate-500">×{p.count}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Flags: beers + depletions */}
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Beers Criteria (65+)</h4>
+                  {interactionStats.beers.length === 0 ? (
+                    <p className="text-xs text-slate-400 italic">No Beers flags recorded.</p>
+                  ) : interactionStats.beers.map(([label, count]) => (
+                    <div key={label} className="flex items-center justify-between p-2.5 rounded-lg bg-orange-50 border border-orange-200 text-xs text-orange-900">
+                      <span className="font-semibold">{label}</span>
+                      <span className="font-bold">×{count}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-2">
+                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center space-x-1.5">
+                    <Zap className="w-3.5 h-3.5 text-yellow-600" />
+                    <span>Nutrient depletion exposure</span>
+                  </h4>
+                  {interactionStats.depletions.length === 0 ? (
+                    <p className="text-xs text-slate-400 italic">No depletions recorded.</p>
+                  ) : interactionStats.depletions.map(([nutrient, count]) => (
+                    <div key={nutrient} className="flex items-center justify-between p-2.5 rounded-lg bg-yellow-50 border border-yellow-200 text-xs text-yellow-900">
+                      <span className="font-semibold">{nutrient}</span>
+                      <span className="font-bold">×{count}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Top 4 KPI Metrics Grid */}

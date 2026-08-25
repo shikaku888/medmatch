@@ -201,7 +201,9 @@ class Engine:
         return [self._interaction_dict(r) for r in rows]
 
     def dailymed_pairs(self, cls_a: str, cls_b: str) -> list:
-        """FDA-label (DailyMed) class x class rows for a pair."""
+        """FDA-label (DailyMed) class x class rows for a pair.
+        The stored `effect` column is a raw label-table dump ("Table N: ...") —
+        compose a clean sentence from the structured columns instead."""
         if not self.has_dailymed:
             return []
         rows = self.conn.execute(
@@ -212,7 +214,25 @@ class Engine:
         out = []
         for r in rows:
             d = dict(r)
-            d["action"] = ACTIONS.get(d["severity"], ACTIONS["moderate"])
+            src = str(d.get("drug_src") or "").strip()
+            mentioned = str(d.get("drug_mentioned") or "").strip()
+            cls_label = self.class_label(str(d.get("cls_mentioned") or ""))
+            sev = str(d.get("severity") or "notable").lower()
+            if src and mentioned:
+                d["effect"] = (
+                    f"FDA label for {src.title()} lists {mentioned.title()} ({cls_label}) "
+                    f"as an interacting medication — {sev} severity per DailyMed. "
+                    f"Monitor clinical response and adjust therapy as needed."
+                )
+            else:
+                text = re.sub(r"^Table\s*\d+:\s*", "", str(d.get("effect") or ""), flags=re.I).strip()
+                if len(text) > 240:
+                    text = text[:240].rsplit(" ", 1)[0] + "…"
+                d["effect"] = text
+            # internal columns are not part of the public interaction shape
+            for junk in ("id", "cls_src", "cls_mentioned", "drug_src", "drug_mentioned", "pair_key"):
+                d.pop(junk, None)
+            d["action"] = ACTIONS.get(d.get("severity"), ACTIONS["moderate"])
             out.append(d)
         return out
 
