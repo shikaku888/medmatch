@@ -55,6 +55,7 @@ const DEFAULT_PROFILE: UserProfile = {
   customAllergens: [],
   dietType: 'omnivore',
   specialConditions: [],
+  medications: [],
   updatedAt: new Date().toISOString()
 };
 
@@ -67,37 +68,44 @@ const DEFAULT_FAMILY_PROFILES: FamilyProfile[] = [
     allergies: ['peanut', 'milk'],
     customAllergens: [],
     dietType: 'omnivore',
-    specialConditions: []
+    specialConditions: [],
+    medications: []
   },
   {
     id: 'profile_child',
     name: 'Liam (6 y/o)',
     role: 'Child',
     avatarColor: 'amber',
+    age: 6,
     allergies: ['peanut', 'tree_nut', 'egg', 'sesame'],
     customAllergens: ['red 40', 'titanium dioxide'],
     dietType: 'omnivore',
-    specialConditions: ['eczema']
+    specialConditions: ['eczema'],
+    medications: []
   },
   {
     id: 'profile_partner',
     name: 'Elena',
     role: 'Partner',
     avatarColor: 'purple',
+    age: 34,
     allergies: ['fragrance', 'salicylic_acid', 'parabens'],
     customAllergens: [],
     dietType: 'vegan',
-    specialConditions: ['pregnant', 'sensitive_skin']
+    specialConditions: ['pregnant', 'sensitive_skin'],
+    medications: []
   },
   {
     id: 'profile_parent',
     name: 'Arthur (Senior)',
     role: 'Parent',
     avatarColor: 'emerald',
+    age: 68,
     allergies: ['gluten'],
     customAllergens: ['high fructose corn syrup'],
     dietType: 'low_sodium',
-    specialConditions: ['hypertension']
+    specialConditions: ['hypertension'],
+    medications: ['Amlodipine', 'Metformin']
   }
 ];
 
@@ -224,6 +232,10 @@ class StorageDatabase {
         customAllergens: [...found.customAllergens],
         dietType: found.dietType,
         specialConditions: [...found.specialConditions],
+        medications: [...(found.medications || [])],
+        age: found.age,
+        gender: found.gender,
+        pregnancyStatus: found.pregnancyStatus,
         updatedAt: new Date().toISOString()
       };
       this.saveToDisk();

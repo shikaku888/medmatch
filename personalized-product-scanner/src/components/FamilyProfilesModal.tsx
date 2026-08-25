@@ -10,7 +10,8 @@ import {
   X, 
   Heart, 
   Sparkles,
-  AlertCircle
+  AlertCircle,
+  Pill
 } from 'lucide-react';
 
 interface FamilyProfilesModalProps {
@@ -35,8 +36,10 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
     allergies: [],
     customAllergens: [],
     dietType: 'omnivore',
-    specialConditions: []
+    specialConditions: [],
+    medications: []
   });
+  const [medInput, setMedInput] = useState('');
 
   useEffect(() => {
     if (isOpen) {
@@ -85,7 +88,9 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
       allergies: editData.allergies || [],
       customAllergens: editData.customAllergens || [],
       dietType: (editData.dietType as DietType) || 'omnivore',
-      specialConditions: editData.specialConditions || []
+      specialConditions: editData.specialConditions || [],
+      medications: editData.medications || [],
+      age: editData.age
     };
 
     try {
@@ -105,7 +110,9 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
             allergies: newProfile.allergies,
             customAllergens: newProfile.customAllergens,
             dietType: newProfile.dietType,
-            specialConditions: newProfile.specialConditions
+            specialConditions: newProfile.specialConditions,
+            medications: newProfile.medications,
+            age: newProfile.age
           });
         }
       }
@@ -130,7 +137,9 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
             allergies: updated[0].allergies,
             customAllergens: updated[0].customAllergens,
             dietType: updated[0].dietType,
-            specialConditions: updated[0].specialConditions
+            specialConditions: updated[0].specialConditions,
+            medications: updated[0].medications || [],
+            age: updated[0].age
           });
         }
       }
@@ -194,7 +203,8 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
                       allergies: [],
                       customAllergens: [],
                       dietType: 'omnivore',
-                      specialConditions: []
+                      specialConditions: [],
+                      medications: []
                     });
                     setIsEditing(true);
                   }}
@@ -234,7 +244,9 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
                                   </span>
                                 )}
                               </div>
-                              <span className="text-xs text-slate-500 font-medium">{p.role}</span>
+                              <span className="text-xs text-slate-500 font-medium">
+                                {p.role}{p.age != null ? ` · ${p.age}y` : ''}
+                              </span>
                             </div>
                           </div>
 
@@ -268,6 +280,12 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
                             <span className="text-[10px] uppercase font-bold text-slate-400 block">Allergies:</span>
                             <span className="text-slate-800 font-medium">
                               {p.allergies.length > 0 ? p.allergies.join(', ') : 'None recorded'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] uppercase font-bold text-slate-400 block">Medications:</span>
+                            <span className="text-slate-800 font-medium">
+                              {(p.medications || []).length > 0 ? p.medications!.join(', ') : 'None recorded'}
                             </span>
                           </div>
                           <div className="flex items-center space-x-2">
@@ -347,6 +365,59 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
                   ))}
                 </select>
               </div>
+
+              {/* Age + Medications — drive the MedMatch interaction engine per member */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Age</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={editData.age ?? ''}
+                    onChange={(e) => setEditData({ ...editData, age: e.target.value === '' ? undefined : Number(e.target.value) })}
+                    placeholder="e.g. 68"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                  />
+                  <p className="mt-1 text-[10px] text-slate-400">65+ enables Beers Criteria checks.</p>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Current Medications</label>
+                  <input
+                    type="text"
+                    value={medInput}
+                    onChange={(e) => setMedInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const v = medInput.trim();
+                        if (v && !(editData.medications || []).some(m => m.toLowerCase() === v.toLowerCase())) {
+                          setEditData({ ...editData, medications: [...(editData.medications || []), v] });
+                        }
+                        setMedInput('');
+                      }
+                    }}
+                    placeholder="Type a drug name and press Enter"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              {(editData.medications || []).length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {editData.medications!.map((med) => (
+                    <span key={med} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-teal-50 border border-teal-300 text-teal-800 text-xs font-semibold">
+                      <Pill className="w-3 h-3" />
+                      {med}
+                      <button
+                        type="button"
+                        onClick={() => setEditData({ ...editData, medications: editData.medications!.filter(m => m !== med) })}
+                        className="text-teal-500 hover:text-teal-800"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
 
               {/* Allergens Selector */}
               <div>
