@@ -185,7 +185,7 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-0.5">
-                Scan grocery receipts or paste carts for multi-profile biological allergen safety scoring.
+                Scan pharmacy & grocery receipts or paste carts for multi-profile medication-interaction and allergen screening.
               </p>
             </div>
           </div>
@@ -342,7 +342,7 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
               {mode === 'text' && (
                 <div className="space-y-3">
                   <label className="block text-xs font-bold text-slate-700">
-                    Paste receipt lines, grocery list, or cart items:
+                    Paste receipt lines, shopping list, or medication names:
                   </label>
                   <textarea
                     rows={7}
@@ -397,7 +397,7 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
                 {loading ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>AI is auditing all items & family allergy profiles...</span>
+                    <span>AI is auditing all items against family medication & allergy profiles...</span>
                   </>
                 ) : (
                   <>

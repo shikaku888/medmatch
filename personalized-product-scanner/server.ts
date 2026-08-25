@@ -338,6 +338,7 @@ async function startServer() {
           const regulatoryBadges = extractRegulatoryBadges(productData.ingredientsList || []);
           const userMeds = currentProfile.medications || [];
           const herbDrugAlerts = checkHerbDrugInteractions(productData.ingredientsList || [], userMeds);
+          const medMatch = await computeMedMatch(productData.ingredientsList || [], currentProfile);
 
           const fullRes: ProductScanResult = {
             barcode: code,
@@ -354,6 +355,7 @@ async function startServer() {
             cleanScoreBreakdown: productData.cleanScoreBreakdown,
             regulatoryBadges,
             herbDrugAlerts,
+            medMatch,
             countryOfOrigin: productData.countryOfOrigin,
             ingredientSafetyList,
             matchAssessment,

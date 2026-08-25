@@ -281,7 +281,7 @@ export interface ParsedReceiptItem {
   category: string;
   quantity?: number;
   estimatedPrice?: string;
-  productType: 'food' | 'cosmetic' | 'household';
+  productType: 'food' | 'cosmetic' | 'household' | 'medication' | 'supplement';
   ingredientsSummary: string;
   detectedAllergens: string[];
   flaggedAdditives: string[];

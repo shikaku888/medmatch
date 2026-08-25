@@ -355,7 +355,7 @@ export const ScannerView: React.FC<ScannerViewProps> = ({
                 </span>
               </div>
               <p className="text-[11px] text-slate-600 mt-0.5 leading-snug">
-                Scan whole receipts or cart photos to cross-audit allergen safety for all family members.
+                Scan whole receipts or cart photos to cross-audit medication interactions and allergen safety for all family members.
               </p>
             </div>
           </button>

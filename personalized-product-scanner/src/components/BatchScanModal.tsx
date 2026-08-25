@@ -10,8 +10,43 @@ import {
   RefreshCw, 
   Plus, 
   Barcode,
-  ArrowRight
+  ArrowRight,
+  Pill
 } from 'lucide-react';
+
+/** Row tone: MedMatch interaction severity first, legacy allergy status as fallback. */
+function medTone(res: ProductScanResult): { rowCls: string; badgeCls: string; label: string; medLine: string | null } {
+  const mm = res.medMatch;
+  if (!mm) {
+    const legacy = res.matchAssessment.status;
+    return {
+      rowCls: legacy === 'safe' ? 'bg-emerald-50/50 border-emerald-200 hover:border-emerald-300'
+        : legacy === 'danger' ? 'bg-rose-50/50 border-rose-200 hover:border-rose-300'
+        : 'bg-amber-50/50 border-amber-200 hover:border-amber-300',
+      badgeCls: legacy === 'safe' ? 'bg-emerald-600 text-white'
+        : legacy === 'danger' ? 'bg-rose-600 text-white'
+        : 'bg-amber-600 text-white',
+      label: legacy,
+      medLine: null
+    };
+  }
+  const major = mm.interactions.filter(i => i.severity === 'major').length;
+  const moderate = mm.interactions.filter(i => i.severity === 'moderate').length;
+  const minor = mm.interactions.filter(i => i.severity === 'minor').length;
+  const evidence = mm.interactions.filter(i => !i.severity).length;
+  const tone = major > 0
+    ? { rowCls: 'bg-rose-50/50 border-rose-200 hover:border-rose-300', badgeCls: 'bg-rose-600 text-white', label: 'major risk' }
+    : moderate > 0
+      ? { rowCls: 'bg-amber-50/50 border-amber-200 hover:border-amber-300', badgeCls: 'bg-amber-600 text-white', label: 'caution' }
+      : { rowCls: 'bg-emerald-50/50 border-emerald-200 hover:border-emerald-300', badgeCls: 'bg-emerald-600 text-white', label: 'clear' };
+  const bits = [
+    major > 0 ? `${major} major` : '',
+    moderate > 0 ? `${moderate} moderate` : '',
+    minor > 0 ? `${minor} minor` : '',
+    evidence > 0 ? `${evidence} evidence` : ''
+  ].filter(Boolean).join(' · ');
+  return { ...tone, medLine: bits || 'No interactions vs active member meds' };
+}
 
 interface BatchScanModalProps {
   isOpen: boolean;
@@ -80,9 +115,9 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
               <Layers className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold">Pantry & Grocery Batch Audit</h3>
+              <h3 className="text-lg font-bold">Batch Product Audit — Meds & Supplements</h3>
               <p className="text-xs text-slate-400">
-                Scan or paste multiple barcodes for rapid household safety screening.
+                Scan or paste multiple product barcodes; each item is checked against the active member's medications by the MedMatch engine.
               </p>
             </div>
           </div>
@@ -147,7 +182,7 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
               {loading ? (
                 <>
                   <RefreshCw className="w-4 h-4 animate-spin" />
-                  <span>Auditing Pantry Database...</span>
+                  <span>Running MedMatch interaction checks...</span>
                 </>
               ) : (
                 <>
@@ -173,27 +208,25 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
                       onSelectResult(res);
                       onClose();
                     }}
-                    className={`p-3.5 rounded-xl border flex items-center justify-between gap-3 cursor-pointer hover:shadow-xs transition-all ${
-                      res.matchAssessment.status === 'safe'
-                        ? 'bg-emerald-50/50 border-emerald-200 hover:border-emerald-300'
-                        : res.matchAssessment.status === 'danger'
-                        ? 'bg-rose-50/50 border-rose-200 hover:border-rose-300'
-                        : 'bg-amber-50/50 border-amber-200 hover:border-amber-300'
-                    }`}
+                    className={`p-3.5 rounded-xl border flex items-center justify-between gap-3 cursor-pointer hover:shadow-xs transition-all ${medTone(res).rowCls}`}
                   >
                     <div className="space-y-0.5">
                       <div className="flex items-center space-x-2">
-                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase ${
-                          res.matchAssessment.status === 'safe' ? 'bg-emerald-600 text-white' :
-                          res.matchAssessment.status === 'danger' ? 'bg-rose-600 text-white' : 'bg-amber-600 text-white'
-                        }`}>
-                          {res.matchAssessment.status}
+                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase ${medTone(res).badgeCls}`}>
+                          {medTone(res).label}
                         </span>
                         <h5 className="font-bold text-xs text-slate-900">{res.productName}</h5>
                       </div>
-                      <p className="text-[11px] text-slate-600">
-                        {res.matchAssessment.summary}
-                      </p>
+                      {medTone(res).medLine ? (
+                        <p className="text-[11px] text-slate-700 font-semibold flex items-center gap-1">
+                          <Pill className="w-3 h-3 text-teal-600" />
+                          {medTone(res).medLine}
+                        </p>
+                      ) : (
+                        <p className="text-[11px] text-slate-600">
+                          {res.matchAssessment.summary}
+                        </p>
+                      )}
                     </div>
 
                     <div className="flex items-center space-x-3 shrink-0">

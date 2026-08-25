@@ -26,7 +26,7 @@ export interface ParsedReceiptItem {
   category: string;
   quantity?: number;
   estimatedPrice?: string;
-  productType: 'food' | 'cosmetic' | 'household';
+  productType: 'food' | 'cosmetic' | 'household' | 'medication' | 'supplement';
   ingredientsSummary: string;
   detectedAllergens: string[];
   flaggedAdditives: string[];
@@ -73,23 +73,26 @@ export async function parseAndAuditReceiptWithGemini(
   const familyContext = allFamilyProfiles.map(p => ({
     name: p.name,
     role: p.role,
+    age: p.age,
     allergies: p.allergies || [],
     diet: p.dietType,
-    conditions: p.specialConditions || []
+    conditions: p.specialConditions || [],
+    currentMedications: p.medications || []
   }));
 
-  const systemPrompt = `You are an expert Clinical Toxicologist & Grocery Receipt Auditor.
-Your task is to analyze a supermarket receipt / shopping cart (either from an OCR image or receipt text).
-1. Extract all purchased food, personal care, and cosmetic items.
+  const systemPrompt = `You are an expert Clinical Toxicologist & Pharmacy-Grocery Receipt Auditor.
+Your task is to analyze a receipt / shopping cart (either from an OCR image or receipt text) that may contain groceries, personal care, cosmetics, AND medications or dietary supplements.
+1. Extract ALL purchased items. Classify each productType as 'food', 'cosmetic', 'household', 'medication' (OTC or prescription) or 'supplement' (vitamins, minerals, herbals).
 2. For each item:
-   - Identify standard common ingredients, additives (e.g. E-numbers, artificial colorants, high sodium, trans fats, preservatives like BHT/Parabens, endocrine disruptors).
-   - Check if any ingredients conflict with ANY member of this household:
-     Active User: ${activeProfile.name || 'User'} (Allergies: ${activeProfile.allergies.join(', ') || 'None'}, Diet: ${activeProfile.dietType}, Conditions: ${activeProfile.specialConditions?.join(', ') || 'None'})
+   - Identify standard common ingredients, additives (e.g. E-numbers, artificial colorants, high sodium, trans fats, preservatives like BHT/Parabens, endocrine disruptors). For medications/supplements, list active ingredients in ingredientsSummary.
+   - Check conflicts against ANY household member:
+     Active User: ${activeProfile.name || 'User'} (Allergies: ${activeProfile.allergies.join(', ') || 'None'}, Diet: ${activeProfile.dietType}, Conditions: ${activeProfile.specialConditions?.join(', ') || 'None'}, Medications: ${(activeProfile.medications || []).join(', ') || 'None'}, Age: ${activeProfile.age ?? 'n/a'})
      Full Household Profiles: ${JSON.stringify(familyContext)}
-   - Determine item status ('safe' = green, 'caution' = yellow, 'danger' = red if it triggers severe allergy or high toxicity).
-   - Assign a suitability score (0-100) and NOVA group (1 to 4).
-   - If an item is flagged ('caution' or 'danger'), suggest a specific cleaner 'suggestedSwap' (e.g. swap Nutella with SunButter, swap instant noodles with whole grain ramen).
-3. Compute overall cart score, ultra-processed ratio, and top family-wide warnings.`;
+   - For 'medication'/'supplement' items: flag known interactions with any member's currentMedications or conditions (e.g. warfarin vs vitamin K supplements, NSAIDs vs hypertension; decongestants vs blood pressure). Put the interaction in warningReason and name affected members in affectedFamilyMembers. Mark status 'danger' for serious interaction risk, 'caution' for minor/uncertain.
+   - For food/cosmetic items: status 'danger' only for severe allergy or high toxicity.
+   - Assign a suitability score (0-100). NOVA group (1-4) for food only; omit for medications/supplements.
+   - If an item is flagged ('caution' or 'danger'), suggest a specific safer 'suggestedSwap' (e.g. swap Nutella with SunButter, swap a decongestant for a saline spray, swap a vitamin-K heavy supplement for a K-free formula).
+3. Compute overall cart score, ultra-processed ratio, and top family-wide warnings (medication interactions first, then allergies).`;
 
   let response;
 
@@ -130,7 +133,7 @@ Your task is to analyze a supermarket receipt / shopping cart (either from an OC
                   category: { type: Type.STRING },
                   quantity: { type: Type.NUMBER },
                   estimatedPrice: { type: Type.STRING },
-                  productType: { type: Type.STRING, enum: ['food', 'cosmetic', 'household'] },
+                  productType: { type: Type.STRING, enum: ['food', 'cosmetic', 'household', 'medication', 'supplement'] },
                   ingredientsSummary: { type: Type.STRING },
                   detectedAllergens: {
                     type: Type.ARRAY,
@@ -192,7 +195,7 @@ Your task is to analyze a supermarket receipt / shopping cart (either from an OC
                   category: { type: Type.STRING },
                   quantity: { type: Type.NUMBER },
                   estimatedPrice: { type: Type.STRING },
-                  productType: { type: Type.STRING, enum: ['food', 'cosmetic', 'household'] },
+                  productType: { type: Type.STRING, enum: ['food', 'cosmetic', 'household', 'medication', 'supplement'] },
                   ingredientsSummary: { type: Type.STRING },
                   detectedAllergens: {
                     type: Type.ARRAY,
