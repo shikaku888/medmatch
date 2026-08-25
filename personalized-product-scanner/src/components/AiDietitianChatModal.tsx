@@ -32,10 +32,14 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
   product,
   userProfile
 }) => {
+  const medAlerts = product.medMatch?.interactions || [];
+  const sevRank = (s: typeof medAlerts[number]['severity']) => (s === 'major' ? 0 : s === 'moderate' ? 1 : s === 'minor' ? 2 : 3);
+  const topAlert = [...medAlerts].sort((a, b) => sevRank(a.severity) - sevRank(b.severity))[0];
+
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      text: `Hello! I am your AI Clinical Dietitian & Toxicologist assistant. I've analyzed "${product.productName}" for ${userProfile.name || 'your profile'}. How can I clarify its ingredients, clinical warnings, or suggest safe preparation alternatives?`,
+      text: `Hi! I'm the supplementary AI advisor of MedMatch AI. The engine already checked "${product.productName}" against verified databases${medAlerts.length ? ` — ${medAlerts.length} interaction alert(s) on file` : ' — no interaction alerts on file'}. I can explain what the alerts mean and what to ask your doctor, but the alerts themselves — not this chat — are the authority.`,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -43,10 +47,12 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
   const [loading, setLoading] = useState(false);
 
   const quickPrompts = [
-    `Why is this flagged for my ${userProfile.allergies[0] || 'profile'} allergy?`,
-    'Is this product suitable for young children or sensitive skin?',
-    'What are the long-term metabolic risks of the preservatives listed?',
-    'Can you recommend a homemade clean ingredient alternative?'
+    topAlert
+      ? `Explain the ${topAlert.severity ?? 'evidence'} finding for ${topAlert.a.label} and ${topAlert.b.label} in plain language`
+      : 'Does this product interact with my current medications?',
+    'How do my medications change what I should avoid here?',
+    'What does the published research (DOI) say about these alerts?',
+    'What should I ask my doctor or pharmacist about this product?'
   ];
 
   const handleSendMessage = async (textToSend?: string) => {
@@ -113,13 +119,13 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
             </div>
             <div>
               <div className="flex items-center space-x-1.5">
-                <h3 className="text-sm font-bold">Ask Gemini Clinical Dietitian</h3>
+                <h3 className="text-sm font-bold">Ask AI Health Advisor</h3>
                 <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-500 text-white uppercase">
                   Pro AI
                 </span>
               </div>
               <p className="text-[11px] text-slate-300 truncate max-w-[280px]">
-                Product: {product.productName} ({product.matchAssessment.score}/100 Fit)
+                {product.productName} — MedMatch: {medAlerts.length} alert(s) on file
               </p>
             </div>
           </div>
@@ -129,6 +135,14 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
           >
             <X className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Role separation: MedMatch engine is authoritative, this chat is supplementary */}
+        <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 flex items-start space-x-2 shrink-0">
+          <ShieldAlert className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+          <p className="text-[10px] leading-snug text-amber-800 font-medium">
+            Supplementary AI advisory (Pro) — safety verdicts come from the MedMatch engine (SUPP.AI · DDInter · DailyMed · FDA). This chat explains the alerts; it never overrides or replaces them.
+          </p>
         </div>
 
         {/* Chat Messages Log */}
@@ -212,6 +226,10 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
             <Send className="w-4 h-4" />
           </button>
         </div>
+
+        <p className="px-3 py-1.5 bg-slate-100 border-t border-slate-200 text-[9px] text-slate-500 font-medium shrink-0">
+          AI chat is not a medical alert or diagnosis — always confirm with the interaction alerts above and a healthcare professional.
+        </p>
       </div>
     </div>
   );
