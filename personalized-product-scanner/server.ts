@@ -18,7 +18,7 @@ import { SUPERMARKET_STORES, MARKET_PRODUCTS } from './server/marketPresets';
 import { parseAndAuditReceiptWithGemini } from './server/services/receipt_scanner';
 import { getAllCrossReactivityRules } from './server/services/cross_reactivity';
 import { extractSkincareActives, analyzeSkincareRoutineConflicts } from './server/services/skincare_conflicts';
-import { ProductScanResult, FamilyProfile, UserRoutineProduct, SupportedCountry, MedMatchAnalysis } from './src/types';
+import { ProductScanResult, FamilyProfile, UserRoutineProduct, SupportedCountry, MedMatchAnalysis, SafeSwapRecommendation } from './src/types';
 import { normalizeIngredient, analyzeMedications, medMatchStats } from './server/services/medmatch_client';
 
 dotenv.config();
@@ -57,6 +57,68 @@ async function computeMedMatch(ingredientsList: string[], currentProfile: any): 
     liverFunction: currentProfile.liverFunction,
   } : null;
   return analyzeMedications(items, patientProfile);
+}
+
+/**
+ * Verify a swap candidate against the user's medication list with the 7-layer engine.
+ * Only interactions involving at least one SWAP ingredient count — pre-existing
+ * medication-vs-medication findings must not penalize the candidate.
+ */
+async function verifySwapSafety(
+  activeIngredients: string[],
+  currentProfile: any
+): Promise<NonNullable<SafeSwapRecommendation['medMatchVerification']>> {
+  const empty = { verified: false, majorCount: 0, moderateCount: 0, minorCount: 0, clean: true };
+  const ings = (activeIngredients || []).map(i => String(i).trim()).filter(Boolean).slice(0, 15);
+  if (!ings.length) return empty;
+
+  try {
+    const swapRaw = new Set<string>();
+    const items: any[] = [];
+    for (const ing of ings) {
+      const hit = await normalizeIngredient(ing);
+      if (hit) {
+        swapRaw.add(ing.toLowerCase());
+        items.push({ name: ing, kind: hit.kind, matched: { kind: hit.kind, id: hit.id } });
+      }
+    }
+    const meds = (currentProfile?.medications || []) as string[];
+    for (const med of meds.slice(0, 20)) {
+      const hit = await normalizeIngredient(med);
+      if (hit) items.push({ name: med, kind: hit.kind, matched: { kind: hit.kind, id: hit.id } });
+    }
+    if (!items.length) return empty;
+
+    const patientProfile = currentProfile ? {
+      age: currentProfile.age,
+      gender: currentProfile.gender,
+      pregnancyStatus: currentProfile.pregnancyStatus,
+      kidneyFunction: currentProfile.kidneyFunction,
+      liverFunction: currentProfile.liverFunction,
+    } : null;
+    const analysis = await analyzeMedications(items, patientProfile);
+
+    // Canonical labels/ids contributed by the SWAP (not by the user's meds)
+    const swapLabels = new Set<string>();
+    const swapIds = new Set<string>();
+    for (const m of analysis.matched || []) {
+      if (swapRaw.has(String(m.input).toLowerCase())) {
+        swapLabels.add(m.label);
+        swapIds.add(m.id);
+      }
+    }
+    const relevant = (analysis.interactions || []).filter(i =>
+      swapLabels.has(i.a.label) || swapLabels.has(i.b.label) ||
+      swapIds.has(i.a.id) || swapIds.has(i.b.id)
+    );
+    const majorCount = relevant.filter(i => i.severity === 'major').length;
+    const moderateCount = relevant.filter(i => i.severity === 'moderate').length;
+    const minorCount = relevant.filter(i => i.severity === 'minor').length;
+    return { verified: true, majorCount, moderateCount, minorCount, clean: majorCount === 0 };
+  } catch (err) {
+    console.warn('Swap verification failed (non-fatal):', err);
+    return empty;
+  }
 }
 
 async function startServer() {
@@ -161,7 +223,17 @@ async function startServer() {
 
     const currentProfile = profile || db.getUserProfile();
     const swaps = await generateSafeSwaps(product, currentProfile);
-    res.json(swaps);
+    // Layer-7 style gate: verify every candidate against the user's meds before recommending it.
+    const verified = await Promise.all(swaps.map(async swap => ({
+      ...swap,
+      medMatchVerification: await verifySwapSafety(swap.activeIngredients || [], currentProfile),
+    })));
+    verified.sort((a, b) => {
+      const av = a.medMatchVerification?.verified ? (a.medMatchVerification.clean ? 0 : 1) : 2;
+      const bv = b.medMatchVerification?.verified ? (b.medMatchVerification.clean ? 0 : 1) : 2;
+      return av - bv;
+    });
+    res.json(verified);
   });
 
   // Supermarket & Local Store Presets Endpoints

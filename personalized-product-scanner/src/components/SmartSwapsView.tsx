@@ -8,7 +8,8 @@ import {
   GitCompare, 
   Leaf, 
   Check, 
-  RefreshCw
+  RefreshCw,
+  AlertTriangle
 } from 'lucide-react';
 
 interface SmartSwapsViewProps {
@@ -30,6 +31,7 @@ export const SmartSwapsView: React.FC<SmartSwapsViewProps> = ({
   const [swaps, setSwaps] = useState<SafeSwapRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState<'all' | 'food' | 'cosmetic'>('all');
+  const [hideConflicting, setHideConflicting] = useState(true);
 
   useEffect(() => {
     fetchSwaps();
@@ -63,9 +65,13 @@ export const SmartSwapsView: React.FC<SmartSwapsViewProps> = ({
   };
 
   const filteredSwaps = swaps.filter(s => {
-    if (activeFilter === 'all') return true;
-    return s.productType === activeFilter;
+    if (activeFilter !== 'all' && s.productType !== activeFilter) return false;
+    if (hideConflicting && s.medMatchVerification?.verified && !s.medMatchVerification.clean) return false;
+    return true;
   });
+  const hiddenConflicts = swaps.filter(s =>
+    hideConflicting && s.medMatchVerification?.verified && !s.medMatchVerification.clean
+  ).length;
 
   return (
     <div id="smart-swaps-view" className="space-y-6">
@@ -153,10 +159,34 @@ export const SmartSwapsView: React.FC<SmartSwapsViewProps> = ({
             {t('cosmeticOnly', 'Skincare & Cosmetics')}
           </button>
         </div>
-        <span className="text-xs text-slate-500 font-medium">
-          {filteredSwaps.length} {t('safe', 'Alternatives')}
-        </span>
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={() => setHideConflicting(v => !v)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center space-x-1.5 ${
+              hideConflicting
+                ? 'bg-emerald-600 text-white shadow-2xs'
+                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+            }`}
+            title="Hide alternatives the MedMatch engine flagged as interacting with your medications"
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>MedMatch-verified only</span>
+          </button>
+          <span className="text-xs text-slate-500 font-medium">
+            {filteredSwaps.length} {t('safe', 'Alternatives')}
+          </span>
+        </div>
       </div>
+
+      {hiddenConflicts > 0 && (
+        <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center space-x-2">
+          <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+          <span>
+            {hiddenConflicts} alternative(s) hidden: the MedMatch engine found medication interactions for them.
+            {' '}<button onClick={() => setHideConflicting(false)} className="font-bold underline">Show anyway</button>
+          </span>
+        </div>
+      )}
 
       {/* Loading state */}
       {loading ? (
@@ -214,6 +244,28 @@ export const SmartSwapsView: React.FC<SmartSwapsViewProps> = ({
                       <span className="font-bold text-emerald-700">
                         +{Math.max(5, swap.score - currentProduct.matchAssessment.score)} pts
                       </span>
+                    </div>
+                  )}
+
+                  {/* MedMatch Interaction Verification (7-layer engine) */}
+                  {swap.medMatchVerification?.verified ? (
+                    swap.medMatchVerification.clean ? (
+                      <div className="p-2.5 rounded-lg bg-teal-50 border border-teal-200 flex items-center space-x-1.5 text-xs text-teal-900 font-semibold">
+                        <ShieldCheck className="w-4 h-4 text-teal-600 shrink-0" />
+                        <span>MedMatch-verified: no major interactions with your medications</span>
+                      </div>
+                    ) : (
+                      <div className="p-2.5 rounded-lg bg-rose-50 border border-rose-200 flex items-center space-x-1.5 text-xs text-rose-900 font-semibold">
+                        <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+                        <span>
+                          {swap.medMatchVerification.majorCount} major
+                          {swap.medMatchVerification.moderateCount > 0 && `, ${swap.medMatchVerification.moderateCount} moderate`} interaction(s) with your medications
+                        </span>
+                      </div>
+                    )
+                  ) : (
+                    <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-400 font-medium">
+                      Interaction verification unavailable (engine offline or no verifiable actives)
                     </div>
                   )}
 

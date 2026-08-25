@@ -96,6 +96,14 @@ export interface SafeSwapRecommendation {
   cleanHighlights: string[];
   priceRange?: string;
   certificationBadges?: string[];
+  activeIngredients?: string[]; // used for MedMatch interaction verification
+  medMatchVerification?: {
+    verified: boolean; // engine reachable and analysis ran
+    majorCount: number;
+    moderateCount: number;
+    minorCount: number;
+    clean: boolean; // no major interactions with the user's medications
+  };
 }
 
 export interface IngredientSafetyItem {

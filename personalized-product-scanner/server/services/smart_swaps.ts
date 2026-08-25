@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import { ProductScanResult, UserProfile } from '../../src/types';
+import { ProductScanResult, UserProfile, SafeSwapRecommendation } from '../../src/types';
 import { DEMO_PRODUCTS } from '../demoData';
 
 let aiClient: GoogleGenAI | null = null;
@@ -17,22 +17,6 @@ function getGenAI(): GoogleGenAI {
   }
   return aiClient;
 }
-
-export interface SafeSwapRecommendation {
-  id: string;
-  name: string;
-  brand: string;
-  productType: 'food' | 'cosmetic';
-  category: string;
-  score: number; // 0-100
-  imageUrl?: string;
-  whyBetter: string[];
-  keyBenefits: string[];
-  cleanHighlights: string[];
-  priceRange?: string;
-  certificationBadges?: string[];
-}
-
 export async function generateSafeSwaps(
   currentProduct: ProductScanResult,
   userProfile: UserProfile
@@ -90,9 +74,14 @@ Ensure the recommendations completely avoid the user's allergies and match their
               certificationBadges: {
                 type: Type.ARRAY,
                 items: { type: Type.STRING }
+              },
+              activeIngredients: {
+                type: Type.ARRAY,
+                items: { type: Type.STRING },
+                description: 'Main active ingredients or notable actives of the recommended product (for foods: key ingredients like Milk, Soy, Hazelnut; for supplements/cosmetics: active compounds like St John Wort extract, Retinol, Vitamin K). Needed to cross-check drug interactions.'
               }
             },
-            required: ['name', 'brand', 'productType', 'score', 'whyBetter', 'keyBenefits', 'cleanHighlights']
+            required: ['name', 'brand', 'productType', 'score', 'whyBetter', 'keyBenefits', 'cleanHighlights', 'activeIngredients']
           }
         }
       }
@@ -125,6 +114,7 @@ Ensure the recommendations completely avoid the user's allergies and match their
         keyBenefits: ['Fortified with Vitamin B12 and D', 'Clean single-digit ingredient deck'],
         cleanHighlights: ['Certified Vegan', 'Dairy-Free', 'Nut-Free facility'],
         priceRange: '$$ - Average',
+        activeIngredients: ['Oats', 'Water'],
         certificationBadges: ['USDA Organic', 'Non-GMO Project']
       },
       {
@@ -138,6 +128,7 @@ Ensure the recommendations completely avoid the user's allergies and match their
         keyBenefits: ['7g Plant Protein per serving', 'Rich in Vitamin E and Magnesium'],
         cleanHighlights: ['Peanut-Free', 'Tree Nut-Free', 'Kosher'],
         priceRange: '$ - Affordable',
+        activeIngredients: ['Sunflower Seeds', 'Salt'],
         certificationBadges: ['Certified Gluten-Free', 'School Safe']
       },
       {
@@ -151,6 +142,7 @@ Ensure the recommendations completely avoid the user's allergies and match their
         keyBenefits: ['Gentle on digestion', 'Lower glycemic spike'],
         cleanHighlights: ['Gluten-Free Option', 'Non-GMO', 'No Artificial Preservatives'],
         priceRange: '$$ - Moderate',
+        activeIngredients: ['Ancient Grain Flour', 'Sourdough Culture', 'Water', 'Salt'],
         certificationBadges: ['Non-GMO Verified']
       }
     ];
@@ -167,6 +159,7 @@ Ensure the recommendations completely avoid the user's allergies and match their
         keyBenefits: ['Ceramide-3 + Niacinamide barrier repair', 'Prebiotic thermal water'],
         cleanHighlights: ['Dermatologist Tested', 'Sensitive Skin Safe', 'Oil-Free'],
         priceRange: '$$ - Mid Tier',
+        activeIngredients: ['Ceramide-3', 'Niacinamide', 'Thermal Spring Water', 'Glycerin'],
         certificationBadges: ['National Eczema Association Accepted']
       },
       {
@@ -180,6 +173,7 @@ Ensure the recommendations completely avoid the user's allergies and match their
         keyBenefits: ['Maintains skin lipid mantle', 'Safe for eczema and rosacea'],
         cleanHighlights: ['Fragrance-Free', 'Preservative-Free', 'Hypoallergenic'],
         priceRange: '$ - Value',
+        activeIngredients: ['Glycerin', 'Cetearyl Alcohol', 'Ceramide-3'],
         certificationBadges: ['National Eczema Association']
       }
     ];
