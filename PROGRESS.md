@@ -67,7 +67,7 @@
 ## 6. 🎯 MỤC TIÊU CUỐI: iOS APP LÊN APP STORE (chốt 2026-08-27)
 
 **Quyết định kiến trúc chốt:**
-- **React (personalized-product-scanner) = UI chính** (giao diện đẹp, 6 ngôn ngữ, 21 components) — medmatch `static/` chỉ để THAM KHẢO, ngừng phát triển.
+1. **Deploy engine lên cloud** — app trên điện thoại KHÔNG gọi được localhost. ✅ **Container một-URL đã sẵn sàng**: `deploy/Dockerfile` + `start.sh` + `DEPLOY.md` (Node BFF công khai $PORT + FastAPI nội bộ 8765, tini supervisor). Chưa build thử local (Docker Desktop chưa cài — chỉ có CLI); Cloud Run: `gcloud run deploy --source . --dockerfile deploy/Dockerfile`. Lưu ý: filesystem ephemeral → `--max-instances 1` cho MVP; port BFF→Python là tối ưu hậu kỳ, không chặn deploy.
 - **FastAPI :8765 = engine service** (7-layer logic + dữ liệu). Browser/app chỉ nói chuyện với BFF :3000 — một origin.
 - **iOS = Capacitor wrap** React app (KHÔNG rewrite React Native). Đúng hướng plan1 đã đề: camera + OCR nhãn.
 

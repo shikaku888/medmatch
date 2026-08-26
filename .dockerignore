@@ -1,0 +1,14 @@
+**/node_modules
+**/dist
+**/__pycache__
+**/.pytest_cache
+medmatch/backend/medmatch.db-shm
+medmatch/backend/medmatch.db-wal
+medmatch/backend/data/dsld
+medmatch/backend/data/_nc_backup
+personalized-product-scanner/data_storage.json
+personalized-product-scanner/eng.traineddata
+*.traineddata
+.git
+deploy
+*.md

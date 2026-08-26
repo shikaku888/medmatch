@@ -124,7 +124,7 @@ async function verifySwapSafety(
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // JSON Body parsing (support image base64 payloads up to 15MB)
   app.use(express.json({ limit: '15mb' }));
