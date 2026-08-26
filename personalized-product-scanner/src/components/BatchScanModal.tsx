@@ -117,7 +117,7 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
             <div>
               <h3 className="text-lg font-bold">Batch Product Audit — Meds & Supplements</h3>
               <p className="text-xs text-slate-400">
-                Scan or paste multiple product barcodes; each item is checked against the active member's medications by the MedMatch engine.
+                Paste multiple barcodes or type medication/supplement names (one per add); each item is checked against the active member's medications by the MedMatch engine.
               </p>
             </div>
           </div>
@@ -144,7 +144,7 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
                   value={barcodeInput}
                   onChange={(e) => setBarcodeInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAddBarcode()}
-                  placeholder="Enter barcode number (e.g. 3017620422003)"
+                  placeholder="Barcode (3017620422003) or medication/supplement name (e.g. warfarin, St John's Wort)"
                   className="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono"
                 />
               </div>

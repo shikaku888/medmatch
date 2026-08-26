@@ -140,6 +140,910 @@
   ],
   "history": [
     {
+      "id": "scan_1787727975576_oe1qa",
+      "barcode": "NAME_SIMVASTATIN",
+      "productName": "Statins",
+      "brand": "Drug class — MedMatch DB",
+      "productType": "supplement",
+      "status": "safe",
+      "score": 90,
+      "warningCount": 0,
+      "scannedAt": "2026-08-26T07:06:15.576Z",
+      "fullResult": {
+        "barcode": "NAME_SIMVASTATIN",
+        "productName": "Statins",
+        "brand": "Drug class — MedMatch DB",
+        "productType": "supplement",
+        "ingredientsText": "Statins",
+        "ingredientsList": [
+          "Statins"
+        ],
+        "allergens": [],
+        "labels": [],
+        "ingredientSafetyList": [],
+        "herbDrugAlerts": [],
+        "matchAssessment": {
+          "status": "safe",
+          "score": 90,
+          "summary": "No documented interactions with the active member's medications",
+          "warnings": [],
+          "safeHighlights": []
+        },
+        "medMatch": {
+          "matched": [
+            {
+              "input": "Statins",
+              "kind": "drug_class",
+              "id": "estatinas",
+              "label": "Statins"
+            }
+          ],
+          "interactions": [],
+          "unmatched": [],
+          "depletions": [
+            {
+              "id": 1,
+              "ingredient": "Vitamin D",
+              "severity": "minor",
+              "effect_size": "",
+              "mechanism": "Cholesterol pathway disruption may reduce D3 synthesis",
+              "pmids": "",
+              "us_users_millions": "92",
+              "source": "Verified Supplement Evidence (MIT)"
+            },
+            {
+              "id": 2,
+              "ingredient": "CoQ10",
+              "severity": "major",
+              "effect_size": "16-54% reduction",
+              "mechanism": "Mevalonate pathway inhibition blocks CoQ10 synthesis",
+              "pmids": "28686047",
+              "us_users_millions": "92",
+              "source": "Verified Supplement Evidence (MIT)"
+            }
+          ],
+          "beers": [],
+          "qt_risk": [],
+          "electrolytes": [],
+          "cascades": [],
+          "schedule": []
+        },
+        "source": "local_scan",
+        "scannedAt": "2026-08-26T07:06:15.576Z"
+      },
+      "favorite": false
+    },
+    {
+      "id": "scan_1787727975538_u22hm",
+      "barcode": "NAME_KETOCONAZOLE",
+      "productName": "Azole antifungals",
+      "brand": "Drug class — MedMatch DB",
+      "productType": "supplement",
+      "status": "safe",
+      "score": 90,
+      "warningCount": 0,
+      "scannedAt": "2026-08-26T07:06:15.538Z",
+      "fullResult": {
+        "barcode": "NAME_KETOCONAZOLE",
+        "productName": "Azole antifungals",
+        "brand": "Drug class — MedMatch DB",
+        "productType": "supplement",
+        "ingredientsText": "Azole antifungals",
+        "ingredientsList": [
+          "Azole antifungals"
+        ],
+        "allergens": [],
+        "labels": [],
+        "ingredientSafetyList": [],
+        "herbDrugAlerts": [],
+        "matchAssessment": {
+          "status": "safe",
+          "score": 90,
+          "summary": "No documented interactions with the active member's medications",
+          "warnings": [],
+          "safeHighlights": []
+        },
+        "medMatch": {
+          "matched": [
+            {
+              "input": "Azole antifungals",
+              "kind": "drug_class",
+              "id": "antifungicos",
+              "label": "Azole antifungals"
+            }
+          ],
+          "interactions": [],
+          "unmatched": [],
+          "depletions": [],
+          "beers": [],
+          "qt_risk": [
+            {
+              "level": "moderate",
+              "qt_classes": [
+                "Azole antifungals"
+              ],
+              "factors": [
+                "age >= 65"
+              ]
+            }
+          ],
+          "electrolytes": [],
+          "cascades": [],
+          "schedule": []
+        },
+        "source": "local_scan",
+        "scannedAt": "2026-08-26T07:06:15.538Z"
+      },
+      "favorite": false
+    },
+    {
+      "id": "scan_1787727975499_zpizu",
+      "barcode": "0737628064502",
+      "productName": "Thai peanut noodle kit includes stir-fry rice noodles & thai peanut seasoning",
+      "brand": "Simply Asia, Thai Kitchen",
+      "productType": "food",
+      "imageUrl": "https://images.openfoodfacts.org/images/products/073/762/806/4502/front_en.6.400.jpg",
+      "status": "caution",
+      "score": 95,
+      "warningCount": 1,
+      "scannedAt": "2026-08-26T07:06:15.499Z",
+      "fullResult": {
+        "barcode": "0737628064502",
+        "productName": "Thai peanut noodle kit includes stir-fry rice noodles & thai peanut seasoning",
+        "brand": "Simply Asia, Thai Kitchen",
+        "productType": "food",
+        "imageUrl": "https://images.openfoodfacts.org/images/products/073/762/806/4502/front_en.6.400.jpg",
+        "ingredientsText": "Rice Noodles (rice, water), seasoning packet (peanut, sugar, salt, corn starch, spices [chili, cinnamon, pepper, cumin, clove], hydrolyzed soy protein, green onions, citric acid, peanut oil, sesame oil, natural flavor).",
+        "ingredientsList": [
+          "Rice Noodles",
+          "seasoning packet"
+        ],
+        "allergens": [
+          "peanuts",
+          "sesame-seeds",
+          "soybeans"
+        ],
+        "labels": [
+          "vegetarian",
+          "no-gluten",
+          "vegan"
+        ],
+        "nutrition": {
+          "energyKcal": 385,
+          "sugars": 13.46,
+          "salt": 0.72,
+          "sodium": 0.288,
+          "fat": 7.69,
+          "saturatedFat": 1.92,
+          "proteins": 9.62,
+          "carbohydrates": 71.15,
+          "fiber": 1.9,
+          "novaGroup": 4,
+          "nutriscoreGrade": "d",
+          "ecoscoreGrade": "unknown",
+          "ukTrafficLight": {
+            "fatLevel": "med",
+            "satFatLevel": "med",
+            "sugarsLevel": "med",
+            "saltLevel": "med"
+          },
+          "usDVs": {
+            "caloriesPercent": 19,
+            "fatPercent": 10,
+            "satFatPercent": 10,
+            "sodiumPercent": 13,
+            "carbsPercent": 26,
+            "fiberPercent": 7
+          }
+        },
+        "cleanScoreBreakdown": {
+          "totalScore": 50,
+          "nutritionalQualityScore": 20,
+          "additivesSafetyScore": 30,
+          "organicBioBonus": 0,
+          "ratingLevel": "good"
+        },
+        "regulatoryBadges": [],
+        "herbDrugAlerts": [],
+        "medMatch": {
+          "matched": [
+            {
+              "input": "Amlodipine",
+              "kind": "drug_class",
+              "id": "antihipertensivos",
+              "label": "Antihypertensives"
+            }
+          ],
+          "interactions": [],
+          "unmatched": [],
+          "depletions": [],
+          "beers": [],
+          "qt_risk": [],
+          "electrolytes": [
+            {
+              "electrolyte": "Potassium",
+              "sources": [
+                "Antihypertensives"
+              ],
+              "reasons": [
+                "Diuretic component of antihypertensives drives renal K+ loss"
+              ],
+              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
+            },
+            {
+              "electrolyte": "Magnesium",
+              "sources": [
+                "Antihypertensives"
+              ],
+              "reasons": [
+                "Thiazide/loop diuretics also waste Mg2+"
+              ],
+              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
+            }
+          ],
+          "cascades": [],
+          "schedule": []
+        },
+        "countryOfOrigin": "FRANCE",
+        "ingredientSafetyList": [
+          {
+            "name": "Rice Noodles",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          },
+          {
+            "name": "seasoning packet",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          }
+        ],
+        "matchAssessment": {
+          "status": "caution",
+          "score": 95,
+          "summary": "Minor Notes: Formulated safely, but contains 1 item(s) you may want to note.",
+          "warnings": [
+            {
+              "id": "warn_nova_group_4",
+              "level": "low",
+              "category": "nutrition",
+              "title": "NOVA Group 4: Ultra-Processed Food",
+              "message": "Formulated with industrial ingredients, emulsifiers, and flavor enhancers.",
+              "matchedItem": "Ultra-processed food"
+            }
+          ],
+          "safeHighlights": [],
+          "crossReactivityAlerts": []
+        },
+        "source": "openfoodfacts",
+        "scannedAt": "2026-08-26T07:06:15.499Z"
+      },
+      "favorite": false
+    },
+    {
+      "id": "scan_1787727975361_fht6m",
+      "barcode": "3017620422003",
+      "productName": "Nutella Hazelnut Spread with Cocoa",
+      "brand": "Ferrero",
+      "status": "caution",
+      "score": 95,
+      "warningCount": 1,
+      "scannedAt": "2026-08-26T07:06:15.361Z",
+      "fullResult": {
+        "barcode": "3017620422003",
+        "productName": "Nutella Hazelnut Spread with Cocoa",
+        "brand": "Ferrero",
+        "ingredientsText": "Sugar, Palm Oil, Hazelnuts (13%), Skimmed Milk Powder (8.7%), Fat-Reduced Cocoa (7.4%), Emulsifier: Lecithins (Soya), Vanillin.",
+        "ingredientsList": [
+          "Sugar",
+          "Palm Oil",
+          "Hazelnuts (13%)",
+          "Skimmed Milk Powder (8.7%)",
+          "Fat-Reduced Cocoa (7.4%)",
+          "Soya Lecithin",
+          "Vanillin"
+        ],
+        "allergens": [
+          "hazelnuts",
+          "milk",
+          "soy",
+          "tree nuts"
+        ],
+        "labels": [
+          "Vegetarian",
+          "Gluten Free"
+        ],
+        "nutrition": {
+          "energyKcal": 539,
+          "sugars": 56.3,
+          "fat": 30.9,
+          "saturatedFat": 10.6,
+          "proteins": 6.3,
+          "carbohydrates": 57.5,
+          "salt": 0.107,
+          "sodium": 43,
+          "novaGroup": 4,
+          "nutriscoreGrade": "e"
+        },
+        "regulatoryBadges": [],
+        "herbDrugAlerts": [],
+        "medMatch": {
+          "matched": [
+            {
+              "input": "Palm Oil",
+              "kind": "herb",
+              "id": "suppai:C0069962",
+              "label": "Palm Oil"
+            },
+            {
+              "input": "Skimmed Milk Powder (8.7%)",
+              "kind": "food",
+              "id": "dairy",
+              "label": "Dairy"
+            },
+            {
+              "input": "Fat-Reduced Cocoa (7.4%)",
+              "kind": "herb",
+              "id": "suppai:C1138626",
+              "label": "Cocoa Extract"
+            },
+            {
+              "input": "Soya Lecithin",
+              "kind": "herb",
+              "id": "suppai:C0872912",
+              "label": "Lecithin, Soybean"
+            },
+            {
+              "input": "Amlodipine",
+              "kind": "drug_class",
+              "id": "antihipertensivos",
+              "label": "Antihypertensives"
+            }
+          ],
+          "interactions": [
+            {
+              "type": "herb-drug-evidence",
+              "a": {
+                "label": "Lecithin, Soybean",
+                "id": "suppai:C0872912",
+                "kind": "herb"
+              },
+              "b": {
+                "label": "Antihypertensives",
+                "id": "antihipertensivos",
+                "kind": "drug_class"
+              },
+              "id": 65958,
+              "herb_id": "suppai:C0872912",
+              "class_id": "antihipertensivos",
+              "supp_cui": "C0872912",
+              "drug_cui": "C0012373",
+              "drug_name": "Diltiazem",
+              "evidence": [
+                {
+                  "doi": "10.1007/s13346-015-0276-5",
+                  "pmid": 26754742,
+                  "year": 2015,
+                  "title": "Pluronic lecithin organogel (PLO) of diltiazem hydrochloride: effect of solvents/penetration enhancers on ex vivo permeation",
+                  "human_study": false,
+                  "sentences": [
+                    {
+                      "uid": 33477,
+                      "confidence": null,
+                      "paper_id": "9876287",
+                      "sentence_id": 2,
+                      "spans": [
+                        {
+                          "text": "The influence of phase ratio and different concentrations of",
+                          "cui": null
+                        },
+                        {
+                          "text": "soya lecithin",
+                          "cui": "C0872912"
+                        },
+                        {
+                          "text": " on ",
+                          "cui": null
+                        },
+                        {
+                          "text": "DZH",
+                          "cui": "C0012373"
+                        },
+                        {
+                          "text": " release from the PLOs was found to be significant (p < 0.05), whereas the influences of different concentrations of pluronic were insignificant.",
+                          "cui": null
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "doi": "10.1007/s13346-015-0276-5",
+              "pair_key": "suppai:suppai:C0872912|C0012373",
+              "trust": 0.9,
+              "added_at": "2026-08-25 03:27:18",
+              "severity": null
+            }
+          ],
+          "unmatched": [],
+          "depletions": [],
+          "beers": [],
+          "qt_risk": [],
+          "electrolytes": [
+            {
+              "electrolyte": "Potassium",
+              "sources": [
+                "Antihypertensives"
+              ],
+              "reasons": [
+                "Diuretic component of antihypertensives drives renal K+ loss"
+              ],
+              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
+            },
+            {
+              "electrolyte": "Magnesium",
+              "sources": [
+                "Antihypertensives"
+              ],
+              "reasons": [
+                "Thiazide/loop diuretics also waste Mg2+"
+              ],
+              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
+            }
+          ],
+          "cascades": [],
+          "schedule": []
+        },
+        "ingredientSafetyList": [
+          {
+            "name": "Sugar",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          },
+          {
+            "name": "Palm Oil",
+            "hazardLevel": "safe",
+            "roleDescription": "Nourishing / Bioactive Compound",
+            "regulatoryStatus": "Clean Verified (EWG 1-2)",
+            "healthImpact": "Supports metabolic health or skin hydration"
+          },
+          {
+            "name": "Hazelnuts (13%)",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          },
+          {
+            "name": "Skimmed Milk Powder (8.7%)",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          },
+          {
+            "name": "Fat-Reduced Cocoa (7.4%)",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          },
+          {
+            "name": "Soya Lecithin",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          },
+          {
+            "name": "Vanillin",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          }
+        ],
+        "matchAssessment": {
+          "status": "caution",
+          "score": 95,
+          "summary": "Minor Notes: Formulated safely, but contains 1 item(s) you may want to note.",
+          "warnings": [
+            {
+              "id": "warn_nova_group_4",
+              "level": "low",
+              "category": "nutrition",
+              "title": "NOVA Group 4: Ultra-Processed Food",
+              "message": "Formulated with industrial ingredients, emulsifiers, and flavor enhancers.",
+              "matchedItem": "Ultra-processed food"
+            }
+          ],
+          "safeHighlights": [],
+          "crossReactivityAlerts": []
+        },
+        "source": "demo",
+        "scannedAt": "2026-08-26T07:06:15.361Z"
+      },
+      "favorite": false
+    },
+    {
+      "id": "scan_1787727780570_wn22y",
+      "barcode": "NAME_WARFARIN",
+      "productName": "Anticoagulants",
+      "brand": "Drug class — MedMatch DB",
+      "productType": "supplement",
+      "status": "safe",
+      "score": 90,
+      "warningCount": 0,
+      "scannedAt": "2026-08-26T07:03:00.569Z",
+      "fullResult": {
+        "barcode": "NAME_WARFARIN",
+        "productName": "Anticoagulants",
+        "brand": "Drug class — MedMatch DB",
+        "productType": "supplement",
+        "ingredientsText": "Anticoagulants",
+        "ingredientsList": [
+          "Anticoagulants"
+        ],
+        "allergens": [],
+        "labels": [],
+        "ingredientSafetyList": [],
+        "herbDrugAlerts": [],
+        "matchAssessment": {
+          "status": "danger",
+          "score": 25,
+          "summary": "major interaction with another batch item: Statins — engine finding",
+          "warnings": [],
+          "safeHighlights": []
+        },
+        "medMatch": {
+          "matched": [
+            {
+              "input": "Anticoagulants",
+              "kind": "drug_class",
+              "id": "anticoagulantes",
+              "label": "Anticoagulants"
+            }
+          ],
+          "interactions": [
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Azole antifungals",
+                "id": "antifungicos",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Anticoagulants",
+                "id": "anticoagulantes",
+                "kind": "drug_class"
+              },
+              "id": 3,
+              "severity": "major",
+              "effect": "Elevated INR and serious bleeding risk.",
+              "mechanism": "Azole antifungals (ketoconazole, fluconazole, itraconazole) inhibit CYP2C9/CYP3A4 metabolism of warfarin.",
+              "source": "FDA azole antifungal and warfarin labeling",
+              "trust": 1,
+              "pair_key": "cls:anticoagulantes|cls:antifungicos",
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            },
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Statins",
+                "id": "estatinas",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Anticoagulants",
+                "id": "anticoagulantes",
+                "kind": "drug_class"
+              },
+              "severity": "major",
+              "effect": "FDA label for Warfarin lists Atorvastatin (Statins) as an interacting medication — major severity per DailyMed. Monitor clinical response and adjust therapy as needed.",
+              "source": "DailyMed: WARFARIN SODIUM (WARFARIN) TABLET [DENTON PHARMA, INC. DBA NORTHWIND PHARMACEUTICALS] (ce3f8677-e07d-22ea-e053-2a95a90a36c4)",
+              "trust": 1,
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            }
+          ],
+          "unmatched": [],
+          "depletions": [],
+          "beers": [],
+          "qt_risk": [],
+          "electrolytes": [],
+          "cascades": [],
+          "schedule": []
+        },
+        "source": "local_scan",
+        "scannedAt": "2026-08-26T07:03:00.569Z"
+      },
+      "favorite": false
+    },
+    {
+      "id": "scan_1787726884112_99j47",
+      "barcode": "TEXT_1787726884112",
+      "productName": "Turmeric Cap",
+      "productType": "food",
+      "status": "danger",
+      "score": 55,
+      "warningCount": 1,
+      "scannedAt": "2026-08-26T06:48:04.112Z",
+      "fullResult": {
+        "barcode": "TEXT_1787726884112",
+        "productName": "Turmeric Cap",
+        "productType": "food",
+        "ingredientsText": "Curcuma longa extract, gelatin. Gluten free.",
+        "ingredientsList": [
+          "Curcuma longa extract",
+          "gelatin. Gluten free"
+        ],
+        "allergens": [],
+        "labels": [
+          "Gluten-Free"
+        ],
+        "cleanScoreBreakdown": {
+          "totalScore": 55,
+          "cleanScore": 55,
+          "ratingLevel": "good",
+          "nutritionalQualityScore": 40,
+          "nutritionPoints": 40,
+          "additivesSafetyScore": 30,
+          "additivesPoints": 30,
+          "organicBioBonus": 0
+        },
+        "regulatoryBadges": [],
+        "herbDrugAlerts": [],
+        "ingredientSafetyList": [
+          {
+            "name": "Curcuma longa extract",
+            "hazardLevel": "safe",
+            "roleDescription": "Nourishing / Bioactive Compound",
+            "regulatoryStatus": "Clean Verified (EWG 1-2)",
+            "healthImpact": "Supports metabolic health or skin hydration"
+          },
+          {
+            "name": "gelatin. Gluten free",
+            "hazardLevel": "safe",
+            "roleDescription": "Functional Ingredient / Carrier",
+            "regulatoryStatus": "Standard GRAS Approval",
+            "healthImpact": "No toxicological flags recorded"
+          }
+        ],
+        "crossReactivityAlerts": [],
+        "matchAssessment": {
+          "status": "danger",
+          "score": 55,
+          "summary": "Direct Conflict Detected: Contains 1 high-risk allergen(s) or contraindication(s) matching your profile.",
+          "warnings": [
+            {
+              "id": "warn_allergy_gluten",
+              "level": "high",
+              "category": "allergy",
+              "title": "Allergy Conflict: Contains GLUTEN",
+              "message": "This product contains \"gluten\", which directly conflicts with your declared gluten allergy.",
+              "matchedItem": "gluten",
+              "explanation": "Immediate risk of allergic reaction. You have active avoidance configured for this allergen.",
+              "research": {
+                "ingredient": "gluten",
+                "studyCount": 1367,
+                "citations": [
+                  {
+                    "id": "34836247",
+                    "title": "The Gluten-Free Diet for Celiac Disease and Beyond.",
+                    "journal": "Nutrients",
+                    "year": "2021",
+                    "url": "https://pubmed.ncbi.nlm.nih.gov/34836247/"
+                  },
+                  {
+                    "id": "34742138",
+                    "title": "ESPEN guideline on hospital nutrition.",
+                    "journal": "Clin Nutr",
+                    "year": "2021",
+                    "url": "https://pubmed.ncbi.nlm.nih.gov/34742138/"
+                  },
+                  {
+                    "id": "28027215",
+                    "title": "Complementary Feeding: A Position Paper by the European Society for Paediatric Gastroenterology, Hepatology, and Nutrition (ESPGHAN) Committee on Nutrition.",
+                    "journal": "J Pediatr Gastroenterol Nutr",
+                    "year": "2017",
+                    "url": "https://pubmed.ncbi.nlm.nih.gov/28027215/"
+                  }
+                ],
+                "summaryNote": "Indexed in NCBI PubMed peer-reviewed database."
+              }
+            }
+          ],
+          "safeHighlights": [],
+          "crossReactivityAlerts": []
+        },
+        "medMatch": {
+          "matched": [
+            {
+              "input": "Curcuma longa extract",
+              "kind": "herb",
+              "id": "suppai:C0077524",
+              "label": "Turmeric Extract"
+            },
+            {
+              "input": "gelatin. Gluten free",
+              "kind": "herb",
+              "id": "suppai:C0017237",
+              "label": "Gelatin"
+            },
+            {
+              "input": "Amlodipine",
+              "kind": "drug_class",
+              "id": "antihipertensivos",
+              "label": "Antihypertensives"
+            }
+          ],
+          "interactions": [
+            {
+              "type": "herb-drug-evidence",
+              "a": {
+                "label": "Gelatin",
+                "id": "suppai:C0017237",
+                "kind": "herb"
+              },
+              "b": {
+                "label": "Antihypertensives",
+                "id": "antihipertensivos",
+                "kind": "drug_class"
+              },
+              "id": 24599,
+              "herb_id": "suppai:C0017237",
+              "class_id": "antihipertensivos",
+              "supp_cui": "C0017237",
+              "drug_cui": "C0006938",
+              "drug_name": "Captopril",
+              "evidence": [
+                {
+                  "doi": "10.3390/polym10030275",
+                  "pmid": 30966310,
+                  "year": 2018,
+                  "title": "Co-Deposition of a Hydrogel/Calcium Phosphate Hybrid Layer on 3D Printed Poly(Lactic Acid) Scaffolds via Dip Coating: Towards Automated Biomaterials Fabrication",
+                  "human_study": false,
+                  "sentences": [
+                    {
+                      "uid": 130372,
+                      "confidence": null,
+                      "paper_id": "54793132",
+                      "sentence_id": 1,
+                      "spans": [
+                        {
+                          "text": "The presence of",
+                          "cui": null
+                        },
+                        {
+                          "text": "gelatin",
+                          "cui": "C0017237"
+                        },
+                        {
+                          "text": " or chitosan significantly enhances ",
+                          "cui": null
+                        },
+                        {
+                          "text": "CP",
+                          "cui": "C0006938"
+                        },
+                        {
+                          "text": " co-deposition and adhesion of the mineral layer on the PLA scaffolds.",
+                          "cui": null
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "doi": "10.3390/polym10030275",
+              "pair_key": "suppai:suppai:C0017237|C0006938",
+              "trust": 0.9,
+              "added_at": "2026-08-25 02:43:18",
+              "severity": null
+            },
+            {
+              "type": "herb-drug-evidence",
+              "a": {
+                "label": "Gelatin",
+                "id": "suppai:C0017237",
+                "kind": "herb"
+              },
+              "b": {
+                "label": "Antihypertensives",
+                "id": "antihipertensivos",
+                "kind": "drug_class"
+              },
+              "id": 24651,
+              "herb_id": "suppai:C0017237",
+              "class_id": "antihipertensivos",
+              "supp_cui": "C0017237",
+              "drug_cui": "C0028066",
+              "drug_name": "Nifedipine",
+              "evidence": [
+                {
+                  "doi": "10.1007/s11095-017-2315-z",
+                  "pmid": 29305725,
+                  "year": 2017,
+                  "title": "Gelatin Nano-coating for Inhibiting Surface Crystallization of Amorphous Drugs",
+                  "human_study": true,
+                  "sentences": [
+                    {
+                      "uid": 175488,
+                      "confidence": null,
+                      "paper_id": "1617861",
+                      "sentence_id": 9,
+                      "spans": [
+                        {
+                          "text": "For",
+                          "cui": null
+                        },
+                        {
+                          "text": "nifedipine",
+                          "cui": "C0028066"
+                        },
+                        {
+                          "text": " (weak base, pKa = 2.6), a ",
+                          "cui": null
+                        },
+                        {
+                          "text": "gelatin",
+                          "cui": "C0017237"
+                        },
+                        {
+                          "text": " coating of either type deposited at pH 5 inhibited its fast surface crystal growth.",
+                          "cui": null
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "doi": "10.1007/s11095-017-2315-z",
+              "pair_key": "suppai:suppai:C0017237|C0028066",
+              "trust": 0.9,
+              "added_at": "2026-08-25 02:43:18",
+              "severity": null
+            }
+          ],
+          "unmatched": [],
+          "depletions": [],
+          "beers": [],
+          "qt_risk": [],
+          "electrolytes": [
+            {
+              "electrolyte": "Potassium",
+              "sources": [
+                "Antihypertensives"
+              ],
+              "reasons": [
+                "Diuretic component of antihypertensives drives renal K+ loss"
+              ],
+              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
+            },
+            {
+              "electrolyte": "Magnesium",
+              "sources": [
+                "Antihypertensives"
+              ],
+              "reasons": [
+                "Thiazide/loop diuretics also waste Mg2+"
+              ],
+              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
+            }
+          ],
+          "cascades": [],
+          "schedule": []
+        },
+        "source": "local_scan",
+        "scannedAt": "2026-08-26T06:48:04.112Z"
+      },
+      "favorite": false
+    },
+    {
       "id": "scan_1787725027777_e6o5q",
       "barcode": "PHOTO_1787725027777",
       "productName": "Nature Made Turmeric 500mg",
@@ -15630,400 +16534,6 @@
         },
         "source": "openbeautyfacts",
         "scannedAt": "2026-08-25T15:38:54.756Z"
-      },
-      "favorite": false
-    },
-    {
-      "id": "scan_1787672328713_ed4bz",
-      "barcode": "0737628064502",
-      "productName": "Thai peanut noodle kit includes stir-fry rice noodles & thai peanut seasoning",
-      "brand": "Simply Asia, Thai Kitchen",
-      "productType": "food",
-      "imageUrl": "https://images.openfoodfacts.org/images/products/073/762/806/4502/front_en.6.400.jpg",
-      "status": "caution",
-      "score": 95,
-      "warningCount": 1,
-      "scannedAt": "2026-08-25T15:38:48.713Z",
-      "fullResult": {
-        "barcode": "0737628064502",
-        "productName": "Thai peanut noodle kit includes stir-fry rice noodles & thai peanut seasoning",
-        "brand": "Simply Asia, Thai Kitchen",
-        "productType": "food",
-        "imageUrl": "https://images.openfoodfacts.org/images/products/073/762/806/4502/front_en.6.400.jpg",
-        "ingredientsText": "Rice Noodles (rice, water), seasoning packet (peanut, sugar, salt, corn starch, spices [chili, cinnamon, pepper, cumin, clove], hydrolyzed soy protein, green onions, citric acid, peanut oil, sesame oil, natural flavor).",
-        "ingredientsList": [
-          "Rice Noodles",
-          "seasoning packet"
-        ],
-        "allergens": [
-          "peanuts",
-          "sesame-seeds",
-          "soybeans"
-        ],
-        "labels": [
-          "vegetarian",
-          "no-gluten",
-          "vegan"
-        ],
-        "nutrition": {
-          "energyKcal": 385,
-          "sugars": 13.46,
-          "salt": 0.72,
-          "sodium": 0.288,
-          "fat": 7.69,
-          "saturatedFat": 1.92,
-          "proteins": 9.62,
-          "carbohydrates": 71.15,
-          "fiber": 1.9,
-          "novaGroup": 4,
-          "nutriscoreGrade": "d",
-          "ecoscoreGrade": "unknown",
-          "ukTrafficLight": {
-            "fatLevel": "med",
-            "satFatLevel": "med",
-            "sugarsLevel": "med",
-            "saltLevel": "med"
-          },
-          "usDVs": {
-            "caloriesPercent": 19,
-            "fatPercent": 10,
-            "satFatPercent": 10,
-            "sodiumPercent": 13,
-            "carbsPercent": 26,
-            "fiberPercent": 7
-          }
-        },
-        "cleanScoreBreakdown": {
-          "totalScore": 50,
-          "nutritionalQualityScore": 20,
-          "additivesSafetyScore": 30,
-          "organicBioBonus": 0,
-          "ratingLevel": "good"
-        },
-        "regulatoryBadges": [],
-        "herbDrugAlerts": [],
-        "medMatch": {
-          "matched": [
-            {
-              "input": "Amlodipine",
-              "kind": "drug_class",
-              "id": "antihipertensivos",
-              "label": "Antihypertensives"
-            }
-          ],
-          "interactions": [],
-          "unmatched": [],
-          "depletions": [],
-          "beers": [],
-          "qt_risk": [],
-          "electrolytes": [
-            {
-              "electrolyte": "Potassium",
-              "sources": [
-                "Antihypertensives"
-              ],
-              "reasons": [
-                "Diuretic component of antihypertensives drives renal K+ loss"
-              ],
-              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
-            },
-            {
-              "electrolyte": "Magnesium",
-              "sources": [
-                "Antihypertensives"
-              ],
-              "reasons": [
-                "Thiazide/loop diuretics also waste Mg2+"
-              ],
-              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
-            }
-          ],
-          "cascades": [],
-          "schedule": []
-        },
-        "countryOfOrigin": "FRANCE",
-        "ingredientSafetyList": [
-          {
-            "name": "Rice Noodles",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          },
-          {
-            "name": "seasoning packet",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          }
-        ],
-        "matchAssessment": {
-          "status": "caution",
-          "score": 95,
-          "summary": "Minor Notes: Formulated safely, but contains 1 item(s) you may want to note.",
-          "warnings": [
-            {
-              "id": "warn_nova_group_4",
-              "level": "low",
-              "category": "nutrition",
-              "title": "NOVA Group 4: Ultra-Processed Food",
-              "message": "Formulated with industrial ingredients, emulsifiers, and flavor enhancers.",
-              "matchedItem": "Ultra-processed food"
-            }
-          ],
-          "safeHighlights": [],
-          "crossReactivityAlerts": []
-        },
-        "source": "openfoodfacts",
-        "scannedAt": "2026-08-25T15:38:48.713Z"
-      },
-      "favorite": false
-    },
-    {
-      "id": "scan_1787672327350_tj8ty",
-      "barcode": "3017620422003",
-      "productName": "Nutella Hazelnut Spread with Cocoa",
-      "brand": "Ferrero",
-      "status": "caution",
-      "score": 95,
-      "warningCount": 1,
-      "scannedAt": "2026-08-25T15:38:47.350Z",
-      "fullResult": {
-        "barcode": "3017620422003",
-        "productName": "Nutella Hazelnut Spread with Cocoa",
-        "brand": "Ferrero",
-        "ingredientsText": "Sugar, Palm Oil, Hazelnuts (13%), Skimmed Milk Powder (8.7%), Fat-Reduced Cocoa (7.4%), Emulsifier: Lecithins (Soya), Vanillin.",
-        "ingredientsList": [
-          "Sugar",
-          "Palm Oil",
-          "Hazelnuts (13%)",
-          "Skimmed Milk Powder (8.7%)",
-          "Fat-Reduced Cocoa (7.4%)",
-          "Soya Lecithin",
-          "Vanillin"
-        ],
-        "allergens": [
-          "hazelnuts",
-          "milk",
-          "soy",
-          "tree nuts"
-        ],
-        "labels": [
-          "Vegetarian",
-          "Gluten Free"
-        ],
-        "nutrition": {
-          "energyKcal": 539,
-          "sugars": 56.3,
-          "fat": 30.9,
-          "saturatedFat": 10.6,
-          "proteins": 6.3,
-          "carbohydrates": 57.5,
-          "salt": 0.107,
-          "sodium": 43,
-          "novaGroup": 4,
-          "nutriscoreGrade": "e"
-        },
-        "regulatoryBadges": [],
-        "herbDrugAlerts": [],
-        "medMatch": {
-          "matched": [
-            {
-              "input": "Palm Oil",
-              "kind": "herb",
-              "id": "suppai:C0069962",
-              "label": "Palm Oil"
-            },
-            {
-              "input": "Skimmed Milk Powder (8.7%)",
-              "kind": "food",
-              "id": "dairy",
-              "label": "Dairy"
-            },
-            {
-              "input": "Fat-Reduced Cocoa (7.4%)",
-              "kind": "herb",
-              "id": "suppai:C1138626",
-              "label": "Cocoa Extract"
-            },
-            {
-              "input": "Soya Lecithin",
-              "kind": "herb",
-              "id": "suppai:C0872912",
-              "label": "Lecithin, Soybean"
-            },
-            {
-              "input": "Amlodipine",
-              "kind": "drug_class",
-              "id": "antihipertensivos",
-              "label": "Antihypertensives"
-            }
-          ],
-          "interactions": [
-            {
-              "type": "herb-drug-evidence",
-              "a": {
-                "label": "Lecithin, Soybean",
-                "id": "suppai:C0872912",
-                "kind": "herb"
-              },
-              "b": {
-                "label": "Antihypertensives",
-                "id": "antihipertensivos",
-                "kind": "drug_class"
-              },
-              "id": 65958,
-              "herb_id": "suppai:C0872912",
-              "class_id": "antihipertensivos",
-              "supp_cui": "C0872912",
-              "drug_cui": "C0012373",
-              "drug_name": "Diltiazem",
-              "evidence": [
-                {
-                  "doi": "10.1007/s13346-015-0276-5",
-                  "pmid": 26754742,
-                  "year": 2015,
-                  "title": "Pluronic lecithin organogel (PLO) of diltiazem hydrochloride: effect of solvents/penetration enhancers on ex vivo permeation",
-                  "human_study": false,
-                  "sentences": [
-                    {
-                      "uid": 33477,
-                      "confidence": null,
-                      "paper_id": "9876287",
-                      "sentence_id": 2,
-                      "spans": [
-                        {
-                          "text": "The influence of phase ratio and different concentrations of",
-                          "cui": null
-                        },
-                        {
-                          "text": "soya lecithin",
-                          "cui": "C0872912"
-                        },
-                        {
-                          "text": " on ",
-                          "cui": null
-                        },
-                        {
-                          "text": "DZH",
-                          "cui": "C0012373"
-                        },
-                        {
-                          "text": " release from the PLOs was found to be significant (p < 0.05), whereas the influences of different concentrations of pluronic were insignificant.",
-                          "cui": null
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "doi": "10.1007/s13346-015-0276-5",
-              "pair_key": "suppai:suppai:C0872912|C0012373",
-              "trust": 0.9,
-              "added_at": "2026-08-25 03:27:18",
-              "severity": null
-            }
-          ],
-          "unmatched": [],
-          "depletions": [],
-          "beers": [],
-          "qt_risk": [],
-          "electrolytes": [
-            {
-              "electrolyte": "Potassium",
-              "sources": [
-                "Antihypertensives"
-              ],
-              "reasons": [
-                "Diuretic component of antihypertensives drives renal K+ loss"
-              ],
-              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
-            },
-            {
-              "electrolyte": "Magnesium",
-              "sources": [
-                "Antihypertensives"
-              ],
-              "reasons": [
-                "Thiazide/loop diuretics also waste Mg2+"
-              ],
-              "secondary_risk": "Muscle weakness and cramps; severe loss predisposes to rhythm disturbances."
-            }
-          ],
-          "cascades": [],
-          "schedule": []
-        },
-        "ingredientSafetyList": [
-          {
-            "name": "Sugar",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          },
-          {
-            "name": "Palm Oil",
-            "hazardLevel": "safe",
-            "roleDescription": "Nourishing / Bioactive Compound",
-            "regulatoryStatus": "Clean Verified (EWG 1-2)",
-            "healthImpact": "Supports metabolic health or skin hydration"
-          },
-          {
-            "name": "Hazelnuts (13%)",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          },
-          {
-            "name": "Skimmed Milk Powder (8.7%)",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          },
-          {
-            "name": "Fat-Reduced Cocoa (7.4%)",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          },
-          {
-            "name": "Soya Lecithin",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          },
-          {
-            "name": "Vanillin",
-            "hazardLevel": "safe",
-            "roleDescription": "Functional Ingredient / Carrier",
-            "regulatoryStatus": "Standard GRAS Approval",
-            "healthImpact": "No toxicological flags recorded"
-          }
-        ],
-        "matchAssessment": {
-          "status": "caution",
-          "score": 95,
-          "summary": "Minor Notes: Formulated safely, but contains 1 item(s) you may want to note.",
-          "warnings": [
-            {
-              "id": "warn_nova_group_4",
-              "level": "low",
-              "category": "nutrition",
-              "title": "NOVA Group 4: Ultra-Processed Food",
-              "message": "Formulated with industrial ingredients, emulsifiers, and flavor enhancers.",
-              "matchedItem": "Ultra-processed food"
-            }
-          ],
-          "safeHighlights": [],
-          "crossReactivityAlerts": []
-        },
-        "source": "demo",
-        "scannedAt": "2026-08-25T15:38:47.350Z"
       },
       "favorite": false
     },

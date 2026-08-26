@@ -313,6 +313,52 @@ async function startServer() {
     const codes = Array.isArray(barcodes) ? barcodes : [];
     for (const code of codes.slice(0, 10)) {
       try {
+        // Medication / supplement NAME mode — resolve via the MedMatch
+        // normalizer (Lớp 1) and analyze vs the active member's medications.
+        if (!/^\d{6,}$/.test(String(code).trim())) {
+          const hit = await normalizeIngredient(String(code));
+          if (!hit) continue;
+          const medMatch = await analyzeMedications(
+            [{ name: hit.label, kind: hit.kind, matched: { kind: hit.kind, id: hit.id } }],
+            {
+              age: currentProfile.age,
+              gender: currentProfile.gender,
+              kidneyFunction: currentProfile.kidneyFunction,
+              liverFunction: currentProfile.liverFunction,
+            }
+          );
+          const major = medMatch.interactions.filter(i => i.severity === 'major').length;
+          const moderate = medMatch.interactions.filter(i => i.severity === 'moderate').length;
+          const fullRes: ProductScanResult = {
+            barcode: `NAME_${String(code).trim().toUpperCase().replace(/\s+/g, '_').slice(0, 40)}`,
+            productName: hit.label,
+            brand: hit.kind === 'herb' ? 'Supplement — MedMatch DB' : hit.kind === 'drug_class' ? 'Drug class — MedMatch DB' : 'Food — MedMatch DB',
+            productType: 'supplement',
+            ingredientsText: hit.label,
+            ingredientsList: [hit.label],
+            allergens: [],
+            labels: [],
+            ingredientSafetyList: [],
+            herbDrugAlerts: [],
+            matchAssessment: {
+              status: major > 0 ? 'danger' : moderate > 0 ? 'warning' : 'safe',
+              score: major > 0 ? 25 : moderate > 0 ? 55 : 90,
+              summary: major > 0
+                ? `${major} major interaction(s) with the active member's medications`
+                : moderate > 0
+                  ? `${moderate} moderate interaction(s) — review timing`
+                  : 'No documented interactions with the active member\'s medications',
+              warnings: [],
+              safeHighlights: [],
+            },
+            medMatch,
+            source: 'local_scan',
+            scannedAt: new Date().toISOString()
+          };
+          db.addHistory(fullRes);
+          results.push(fullRes);
+          continue;
+        }
         const demoItem = DEMO_PRODUCTS.find(p => p.barcode === code);
         const marketItem = MARKET_PRODUCTS.find(p => p.barcode === code);
         let productData: any = null;
@@ -367,6 +413,45 @@ async function startServer() {
         }
       } catch (err) {
         console.warn('Batch scan item error:', err);
+      }
+    }
+    // Cross-item check: interactions BETWEEN batch items
+    // (e.g. ketoconazole × simvastatin in the same pantry).
+    const nameHits = results.filter(r => r.barcode.startsWith('NAME_') && r.medMatch?.matched?.length);
+    if (nameHits.length >= 2) {
+      try {
+        const cross = await analyzeMedications(
+          nameHits.map(r => {
+            const m = r.medMatch!.matched[0];
+            return { name: m.label, kind: m.kind, matched: { kind: m.kind, id: m.id } };
+          }),
+          {
+            age: currentProfile.age,
+            gender: currentProfile.gender,
+            kidneyFunction: currentProfile.kidneyFunction,
+            liverFunction: currentProfile.liverFunction,
+          }
+        );
+        for (const inter of cross.interactions) {
+          if (inter.severity !== 'major' && inter.severity !== 'moderate') continue;
+          for (const r of nameHits) {
+            const lbl = (r.medMatch!.matched[0].label || '').toLowerCase();
+            const la = (inter.a?.label || '').toLowerCase();
+            const lb = (inter.b?.label || '').toLowerCase();
+            if (lbl !== la && lbl !== lb) continue;
+            const dup = r.medMatch!.interactions.some(x => x.a?.label === inter.a?.label && x.b?.label === inter.b?.label && x.severity === inter.severity);
+            if (dup) continue;
+            r.medMatch!.interactions.push(inter);
+            const major = r.medMatch!.interactions.filter(i => i.severity === 'major').length;
+            const moderate = r.medMatch!.interactions.filter(i => i.severity === 'moderate').length;
+            r.matchAssessment.status = major > 0 ? 'danger' : moderate > 0 ? 'warning' : r.matchAssessment.status;
+            r.matchAssessment.score = Math.min(r.matchAssessment.score, major > 0 ? 25 : 55);
+            const other = lbl === la ? inter.b?.label : inter.a?.label;
+            r.matchAssessment.summary = `${inter.severity} interaction with another batch item: ${other} — ${inter.mechanism || 'engine finding'}`;
+          }
+        }
+      } catch (err) {
+        console.warn('Batch cross-item check failed:', err);
       }
     }
 
