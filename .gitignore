@@ -23,3 +23,8 @@ Thumbs.db
 
 # Tesseract runtime language cache
 *.traineddata
+
+# SQLite lookup cache (runtime)
+lookup_cache.db
+lookup_cache.db-shm
+lookup_cache.db-wal

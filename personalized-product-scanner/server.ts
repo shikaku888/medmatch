@@ -19,7 +19,8 @@ import { auditReceipt } from './server/services/receipt_scanner';
 import { getAllCrossReactivityRules } from './server/services/cross_reactivity';
 import { extractSkincareActives, analyzeSkincareRoutineConflicts } from './server/services/skincare_conflicts';
 import { ProductScanResult, FamilyProfile, UserRoutineProduct, SupportedCountry, MedMatchAnalysis, SafeSwapRecommendation } from './src/types';
-import { normalizeIngredient, analyzeMedications, medMatchStats } from './server/services/medmatch_client';
+import { normalizeIngredient, analyzeMedications, medMatchStats, medMatchFetch } from './server/services/medmatch_client';
+import { cacheStats, cacheSearch, cacheClear } from './server/services/lookup_cache';
 
 dotenv.config();
 
@@ -270,13 +271,27 @@ async function startServer() {
   app.get('/api/herb-drug-interactions', async (req, res) => {
     const query = req.query.q as string;
     try {
-      const { results } = await (await fetch(
-        `${process.env.MEDMATCH_URL || 'http://127.0.0.1:8765'}/api/search?q=${encodeURIComponent(query || '')}&limit=12`
-      )).json();
-      res.json({ query: query || '', results });
+      const data = await medMatchFetch<{ results: unknown[] }>(
+        `/api/search?q=${encodeURIComponent(query || '')}&limit=12`
+      );
+      res.json({ query: query || '', results: data.results });
     } catch {
       res.status(502).json({ error: 'MedMatch backend unreachable' });
     }
+  });
+
+  // Lookup cache (SQLite FTS5): stats / offline search / clear
+  app.get('/api/cache/stats', (req, res) => {
+    res.json(cacheStats());
+  });
+
+  app.get('/api/cache/search', (req, res) => {
+    const q = (req.query.q as string) || '';
+    res.json({ query: q, results: cacheSearch(q, 10) });
+  });
+
+  app.post('/api/cache/clear', (req, res) => {
+    res.json({ cleared: cacheClear() });
   });
 
   // Receipt & Supermarket Cart AI Audit Endpoint

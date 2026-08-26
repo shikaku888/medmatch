@@ -140,23 +140,23 @@
   ],
   "history": [
     {
-      "id": "scan_1787727975576_oe1qa",
-      "barcode": "NAME_SIMVASTATIN",
-      "productName": "Statins",
-      "brand": "Drug class — MedMatch DB",
+      "id": "scan_1787729399932_xiugn",
+      "barcode": "NAME_ST_JOHN'S_WORT",
+      "productName": "St. John's Wort",
+      "brand": "Supplement — MedMatch DB",
       "productType": "supplement",
       "status": "safe",
       "score": 90,
       "warningCount": 0,
-      "scannedAt": "2026-08-26T07:06:15.576Z",
+      "scannedAt": "2026-08-26T07:29:59.932Z",
       "fullResult": {
-        "barcode": "NAME_SIMVASTATIN",
-        "productName": "Statins",
-        "brand": "Drug class — MedMatch DB",
+        "barcode": "NAME_ST_JOHN'S_WORT",
+        "productName": "St. John's Wort",
+        "brand": "Supplement — MedMatch DB",
         "productType": "supplement",
-        "ingredientsText": "Statins",
+        "ingredientsText": "St. John's Wort",
         "ingredientsList": [
-          "Statins"
+          "St. John's Wort"
         ],
         "allergens": [],
         "labels": [],
@@ -172,13 +172,199 @@
         "medMatch": {
           "matched": [
             {
+              "input": "St. John's Wort",
+              "kind": "herb",
+              "id": "hypericum",
+              "label": "St. John's Wort"
+            }
+          ],
+          "interactions": [],
+          "unmatched": [],
+          "depletions": [],
+          "beers": [],
+          "qt_risk": [],
+          "electrolytes": [],
+          "cascades": [],
+          "schedule": []
+        },
+        "source": "local_scan",
+        "scannedAt": "2026-08-26T07:29:59.932Z"
+      },
+      "favorite": false
+    },
+    {
+      "id": "scan_1787729399796_fsyae",
+      "barcode": "NAME_WARFARIN",
+      "productName": "Anticoagulants",
+      "brand": "Drug class — MedMatch DB",
+      "productType": "supplement",
+      "status": "safe",
+      "score": 90,
+      "warningCount": 0,
+      "scannedAt": "2026-08-26T07:29:59.796Z",
+      "fullResult": {
+        "barcode": "NAME_WARFARIN",
+        "productName": "Anticoagulants",
+        "brand": "Drug class — MedMatch DB",
+        "productType": "supplement",
+        "ingredientsText": "Anticoagulants",
+        "ingredientsList": [
+          "Anticoagulants"
+        ],
+        "allergens": [],
+        "labels": [],
+        "ingredientSafetyList": [],
+        "herbDrugAlerts": [],
+        "matchAssessment": {
+          "status": "danger",
+          "score": 25,
+          "summary": "major interaction with another batch item: Statins — engine finding",
+          "warnings": [],
+          "safeHighlights": []
+        },
+        "medMatch": {
+          "matched": [
+            {
+              "input": "Anticoagulants",
+              "kind": "drug_class",
+              "id": "anticoagulantes",
+              "label": "Anticoagulants"
+            }
+          ],
+          "interactions": [
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Azole antifungals",
+                "id": "antifungicos",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Anticoagulants",
+                "id": "anticoagulantes",
+                "kind": "drug_class"
+              },
+              "id": 3,
+              "severity": "major",
+              "effect": "Elevated INR and serious bleeding risk.",
+              "mechanism": "Azole antifungals (ketoconazole, fluconazole, itraconazole) inhibit CYP2C9/CYP3A4 metabolism of warfarin.",
+              "source": "FDA azole antifungal and warfarin labeling",
+              "trust": 1,
+              "pair_key": "cls:anticoagulantes|cls:antifungicos",
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            },
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Statins",
+                "id": "estatinas",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Anticoagulants",
+                "id": "anticoagulantes",
+                "kind": "drug_class"
+              },
+              "severity": "major",
+              "effect": "FDA label for Warfarin lists Atorvastatin (Statins) as an interacting medication — major severity per DailyMed. Monitor clinical response and adjust therapy as needed.",
+              "source": "DailyMed: WARFARIN SODIUM (WARFARIN) TABLET [DENTON PHARMA, INC. DBA NORTHWIND PHARMACEUTICALS] (ce3f8677-e07d-22ea-e053-2a95a90a36c4)",
+              "trust": 1,
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            }
+          ],
+          "unmatched": [],
+          "depletions": [],
+          "beers": [],
+          "qt_risk": [],
+          "electrolytes": [],
+          "cascades": [],
+          "schedule": []
+        },
+        "source": "local_scan",
+        "scannedAt": "2026-08-26T07:29:59.796Z"
+      },
+      "favorite": false
+    },
+    {
+      "id": "scan_1787729399789_j6c31",
+      "barcode": "NAME_SIMVASTATIN",
+      "productName": "Statins",
+      "brand": "Drug class — MedMatch DB",
+      "productType": "supplement",
+      "status": "safe",
+      "score": 90,
+      "warningCount": 0,
+      "scannedAt": "2026-08-26T07:29:59.789Z",
+      "fullResult": {
+        "barcode": "NAME_SIMVASTATIN",
+        "productName": "Statins",
+        "brand": "Drug class — MedMatch DB",
+        "productType": "supplement",
+        "ingredientsText": "Statins",
+        "ingredientsList": [
+          "Statins"
+        ],
+        "allergens": [],
+        "labels": [],
+        "ingredientSafetyList": [],
+        "herbDrugAlerts": [],
+        "matchAssessment": {
+          "status": "danger",
+          "score": 25,
+          "summary": "major interaction with another batch item: Anticoagulants — engine finding",
+          "warnings": [],
+          "safeHighlights": []
+        },
+        "medMatch": {
+          "matched": [
+            {
               "input": "Statins",
               "kind": "drug_class",
               "id": "estatinas",
               "label": "Statins"
             }
           ],
-          "interactions": [],
+          "interactions": [
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Azole antifungals",
+                "id": "antifungicos",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Statins",
+                "id": "estatinas",
+                "kind": "drug_class"
+              },
+              "id": 25,
+              "severity": "major",
+              "effect": "Myopathy and rhabdomyolysis risk, especially with simvastatin and lovastatin.",
+              "mechanism": "Azole antifungals inhibit CYP3A4, raising statin plasma levels.",
+              "source": "FDA statin labeling",
+              "trust": 1,
+              "pair_key": "cls:antifungicos|cls:estatinas",
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            },
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Statins",
+                "id": "estatinas",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Anticoagulants",
+                "id": "anticoagulantes",
+                "kind": "drug_class"
+              },
+              "severity": "major",
+              "effect": "FDA label for Warfarin lists Atorvastatin (Statins) as an interacting medication — major severity per DailyMed. Monitor clinical response and adjust therapy as needed.",
+              "source": "DailyMed: WARFARIN SODIUM (WARFARIN) TABLET [DENTON PHARMA, INC. DBA NORTHWIND PHARMACEUTICALS] (ce3f8677-e07d-22ea-e053-2a95a90a36c4)",
+              "trust": 1,
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            }
+          ],
           "unmatched": [],
           "depletions": [
             {
@@ -209,12 +395,12 @@
           "schedule": []
         },
         "source": "local_scan",
-        "scannedAt": "2026-08-26T07:06:15.576Z"
+        "scannedAt": "2026-08-26T07:29:59.789Z"
       },
       "favorite": false
     },
     {
-      "id": "scan_1787727975538_u22hm",
+      "id": "scan_1787729399782_cy7lt",
       "barcode": "NAME_KETOCONAZOLE",
       "productName": "Azole antifungals",
       "brand": "Drug class — MedMatch DB",
@@ -222,7 +408,7 @@
       "status": "safe",
       "score": 90,
       "warningCount": 0,
-      "scannedAt": "2026-08-26T07:06:15.538Z",
+      "scannedAt": "2026-08-26T07:29:59.782Z",
       "fullResult": {
         "barcode": "NAME_KETOCONAZOLE",
         "productName": "Azole antifungals",
@@ -237,9 +423,9 @@
         "ingredientSafetyList": [],
         "herbDrugAlerts": [],
         "matchAssessment": {
-          "status": "safe",
-          "score": 90,
-          "summary": "No documented interactions with the active member's medications",
+          "status": "danger",
+          "score": 25,
+          "summary": "major interaction with another batch item: Anticoagulants — Azole antifungals (ketoconazole, fluconazole, itraconazole) inhibit CYP2C9/CYP3A4 metabolism of warfarin.",
           "warnings": [],
           "safeHighlights": []
         },
@@ -252,7 +438,50 @@
               "label": "Azole antifungals"
             }
           ],
-          "interactions": [],
+          "interactions": [
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Azole antifungals",
+                "id": "antifungicos",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Statins",
+                "id": "estatinas",
+                "kind": "drug_class"
+              },
+              "id": 25,
+              "severity": "major",
+              "effect": "Myopathy and rhabdomyolysis risk, especially with simvastatin and lovastatin.",
+              "mechanism": "Azole antifungals inhibit CYP3A4, raising statin plasma levels.",
+              "source": "FDA statin labeling",
+              "trust": 1,
+              "pair_key": "cls:antifungicos|cls:estatinas",
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            },
+            {
+              "type": "drug-drug",
+              "a": {
+                "label": "Azole antifungals",
+                "id": "antifungicos",
+                "kind": "drug_class"
+              },
+              "b": {
+                "label": "Anticoagulants",
+                "id": "anticoagulantes",
+                "kind": "drug_class"
+              },
+              "id": 3,
+              "severity": "major",
+              "effect": "Elevated INR and serious bleeding risk.",
+              "mechanism": "Azole antifungals (ketoconazole, fluconazole, itraconazole) inhibit CYP2C9/CYP3A4 metabolism of warfarin.",
+              "source": "FDA azole antifungal and warfarin labeling",
+              "trust": 1,
+              "pair_key": "cls:anticoagulantes|cls:antifungicos",
+              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
+            }
+          ],
           "unmatched": [],
           "depletions": [],
           "beers": [],
@@ -272,7 +501,7 @@
           "schedule": []
         },
         "source": "local_scan",
-        "scannedAt": "2026-08-26T07:06:15.538Z"
+        "scannedAt": "2026-08-26T07:29:59.782Z"
       },
       "favorite": false
     },
@@ -667,99 +896,6 @@
         },
         "source": "demo",
         "scannedAt": "2026-08-26T07:06:15.361Z"
-      },
-      "favorite": false
-    },
-    {
-      "id": "scan_1787727780570_wn22y",
-      "barcode": "NAME_WARFARIN",
-      "productName": "Anticoagulants",
-      "brand": "Drug class — MedMatch DB",
-      "productType": "supplement",
-      "status": "safe",
-      "score": 90,
-      "warningCount": 0,
-      "scannedAt": "2026-08-26T07:03:00.569Z",
-      "fullResult": {
-        "barcode": "NAME_WARFARIN",
-        "productName": "Anticoagulants",
-        "brand": "Drug class — MedMatch DB",
-        "productType": "supplement",
-        "ingredientsText": "Anticoagulants",
-        "ingredientsList": [
-          "Anticoagulants"
-        ],
-        "allergens": [],
-        "labels": [],
-        "ingredientSafetyList": [],
-        "herbDrugAlerts": [],
-        "matchAssessment": {
-          "status": "danger",
-          "score": 25,
-          "summary": "major interaction with another batch item: Statins — engine finding",
-          "warnings": [],
-          "safeHighlights": []
-        },
-        "medMatch": {
-          "matched": [
-            {
-              "input": "Anticoagulants",
-              "kind": "drug_class",
-              "id": "anticoagulantes",
-              "label": "Anticoagulants"
-            }
-          ],
-          "interactions": [
-            {
-              "type": "drug-drug",
-              "a": {
-                "label": "Azole antifungals",
-                "id": "antifungicos",
-                "kind": "drug_class"
-              },
-              "b": {
-                "label": "Anticoagulants",
-                "id": "anticoagulantes",
-                "kind": "drug_class"
-              },
-              "id": 3,
-              "severity": "major",
-              "effect": "Elevated INR and serious bleeding risk.",
-              "mechanism": "Azole antifungals (ketoconazole, fluconazole, itraconazole) inhibit CYP2C9/CYP3A4 metabolism of warfarin.",
-              "source": "FDA azole antifungal and warfarin labeling",
-              "trust": 1,
-              "pair_key": "cls:anticoagulantes|cls:antifungicos",
-              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
-            },
-            {
-              "type": "drug-drug",
-              "a": {
-                "label": "Statins",
-                "id": "estatinas",
-                "kind": "drug_class"
-              },
-              "b": {
-                "label": "Anticoagulants",
-                "id": "anticoagulantes",
-                "kind": "drug_class"
-              },
-              "severity": "major",
-              "effect": "FDA label for Warfarin lists Atorvastatin (Statins) as an interacting medication — major severity per DailyMed. Monitor clinical response and adjust therapy as needed.",
-              "source": "DailyMed: WARFARIN SODIUM (WARFARIN) TABLET [DENTON PHARMA, INC. DBA NORTHWIND PHARMACEUTICALS] (ce3f8677-e07d-22ea-e053-2a95a90a36c4)",
-              "trust": 1,
-              "action": "Do not combine. Contact your doctor or pharmacist before taking these together."
-            }
-          ],
-          "unmatched": [],
-          "depletions": [],
-          "beers": [],
-          "qt_risk": [],
-          "electrolytes": [],
-          "cascades": [],
-          "schedule": []
-        },
-        "source": "local_scan",
-        "scannedAt": "2026-08-26T07:03:00.569Z"
       },
       "favorite": false
     },
