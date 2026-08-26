@@ -10,5 +10,3 @@ personalized-product-scanner/data_storage.json
 personalized-product-scanner/eng.traineddata
 *.traineddata
 .git
-deploy
-*.md

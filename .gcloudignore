@@ -1,0 +1,19 @@
+# Cloud Build source exclusions (gcloud run deploy --source .)
+.git
+**/node_modules
+**/dist
+**/__pycache__
+**/.pytest_cache
+*.traineddata
+*.md
+
+# DB travels via GCS volume (MEDMATCH_DB), not the source archive
+medmatch/backend/medmatch.db
+medmatch/backend/medmatch.db-shm
+medmatch/backend/medmatch.db-wal
+
+# bulk/local-only data (importers' inputs, not runtime)
+medmatch/backend/data
+personalized-product-scanner/data_storage.json
+personalized-product-scanner/eng.traineddata
+deploy/DEPLOY.md

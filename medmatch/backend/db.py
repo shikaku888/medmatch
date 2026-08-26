@@ -1,10 +1,12 @@
 """SQLite schema + seeding from translated tapirro data and curated rules."""
 import json
+import os
 import sqlite3
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent / "data"
-DB_PATH = Path(__file__).parent / "medmatch.db"
+# Cloud Run: MEDMATCH_DB points at a volume-mounted DB (GCS FUSE); local default stays beside the code.
+DB_PATH = Path(os.environ.get("MEDMATCH_DB") or (Path(__file__).parent / "medmatch.db"))
 
 SEVERITY_MAP = {"alta": "major", "moderada": "moderate", "baja": "minor"}
 # Source trust tiers (plan3): FDA/EMA 1.0 > DDInter/SUPP.AI 0.9 > BotanicaAndina/NaPDI 0.8 > KG 0.7 > inference 0.5
