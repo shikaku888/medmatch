@@ -118,6 +118,25 @@ class Engine:
                     n = normalize(a)
                     if n and n not in self.foods:
                         self.foods[n] = d
+        # Unified synonym layer (unify.py): every name variant from all sources,
+        # incl. EU↔US naming (paracetamol, salbutamol, adrenaline…)
+        if self._table_exists("ingredient_synonyms"):
+            targets = {"herb": self.herbs, "drug_class": self.classes, "food": self.foods}
+            name_rows = {}
+            for row in self.conn.execute("SELECT id, name_en FROM herbs"):
+                name_rows[("herb", row["id"])] = {"id": row["id"], "name_en": row["name_en"]}
+            for row in self.conn.execute("SELECT id, name_en FROM drug_classes"):
+                name_rows[("drug_class", row["id"])] = {"id": row["id"], "name_en": row["name_en"]}
+            for row in self.conn.execute("SELECT id, name_en FROM foods"):
+                name_rows[("food", row["id"])] = {"id": row["id"], "name_en": row["name_en"]}
+            for row in self.conn.execute("SELECT kind, entity_id, synonym FROM ingredient_synonyms"):
+                target = targets.get(row["kind"])
+                entry = name_rows.get((row["kind"], row["entity_id"]))
+                if not target or not entry:
+                    continue
+                n = normalize(row["synonym"])
+                if n and n not in target:
+                    target[n] = entry
         self.class_cyp: dict[str, dict[str, set]] = {}
         self.herb_cyp: dict[str, dict[str, set]] = {}
         for row in self.conn.execute("SELECT * FROM cyp_roles"):

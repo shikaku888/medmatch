@@ -31,3 +31,6 @@ lookup_cache.db-wal
 
 # NC-licensed research backups (never distribute)
 medmatch/backend/data/_nc_backup/
+
+# DSLD bulk download (public domain, ~800MB — user-supplied, not distributed)
+medmatch/backend/data/dsld/

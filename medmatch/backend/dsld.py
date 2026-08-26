@@ -30,26 +30,25 @@ CREATE TABLE IF NOT EXISTS dsld_products (
     brand TEXT,
     ingredients TEXT
 );
-CREATE INDEX IF NOT EXISTS idx_dsld_name ON dsld_products(name);
 """
 
-# header candidate -> canonical field (checked case-insensitively, first hit wins)
+# spaces/underscores stripped ("Bar Code" -> "barcode", "Product Name" -> "productname")
 COLUMN_ALIASES = {
-    "dsld_id": ("id", "dsld_id", "productid", "product_id"),
-    "name": ("productname", "product_name", "name", "labeldescription"),
-    "brand": ("brandname", "brand_name", "brand", "distributorname"),
-    "ingredients": ("ingredients", "ingredientstatement", "ingredient_statement", "ingredientlist"),
+    "dsld_id": ("id", "dsldid", "productid", "productid"),
+    "name": ("productname", "name", "labeldescription"),
+    "brand": ("brandname", "brand", "distributorname", "companyname"),
+    "ingredients": ("ingredients", "ingredientstatement", "ingredientlist"),
 }
-UPC_ALIASES = ("upc_s", "upcs", "upc", "upc_code", "barcodes", "barcode")
+UPC_ALIASES = ("upcs", "upc", "upccode", "barcode", "barcodes")
 
 
 def _canon(header: list[str]) -> dict[str, str | None]:
     """Map canonical field -> actual CSV column name (or None)."""
-    lowered = {h.strip().lower(): h for h in header}
+    stripped = {h.strip().lower().replace(" ", "").replace("_", ""): h for h in header}
     out: dict[str, str | None] = {}
     for canon, aliases in COLUMN_ALIASES.items():
-        out[canon] = next((lowered[a] for a in aliases if a in lowered), None)
-    out["_upc"] = next((lowered[a] for a in UPC_ALIASES if a in lowered), None)
+        out[canon] = next((stripped[a] for a in aliases if a in stripped), None)
+    out["_upc"] = next((stripped[a] for a in UPC_ALIASES if a in stripped), None)
     return out
 
 
@@ -82,6 +81,45 @@ def import_csv(path: Path, conn: sqlite3.Connection) -> dict:
             rows += 1
         return {"file": path.name, "rows": rows, "barcodes": barcodes}
 
+def import_ingredients(path: Path, conn: sqlite3.Connection, kind: str) -> int:
+    """Second pass: attach ingredient statements by DSLD ID.
+    kind='other'  → OtherIngredients_*.csv (inactive, semicolon-separated)
+    kind='facts'  → DietarySupplementFacts_*.csv (one row per nutrient)"""
+    stripped = None
+    updated = 0
+    with path.open(encoding="utf-8-sig", newline="") as fh:
+        reader = csv.DictReader(fh)
+        fields = {f.strip().lower().replace(" ", "").replace("_", ""): f for f in (reader.fieldnames or [])}
+        dsld_col = fields.get("dsldid")
+        if not dsld_col:
+            return 0
+        per_product: dict[str, list[str]] = {}
+        if kind == "other":
+            other_col = fields.get("otheringredients")
+            for r in reader:
+                did = (r.get(dsld_col) or "").strip()
+                text = (r.get(other_col) or "").strip() if other_col else ""
+                if did and text:
+                    per_product[did] = [s.strip() for s in text.split(";") if s.strip()]
+        else:
+            name_col = fields.get("ingredient")
+            amount_col = fields.get("amountperserving")
+            unit_col = fields.get("amountperservingunit")
+            for r in reader:
+                did = (r.get(dsld_col) or "").strip()
+                ing = (r.get(name_col) or "").strip() if name_col else ""
+                if not did or not ing:
+                    continue
+                amount = (r.get(amount_col) or "").strip() if amount_col else ""
+                unit = (r.get(unit_col) or "").strip() if unit_col else ""
+                per_product.setdefault(did, []).append(f"{ing} {amount} {unit}".strip())
+        for did, parts in per_product.items():
+            cur = conn.execute(
+                "UPDATE dsld_products SET ingredients = COALESCE(NULLIF(ingredients, '') || ' | ', '') || ?"
+                " WHERE dsld_id = ?", ("; ".join(parts), did))
+            updated += cur.rowcount
+    return updated
+
 
 def run() -> dict:
     conn = sqlite3.connect(DB_PATH, timeout=30)
@@ -97,8 +135,13 @@ def run() -> dict:
             stats = import_csv(f, conn)
             print(stats)
             total_bc += stats.get("barcodes", 0)
+        for f in sorted(DATA_DIR.glob("OtherIngredients_*.csv")):
+            n = import_ingredients(f, conn, "other")
+            print(f"other ingredients: {f.name} → {n} products updated")
+        for f in sorted(DATA_DIR.glob("DietarySupplementFacts_*.csv")):
+            n = import_ingredients(f, conn, "facts")
+            print(f"active ingredients: {f.name} → {n} products updated")
         conn.commit()
-        n = conn.execute("SELECT COUNT(*) FROM dsld_products").fetchone()[0]
         print(f"total dsld_products barcodes: {n}")
         return {"files": len(files), "barcodes": total_bc}
     finally:
