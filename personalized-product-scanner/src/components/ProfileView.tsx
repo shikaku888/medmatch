@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { UserProfile, DietType, SpecialCondition, SupportedLanguage } from '../types';
-import { LANGUAGE_OPTIONS } from '../i18n';
+import { LANGUAGE_OPTIONS, getTranslation } from '../i18n';
 import { 
   UserCircle, 
   ShieldAlert, 
@@ -24,6 +24,7 @@ interface ProfileViewProps {
   userProfile: UserProfile;
   onSaveProfile: (updated: UserProfile) => Promise<void>;
   onApplyPreset: (presetKey: string) => void;
+  language?: SupportedLanguage;
 }
 
 const FOOD_ALLERGENS = [
@@ -74,8 +75,10 @@ const SPECIAL_CONDITIONS: { key: SpecialCondition; label: string; desc: string; 
 export const ProfileView: React.FC<ProfileViewProps> = ({
   userProfile,
   onSaveProfile,
-  onApplyPreset
+  onApplyPreset,
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const [profile, setProfile] = useState<UserProfile>({ ...userProfile });
   const [customTagInput, setCustomTagInput] = useState('');
   const [isSaved, setIsSaved] = useState(false);
@@ -141,10 +144,10 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           </div>
           <div>
             <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-              Personal Suitability Profile
+              {t('profileTitle', 'Personal Suitability Profile')}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Configure your allergies, dietary preferences, and physiological parameters for automatic product validation.
+              {t('profileSubtitle', 'Configure your allergies, dietary preferences, and physiological parameters for automatic product validation.')}
             </p>
           </div>
         </div>
@@ -158,12 +161,12 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           {isSaved ? (
             <>
               <Check className="w-4 h-4" />
-              <span>Profile Saved!</span>
+              <span>{t('profileSavedSuccess', 'Profile Saved!')}</span>
             </>
           ) : (
             <>
               <Save className="w-4 h-4" />
-              <span>Save Changes</span>
+              <span>{t('saveProfileBtn', 'Save Changes')}</span>
             </>
           )}
         </button>
@@ -174,7 +177,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         <div className="flex items-center space-x-2">
           <Sparkles className="w-4 h-4 text-blue-600" />
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600">
-            Quick Persona Profiles (One-Click Presets)
+            {t('pvPresets', 'Quick Persona Profiles (One-Click Presets)')}
           </h3>
         </div>
 
@@ -219,7 +222,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           <div className="flex items-center space-x-2">
             <ShieldAlert className="w-5 h-5 text-rose-600" />
             <h3 className="text-base font-bold text-slate-900">
-              1. Declared Allergies & Critical Exclusions (High Priority)
+              {t('pvSectionAllergies', '1. Declared Allergies & Critical Exclusions (High Priority)')}
             </h3>
           </div>
           <p className="text-xs text-slate-500">
@@ -230,7 +233,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         {/* Food Allergens */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600">
-            Food Allergens
+            {t('pvFoodAllergens', 'Food Allergens')}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
             {FOOD_ALLERGENS.map((item) => {
@@ -261,7 +264,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         {/* Cosmetic Allergens */}
         <div className="space-y-3 pt-2">
           <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600">
-            Cosmetic & Skincare Sensitizers
+            {t('pvCosmeticSensitizers', 'Cosmetic & Skincare Sensitizers')}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
             {COSMETIC_ALLERGENS.map((item) => {
@@ -292,7 +295,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         {/* Custom User Allergens Tag Input */}
         <div className="space-y-3 pt-4 border-t border-slate-200">
           <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600">
-            Custom Allergen & Sensitivity Keywords
+            {t('pvCustomKeywords', 'Custom Allergen & Sensitivity Keywords')}
           </h4>
           <p className="text-xs text-slate-500">
             Add specific custom ingredients for the evaluator to monitor (e.g. "MSG", "Caffeine", "Coconut oil", "Aspartame").
@@ -343,7 +346,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           <div className="flex items-center space-x-2">
             <Utensils className="w-5 h-5 text-blue-600" />
             <h3 className="text-base font-bold text-slate-900">
-              2. Primary Dietary Regimen
+              {t('pvSectionDiet', '2. Primary Dietary Regimen')}
             </h3>
           </div>
           <p className="text-xs text-slate-500">
@@ -384,7 +387,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           <div className="flex items-center space-x-2">
             <HeartPulse className="w-5 h-5 text-blue-600" />
             <h3 className="text-base font-bold text-slate-900">
-              3. Physiological & Health Conditions
+              {t('pvSectionConditions', '3. Physiological & Health Conditions')}
             </h3>
           </div>
           <p className="text-xs text-slate-500">
@@ -435,7 +438,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           <div className="flex items-center space-x-2">
             <Languages className="w-5 h-5 text-blue-600" />
             <h3 className="text-base font-bold text-slate-900">
-              4. Display & Interface Language
+              {t('pvSectionLanguage', '4. Display & Interface Language')}
             </h3>
           </div>
           <p className="text-xs text-slate-500">
@@ -477,7 +480,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           <div className="flex items-center space-x-2">
             <Pill className="w-5 h-5 text-rose-600" />
             <h3 className="text-base font-bold text-slate-900">
-              5. Active Prescriptions & Herb-Drug Radar
+              {t('pvSectionPrescriptions', '5. Active Prescriptions & Herb-Drug Radar')}
             </h3>
           </div>
           <p className="text-xs text-slate-500">
@@ -521,7 +524,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             <div className="flex items-center space-x-2">
               <HeartPulse className="w-5 h-5 text-rose-600" />
               <h3 className="text-base font-bold text-slate-900">
-                6. Medical Context (Age, Organs, Pregnancy)
+                {t('pvSectionMedical', '6. Medical Context (Age, Organs, Pregnancy)')}
               </h3>
             </div>
             <p className="text-xs text-slate-500">

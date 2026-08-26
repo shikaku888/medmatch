@@ -102,7 +102,7 @@ export default function App() {
       const res = await fetch('/api/profile');
       if (res.ok) {
         const data: UserProfile = await res.json();
-        const validLanguages: SupportedLanguage[] = ['en', 'fr', 'de', 'it', 'es'];
+        const validLanguages: SupportedLanguage[] = ['en', 'vi', 'fr', 'de', 'it', 'es'];
         const validCountries: SupportedCountry[] = ['US', 'UK', 'FR', 'DE', 'IT', 'ES'];
 
         const rawLang = localStorage.getItem('medmatch_lang') as SupportedLanguage | null;
@@ -480,6 +480,7 @@ export default function App() {
         {currentTab === 'profile' && (
           <div className="animate-fade-in">
             <ProfileView
+              language={userProfile.language || 'en'}
               userProfile={userProfile}
               onSaveProfile={handleSaveProfile}
               onApplyPreset={handleApplyPreset}
@@ -526,6 +527,7 @@ export default function App() {
       {/* 1. PubMed Evidence Modal */}
       {selectedEvidence && (
         <EvidenceModal
+          language={userProfile.language || 'en'}
           research={selectedEvidence}
           onClose={() => setSelectedEvidence(null)}
         />
@@ -533,6 +535,7 @@ export default function App() {
 
       {/* 2. Family Profiles Modal */}
       <FamilyProfilesModal
+        language={userProfile.language || 'en'}
         isOpen={isFamilyModalOpen}
         onClose={() => setIsFamilyModalOpen(false)}
         activeProfile={userProfile}
@@ -542,6 +545,7 @@ export default function App() {
       {/* 3. AI Dietitian Consultation Modal */}
       {currentScanResult && (
         <AiDietitianChatModal
+          language={userProfile.language || 'en'}
           isOpen={isAiChatModalOpen}
           onClose={() => setIsAiChatModalOpen(false)}
           product={currentScanResult}
@@ -551,6 +555,7 @@ export default function App() {
 
       {/* 4. Pro Upgrade Modal */}
       <ProUpgradeModal
+        language={userProfile.language || 'en'}
         isOpen={isProModalOpen}
         onClose={() => setIsProModalOpen(false)}
         onUpgradeSuccess={() => setIsProUser(true)}
@@ -571,6 +576,7 @@ export default function App() {
 
       {/* 6. Receipt & Cart Audit Scanner Modal */}
       <ReceiptCartAuditModal
+        language={userProfile.language || 'en'}
         isOpen={isReceiptAuditModalOpen}
         onClose={() => setIsReceiptAuditModalOpen(false)}
         userProfile={userProfile}
@@ -594,6 +600,7 @@ export default function App() {
 
       {/* 8. Cross-Reactivity Clinical Matrix Modal */}
       <CrossReactivityModal
+        language={userProfile.language || 'en'}
         isOpen={isCrossReactivityModalOpen}
         onClose={() => setIsCrossReactivityModalOpen(false)}
         userProfile={userProfile}
@@ -601,6 +608,7 @@ export default function App() {
 
       {/* 9. Cosmeceutical Skincare Routine Radar & Active Collisions Shelf Modal */}
       <SkincareRoutineRadarModal
+        language={userProfile.language || 'en'}
         isOpen={isSkincareRadarModalOpen}
         onClose={() => setIsSkincareRadarModalOpen(false)}
       />

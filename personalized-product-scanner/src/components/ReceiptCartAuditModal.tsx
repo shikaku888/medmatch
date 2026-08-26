@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { 
-  ReceiptAuditResult, 
-  ParsedReceiptItem, 
-  UserProfile, 
-  FamilyProfile, 
-  ProductScanResult 
+import {
+  ReceiptAuditResult,
+  ParsedReceiptItem,
+  UserProfile,
+  FamilyProfile,
+  ProductScanResult,
+  SupportedLanguage
 } from '../types';
+import { getTranslation } from '../i18n';
 import { 
   Receipt, 
   Camera, 
@@ -35,6 +37,7 @@ interface ReceiptCartAuditModalProps {
   userProfile: UserProfile;
   familyProfiles: FamilyProfile[];
   onSelectProduct?: (barcode: string) => void;
+  language?: SupportedLanguage;
 }
 
 const SAMPLE_RECEIPTS = [
@@ -97,8 +100,10 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
   onClose,
   userProfile,
   familyProfiles,
-  onSelectProduct
+  onSelectProduct,
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const [mode, setMode] = useState<'upload' | 'text' | 'sample'>('sample');
   const [receiptText, setReceiptText] = useState(SAMPLE_RECEIPTS[0].text);
   const [storeHint, setStoreHint] = useState(SAMPLE_RECEIPTS[0].store);
@@ -179,7 +184,7 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h3 className="text-lg font-bold">Batch Receipt & Shopping Cart Audit</h3>
+                <h3 className="text-lg font-bold">{t('receiptTitle', 'Batch Receipt & Shopping Cart Audit')}</h3>
                 <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[10px] font-bold uppercase tracking-wider">
                   AI Vision 3.7
                 </span>
@@ -319,7 +324,7 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
                       <div className="w-12 h-12 mx-auto rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
                         <Upload className="w-6 h-6" />
                       </div>
-                      <h4 className="text-sm font-bold text-slate-800">Upload or Photograph Supermarket Receipt</h4>
+                      <h4 className="text-sm font-bold text-slate-800">{t('receiptUpload', 'Upload or Photograph Supermarket Receipt')}</h4>
                       <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
                         Supports receipts from Trader Joe's, Costco, Tesco, Carrefour, Edeka, Whole Foods, or online order bills.
                       </p>

@@ -1,13 +1,16 @@
 import React from 'react';
-import { ResearchData, PubMedCitation } from '../types';
+import { ResearchData, PubMedCitation, SupportedLanguage } from '../types';
+import { getTranslation } from '../i18n';
 import { BookOpen, ExternalLink, X, Award, CheckCircle2, FileText, Search } from 'lucide-react';
 
 interface EvidenceModalProps {
   research: ResearchData | null;
   onClose: () => void;
+  language?: SupportedLanguage;
 }
 
-export const EvidenceModal: React.FC<EvidenceModalProps> = ({ research, onClose }) => {
+export const EvidenceModal: React.FC<EvidenceModalProps> = ({ research, onClose, language = 'en' }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   if (!research) return null;
 
   return (
@@ -25,7 +28,7 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ research, onClose 
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="font-bold text-lg text-slate-900 tracking-tight">
-                  NCBI PubMed Clinical Evidence
+                  {t('evidenceTitle', 'NCBI PubMed Clinical Evidence')}
                 </h3>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wider">
                   Peer-Reviewed

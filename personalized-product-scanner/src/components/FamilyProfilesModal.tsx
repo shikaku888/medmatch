@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FamilyProfile, UserProfile, AllergenKey, DietType, SpecialCondition } from '../types';
+import { FamilyProfile, UserProfile, AllergenKey, DietType, SpecialCondition, SupportedLanguage } from '../types';
+import { getTranslation } from '../i18n';
 import { 
   Users, 
   UserPlus, 
@@ -19,14 +20,17 @@ interface FamilyProfilesModalProps {
   onClose: () => void;
   activeProfile: UserProfile;
   onProfileSwitched: (newProfile: UserProfile) => void;
+  language?: SupportedLanguage;
 }
 
 export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
   isOpen,
   onClose,
   activeProfile,
-  onProfileSwitched
+  onProfileSwitched,
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const [profiles, setProfiles] = useState<FamilyProfile[]>([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<FamilyProfile>>({
@@ -172,9 +176,9 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
               <Users className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold">Household & Family Profiles</h3>
+              <h3 className="text-lg font-bold">{t('familyTitle', 'Household & Family Profiles')}</h3>
               <p className="text-xs text-slate-400">
-                Switch profiles to instantly re-evaluate products against each member's biological safety profile.
+                {t('familySubtitle', "Switch profiles to instantly re-evaluate products against each member's biological safety profile.")}
               </p>
             </div>
           </div>
@@ -299,7 +303,7 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
                         <span className={`block w-full text-center py-1.5 rounded-lg text-xs font-bold ${
                           isActive ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
                         }`}>
-                          {isActive ? 'Currently Active' : 'Click to Switch'}
+                          {isActive ? t('familyActive', 'Currently Active') : t('familySwitch', 'Click to Switch')}
                         </span>
                       </div>
                     </div>
@@ -312,7 +316,7 @@ export const FamilyProfilesModal: React.FC<FamilyProfilesModalProps> = ({
             <form onSubmit={handleSaveProfile} className="space-y-4">
               <div className="flex items-center justify-between pb-2 border-b border-slate-200">
                 <h4 className="text-sm font-bold text-slate-900">
-                  {editData.id ? 'Edit Household Member' : 'Add New Household Member'}
+                          {editData.id ? t('familyEdit', 'Edit Household Member') : t('familyAdd', 'Add New Household Member')}
                 </h4>
                 <button
                   type="button"

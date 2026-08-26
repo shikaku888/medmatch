@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ProductScanResult, UserProfile } from '../types';
+import { ProductScanResult, UserProfile, SupportedLanguage } from '../types';
+import { getTranslation } from '../i18n';
 import { 
   Sparkles, 
   Send, 
@@ -18,6 +19,7 @@ interface AiDietitianChatModalProps {
   onClose: () => void;
   product: ProductScanResult;
   userProfile: UserProfile;
+  language?: SupportedLanguage;
 }
 
 interface Message {
@@ -30,8 +32,10 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
   isOpen,
   onClose,
   product,
-  userProfile
+  userProfile,
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const medAlerts = product.medMatch?.interactions || [];
   const sevRank = (s: typeof medAlerts[number]['severity']) => (s === 'major' ? 0 : s === 'moderate' ? 1 : s === 'minor' ? 2 : 3);
   const topAlert = [...medAlerts].sort((a, b) => sevRank(a.severity) - sevRank(b.severity))[0];
@@ -39,7 +43,9 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      text: `Hi! I'm the supplementary AI advisor of MedMatch AI. The engine already checked "${product.productName}" against verified databases${medAlerts.length ? ` — ${medAlerts.length} interaction alert(s) on file` : ' — no interaction alerts on file'}. I can explain what the alerts mean and what to ask your doctor, but the alerts themselves — not this chat — are the authority.`,
+      text: t('aiGreeting', 'Hi! I\'m the supplementary AI advisor of MedMatch AI. The engine already checked "{name}" against verified databases{alerts}. I can explain what the alerts mean and what to ask your doctor, but the alerts themselves — not this chat — are the authority.')
+        .replace('{name}', product.productName)
+        .replace('{alerts}', medAlerts.length ? ` — ${medAlerts.length} ${t('aiAlertsOnFile', 'interaction alert(s) on file')}` : ` — ${t('aiNoAlerts', 'no interaction alerts on file')}`),
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -119,7 +125,7 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
             </div>
             <div>
               <div className="flex items-center space-x-1.5">
-                <h3 className="text-sm font-bold">Ask AI Health Advisor</h3>
+                <h3 className="text-sm font-bold">{t('aiTitle', 'Ask AI Health Advisor')}</h3>
                 <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-500 text-white uppercase">
                   Pro AI
                 </span>
@@ -141,7 +147,7 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
         <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 flex items-start space-x-2 shrink-0">
           <ShieldAlert className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
           <p className="text-[10px] leading-snug text-amber-800 font-medium">
-            Supplementary AI advisory (Pro) — safety verdicts come from the MedMatch engine (SUPP.AI · DDInter · DailyMed · FDA). This chat explains the alerts; it never overrides or replaces them.
+            {t('aiDisclaimer', 'Supplementary AI advisory (Pro) — safety verdicts come from the MedMatch engine (SUPP.AI · DDInter · DailyMed · FDA). This chat explains the alerts; it never overrides or replaces them.')}
           </p>
         </div>
 
@@ -188,7 +194,7 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
           {loading && (
             <div className="flex items-center space-x-2 text-xs text-slate-500 bg-white p-3 rounded-xl border border-slate-200 w-fit">
               <RefreshCw className="w-3.5 h-3.5 animate-spin text-blue-600" />
-              <span>Analyzing biomedical database & formulating advice...</span>
+              <span>{t('aiLoading', 'Analyzing biomedical database & formulating advice...')}</span>
             </div>
           )}
         </div>
@@ -214,7 +220,7 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-            placeholder="Ask a clinical question about this product..."
+            placeholder={t('aiPlaceholder', 'Ask a clinical question about this product...')}
             disabled={loading}
             className="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500"
           />
@@ -228,7 +234,7 @@ export const AiDietitianChatModal: React.FC<AiDietitianChatModalProps> = ({
         </div>
 
         <p className="px-3 py-1.5 bg-slate-100 border-t border-slate-200 text-[9px] text-slate-500 font-medium shrink-0">
-          AI chat is not a medical alert or diagnosis — always confirm with the interaction alerts above and a healthcare professional.
+          {t('aiFooter', 'AI chat is not a medical alert or diagnosis — always confirm with the interaction alerts above and a healthcare professional.')}
         </p>
       </div>
     </div>

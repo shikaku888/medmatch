@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { getTranslation } from '../i18n';
+import { SupportedLanguage } from '../types';
 import { 
   Sparkles, 
   ShieldCheck, 
@@ -18,14 +20,17 @@ interface ProUpgradeModalProps {
   onClose: () => void;
   onUpgradeSuccess: () => void;
   isProUser: boolean;
+  language?: SupportedLanguage;
 }
 
 export const ProUpgradeModal: React.FC<ProUpgradeModalProps> = ({
   isOpen,
   onClose,
   onUpgradeSuccess,
-  isProUser
+  isProUser,
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
   const [loading, setLoading] = useState(false);
 
@@ -88,7 +93,7 @@ export const ProUpgradeModal: React.FC<ProUpgradeModalProps> = ({
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-white mt-3 tracking-tight">
-            Elevate Your Family's Biological Safety
+            {t('proHeadline', "Elevate Your Family's Biological Safety")}
           </h2>
           <p className="text-sm text-slate-300 mt-2 max-w-md">
             Unlock advanced toxicological screening, AI-powered smart swaps, and comprehensive family health monitoring.
@@ -104,7 +109,7 @@ export const ProUpgradeModal: React.FC<ProUpgradeModalProps> = ({
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Monthly ($7.99/mo)
+              {t('proMonthly', 'Monthly')} ($7.99/mo)
             </button>
             <button
               onClick={() => setBillingCycle('yearly')}
@@ -114,7 +119,7 @@ export const ProUpgradeModal: React.FC<ProUpgradeModalProps> = ({
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <span>Annual ($4.99/mo)</span>
+              <span>{t('proAnnual', 'Annual')} ($4.99/mo)</span>
               <span className="px-1.5 py-0.2 rounded-full bg-emerald-500 text-white text-[9px] font-extrabold uppercase">
                 Save 37%
               </span>

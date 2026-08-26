@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { CrossReactivityRule, UserProfile, FamilyProfile } from '../types';
+import { CrossReactivityRule, UserProfile, FamilyProfile, SupportedLanguage } from '../types';
+import { getTranslation } from '../i18n';
 import { 
   X, 
   ShieldAlert, 
@@ -22,14 +23,17 @@ interface CrossReactivityModalProps {
   onClose: () => void;
   userProfile: UserProfile;
   familyProfiles?: FamilyProfile[];
+  language?: SupportedLanguage;
 }
 
 export const CrossReactivityModal: React.FC<CrossReactivityModalProps> = ({
   isOpen,
   onClose,
   userProfile,
-  familyProfiles = []
+  familyProfiles = [],
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const [rules, setRules] = useState<CrossReactivityRule[]>([]);
   const [selectedRuleId, setSelectedRuleId] = useState<string>('birch_pollen_oas');
   const [searchQuery, setSearchQuery] = useState('');
@@ -95,14 +99,14 @@ export const CrossReactivityModal: React.FC<CrossReactivityModalProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="font-bold text-slate-900 text-base sm:text-lg">
-                  Biological Cross-Reactivity Matrix
+                  {t('crossTitle', 'Biological Cross-Reactivity Matrix')}
                 </h3>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
                   Clinical Immunology Standards
                 </span>
               </div>
               <p className="text-xs text-slate-500">
-                Analyze epitope protein homology, Pollen Food Allergy Syndrome (PFAS/OAS), Latex-Fruit syndrome, and CMPA clinical risk rates.
+                {t('crossSubtitle', 'Analyze epitope protein homology, Pollen Food Allergy Syndrome (PFAS/OAS), Latex-Fruit syndrome, and CMPA clinical risk rates.')}
               </p>
             </div>
           </div>

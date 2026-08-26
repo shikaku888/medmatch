@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { UserRoutineProduct, RoutineAuditCheckResult, SkincareActiveItem } from '../types';
+import { UserRoutineProduct, RoutineAuditCheckResult, SkincareActiveItem, SupportedLanguage } from '../types';
+import { getTranslation } from '../i18n';
 import { 
   X, 
   Sparkles, 
@@ -24,12 +25,15 @@ interface SkincareRoutineRadarModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectProduct?: (productName: string) => void;
+  language?: SupportedLanguage;
 }
 
 export const SkincareRoutineRadarModal: React.FC<SkincareRoutineRadarModalProps> = ({
   isOpen,
-  onClose
+  onClose,
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const [activeTab, setActiveTab] = useState<'routine' | 'radar' | 'cycling'>('radar');
   const [routine, setRoutine] = useState<UserRoutineProduct[]>([]);
   const [auditResult, setAuditResult] = useState<RoutineAuditCheckResult | null>(null);
@@ -161,7 +165,7 @@ export const SkincareRoutineRadarModal: React.FC<SkincareRoutineRadarModalProps>
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="font-bold text-slate-900 text-base sm:text-lg">
-                  Skincare Actives Radar & Vanity Shelf
+                  {t('skinTitle', 'Skincare Actives Radar & Vanity Shelf')}
                 </h3>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-teal-800 border border-teal-200">
                   Cosmeceutical & Routine Audit
@@ -359,7 +363,7 @@ export const SkincareRoutineRadarModal: React.FC<SkincareRoutineRadarModalProps>
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold text-slate-900">
-                    Daily Skincare Products Shelf
+                    {t('skinShelf', 'Daily Skincare Products Shelf')}
                   </h4>
                   <p className="text-xs text-slate-500">
                     Save your skincare routine so AI automatically cross-audits compatibility whenever you scan a new item.
