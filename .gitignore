@@ -20,3 +20,6 @@ server.js
 # OS / editor
 Thumbs.db
 .DS_Store
+
+# Tesseract runtime language cache
+ing.traineddata
