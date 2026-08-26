@@ -134,9 +134,17 @@ async def lookup(barcode: str):
         raise HTTPException(400, "Invalid barcode")
     data = _fetch_off(barcode)
     if not data or data.get("status") != 1:
+        # NIH DSLD — US dietary supplement labels (public domain), bulk-imported
+        from .dsld import lookup as dsld_lookup
+        dsld = dsld_lookup(barcode)
+        if dsld:
+            ingredients = [s.strip() for s in (dsld.get("ingredients") or "").split(",") if s.strip()]
+            return {"barcode": barcode, "name": dsld.get("name") or f"DSLD {barcode}",
+                    "brands": dsld.get("brand") or "", "ingredients": ingredients,
+                    "matched_ingredients": [], "source": "NIH DSLD"}
         fallback = _fetch_upcitemdb(barcode)
         if not fallback:
-            raise HTTPException(404, "Product not found (Open Food Facts + UPCitemdb)")
+            raise HTTPException(404, "Product not found (Open Food Facts + NIH DSLD + UPCitemdb)")
         return {"barcode": barcode, "name": fallback["name"], "brands": fallback["brand"],
                 "ingredients": [], "matched_ingredients": [], "source": "UPCitemdb"}
     p = data["product"]
