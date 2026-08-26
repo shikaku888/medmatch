@@ -61,3 +61,28 @@
 - **Engine match index** giờ nạp cả `ingredient_synonyms` — thêm synonym mới = chỉ cần INSERT vào bảng đó + restart (không cần sửa engine).
 - **Sửa file scanner nhiều lần liên tiếp → restart `bun run dev`** (vite stale graph, xem §4.4).
 - Kế hoạch tổng: `KeHoach_XayDung_MedMatchAI_v2.md` · kiến trúc 7 lớp: `brain.md` · tích hợp UI: `KeHoach_TichHop_Frontend_MedMatchAI.md` (Giai đoạn 1-3 xong, Giai đoạn 4 còn Health Dashboard/Compare đã làm một phần, offline cache xong).
+
+---
+
+## 6. 🎯 MỤC TIÊU CUỐI: iOS APP LÊN APP STORE (chốt 2026-08-27)
+
+**Quyết định kiến trúc chốt:**
+- **React (personalized-product-scanner) = UI chính** (giao diện đẹp, 6 ngôn ngữ, 21 components) — medmatch `static/` chỉ để THAM KHẢO, ngừng phát triển.
+- **FastAPI :8765 = engine service** (7-layer logic + dữ liệu). Browser/app chỉ nói chuyện với BFF :3000 — một origin.
+- **iOS = Capacitor wrap** React app (KHÔNG rewrite React Native). Đúng hướng plan1 đã đề: camera + OCR nhãn.
+
+**Chuỗi tiền điều kiện App Store (theo thứ tự):**
+1. **Deploy engine lên cloud** — app trên điện thoại KHÔNG gọi được localhost. Cloud Run khớp `metadata.json` (AI Studio) đã có. Ưu tiên gộp Express BFF vào một service deploy duy nhất (1 URL cho app).
+2. **Native hóa 2 tính năng** (Capacitor plugin):
+   - Camera/quét barcode: ZXing hiện chạy được trên iOS Safari (getUserMedia) — giữ, thêm Capacitor Camera plugin cho chụp nhãn.
+   - OCR: chuyển sang **Apple Vision (text recognition)** qua Capacitor plugin khi chạy trên iOS; Tesseract.js làm fallback web.
+3. **Capacitor init**: `npm i @capacitor/core @capacitor/cli` → `npx cap init` → `npx cap add ios` (⚠️ bước `pod install` cần macOS — build iOS trên Windows KHÔNG được; dùng Mac thật hoặc CI: GitHub Actions macOS runner / Codemagic).
+4. **Apple Developer Account** ($99/năm) + App Store Connect tạo app.
+5. **Compliance app y tế (App Review 1.4.1):**
+   - Disclaimer y tế đã có VERBATIM (FDA) ✓ — phải hiển thị ở màn đầu tiên/kết quả, không chỉ footer
+   - KHÔNG hứa chẩn đoán/điều trị — wording hiện tại đã an toàn ("reference information")
+   - Privacy Nutrition Labels: dữ liệu tủ thuốc nằm local (localStorage) = không thu thập ✓ — nếu sau này sync cloud thì phải mã hóa + khai báo
+   - Tài khoản demo + video demo cho reviewer
+6. **Trước khi submit:** test B đạt ≥10/11 (thêm 4-6 luật seed FDA — xem §4.1), 131 cặp CYP pending cần dược sĩ duyệt hoặc tạm ẩn trust 0.5 khỏi kết quả iOS.
+
+**Khởi động dev local:** chạy `start-medmatch.bat` (engine :8765 + app :3000, tự mở trình duyệt).
