@@ -559,6 +559,7 @@ export default function App() {
 
       {/* 5. Batch / Pantry Audit Scanner Modal */}
       <BatchScanModal
+        language={userProfile.language || 'en'}
         isOpen={isBatchModalOpen}
         onClose={() => setIsBatchModalOpen(false)}
         userProfile={userProfile}

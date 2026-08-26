@@ -1,5 +1,5 @@
 export type SupportedCountry = 'US' | 'UK' | 'FR' | 'DE' | 'IT' | 'ES';
-export type SupportedLanguage = 'en' | 'fr' | 'de' | 'it' | 'es';
+export type SupportedLanguage = 'en' | 'vi' | 'fr' | 'de' | 'it' | 'es';
 
 export type AllergenKey =
   | 'peanut'

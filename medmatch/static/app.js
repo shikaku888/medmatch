@@ -2,6 +2,7 @@
 "use strict";
 
 const $ = (sel) => document.querySelector(sel);
+const t = (k, fb) => (window.I18N ? window.I18N.t(k, fb) : (fb || k));
 
 /* ---------- profile + cabinet store (localStorage) ---------- */
 const CAB_KEY = "medmatch_cabinet_v1";
@@ -463,10 +464,10 @@ async function runCheck() {
   const box = $("#check-content");
   if (!cabinet.length) {
     box.innerHTML =
-      '<div class="card"><h2>Nothing to check yet</h2><p class="muted">Add your supplements and medications first.</p></div>';
+      '<div class="card"><h2>' + t("msg_nothing", "Nothing to check yet") + '</h2><p class="muted">' + t("msg_nothing_intro", "Add your supplements and medications first.") + "</p></div>";
     return;
   }
-  box.innerHTML = '<div class="card"><div class="empty-note">Analyzing ' + cabinet.length + " items…</div></div>";
+  box.innerHTML = '<div class="card"><div class="empty-note">' + t("msg_analyzing", "Analyzing") + " " + cabinet.length + " " + t("msg_items", "items…") + "</div></div>";
   try {
     const payload = cabinet.map((c) =>
       c.kind === "herb" || c.kind === "drug_class" || c.kind === "food"
@@ -484,7 +485,7 @@ async function runCheck() {
     const data = await res.json();
     renderCheckResults(data);
   } catch {
-    box.innerHTML = '<div class="card"><div class="empty-note">Server unreachable — is the backend running?</div></div>';
+    box.innerHTML = '<div class="card"><div class="empty-note">' + t("msg_unreachable", "Server unreachable — is the backend running?") + "</div></div>";
   }
 }
 function renderCheckResults(data) {
@@ -499,14 +500,14 @@ function renderCheckResults(data) {
   const minor = data.interactions.filter((i) => i.severity === "minor").length;
   const evidence = data.interactions.length - major - moderate - minor;
   if (!data.interactions.length) {
-    h2.textContent = "No known interactions";
+    h2.textContent = t("msg_no_interactions", "No known interactions");
     const ok = document.createElement("div");
     ok.className = "ok-box";
-    ok.textContent = "✓ No documented interactions were found among these items.";
+    ok.textContent = t("msg_none_found", "✓ No documented interactions were found among these items.");
     head.append(h2, ok);
   } else {
     h2.textContent = major
-      ? major + " serious warning" + (major > 1 ? "s" : "") + " found"
+      ? major + " " + t("summary_major", "serious warning") + (major > 1 && window.I18N.lang === "en" ? "s" : "") + " " + t("summary_warnings_found", "found")
       : "Interaction summary";
     const summary = document.createElement("p");
     summary.className = "muted";
@@ -520,10 +521,10 @@ function renderCheckResults(data) {
     const card = document.createElement("div");
     card.className = "card";
     const h3 = document.createElement("h3");
-    h3.textContent = "Could not identify";
+    h3.textContent = t("title_unmatched", "Could not identify");
     const p = document.createElement("p");
     p.className = "muted";
-    p.textContent = "These items were not recognized — check spelling or add them via search:";
+    p.textContent = t("unmatched_intro", "These items were not recognized — check spelling or add them via search:");
     const chips = document.createElement("div");
     chips.className = "chips";
     data.unmatched.forEach((u) => {
@@ -551,10 +552,10 @@ function renderCheckResults(data) {
     const depCard = document.createElement("div");
     depCard.className = "card";
     const h3 = document.createElement("h3");
-    h3.textContent = "Nutrient depletion watch";
+    h3.textContent = t("title_depletions", "Nutrient depletion watch");
     const sub = document.createElement("p");
     sub.className = "muted";
-    sub.textContent = "These medications may deplete nutrients over time — worth discussing supplementation with your doctor.";
+    sub.textContent = t("depletions_intro", "These medications may deplete nutrients over time — worth discussing supplementation with your doctor.");
     depCard.append(h3, sub);
     data.depletions.forEach((d) => {
       const row = document.createElement("div");
@@ -565,7 +566,7 @@ function renderCheckResults(data) {
       sev.textContent = d.severity;
       const label = document.createElement("span");
       label.className = "dep-label";
-      label.textContent = "May deplete " + d.ingredient + (d.effect_size ? " (" + d.effect_size + ")" : "");
+      label.textContent = t("summary_may_deplete", "May deplete") + " " + d.ingredient + (d.effect_size ? " (" + d.effect_size + ")" : "");
       const mech = document.createElement("div");
       mech.className = "dep-mech";
       mech.textContent = d.mechanism || "";
@@ -580,7 +581,8 @@ function renderCheckResults(data) {
   const p = document.createElement("p");
   p.className = "muted small";
   p.innerHTML =
-    "<i>This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</i>";
+    "<i>This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</i>"
+    + "<br>" + escapeHtml(t("fda_extra", "Information above is an automated reference from public databases, not medical advice. Consult a licensed physician or pharmacist."));
   fda.appendChild(p);
   box.appendChild(fda);
 
@@ -588,7 +590,7 @@ function renderCheckResults(data) {
   save.className = "card no-print";
   const btn = document.createElement("button");
   btn.className = "btn primary wide";
-  btn.textContent = "Print / Save as PDF";
+  btn.textContent = t("btn_print", "Print / Save as PDF");
   btn.addEventListener("click", () => window.print());
   save.appendChild(btn);
   box.appendChild(save);
@@ -606,7 +608,7 @@ function renderInteraction(inter) {
   pair.textContent = inter.a.label + " × " + inter.b.label;
   const sev = document.createElement("span");
   sev.className = "sev " + (isEvidence ? "sev-evidence" : "sev-" + inter.severity);
-  sev.textContent = isEvidence ? "Evidence-based" : inter.severity;
+  sev.textContent = isEvidence ? t("status_evidence", "Evidence-based") : t("status_" + inter.severity, inter.severity);
   head.append(pair, sev);
 
   if (isEvidence) {
@@ -671,7 +673,7 @@ function timingNote(inter) {
   if (inter.timing !== "separated") return null;
   const note = document.createElement("div");
   note.className = "timing-note";
-  note.textContent = "Timing: you take these at different times of day — separating doses by 2+ hours reduces this risk.";
+  note.textContent = t("timing_note", "Timing: you take these at different times of day — separating doses by 2+ hours reduces this risk.");
   return note;
 }
 
@@ -694,8 +696,8 @@ function sectionCard(title, subtitle) {
 function renderCascades(cascades) {
   if (!Array.isArray(cascades) || !cascades.length) return;
   const card = sectionCard(
-    "Hidden risk chains",
-    "Inferred from enzyme pathways — mechanism-based signal, not a directly documented interaction."
+    t("title_cascades", "Hidden risk chains"),
+    t("cascades_intro", "Inferred from enzyme pathways — mechanism-based signal, not a directly documented interaction.")
   );
   cascades.forEach((c) => {
     const box = document.createElement("div");
@@ -725,7 +727,7 @@ function renderCascades(cascades) {
 function renderQtRisk(entries) {
   const q = Array.isArray(entries) ? entries[0] : null;
   if (!q) return;
-  const card = sectionCard("QT prolongation risk", "Combining QT-prolonging drugs raises the chance of a dangerous heart rhythm (torsades).");
+  const card = sectionCard(t("title_qt", "QT prolongation risk"), t("qt_intro", "Combining QT-prolonging drugs raises the chance of a dangerous heart rhythm (torsades)."));
   const box = document.createElement("div");
   box.className = "engine-box qt level-" + q.level;
   const head = document.createElement("div");
@@ -757,7 +759,7 @@ function renderQtRisk(entries) {
 
 function renderElectrolytes(list) {
   if (!Array.isArray(list) || !list.length) return;
-  const card = sectionCard("Electrolyte watch", "These medications can drain potassium/magnesium — an occasional blood test is worth it.");
+  const card = sectionCard(t("title_elytes", "Electrolyte watch"), t("elytes_intro", "These medications can drain potassium/magnesium — an occasional blood test is worth it."));
   list.forEach((e) => {
     const row = document.createElement("div");
     row.className = "elyte-row";
@@ -780,7 +782,7 @@ function renderElectrolytes(list) {
 
 function renderBeers(list) {
   if (!Array.isArray(list) || !list.length) return;
-  const card = sectionCard("Beers Criteria (age 65+)", "AGS Beers 2023 — medications needing extra caution in older adults.");
+  const card = sectionCard(t("title_beers", "Beers Criteria (age 65+)"), t("beers_intro", "AGS Beers 2023 — medications needing extra caution in older adults."));
   list.forEach((b) => {
     const row = document.createElement("div");
     row.className = "beer-row";
@@ -804,7 +806,7 @@ function renderBeers(list) {
 
 function renderSchedule(list) {
   if (!Array.isArray(list) || !list.length) return;
-  const card = sectionCard("Scheduling suggestions", "Absorption conflicts — spacing doses apart defuses these.");
+  const card = sectionCard(t("title_schedule", "Scheduling suggestions"), t("schedule_intro", "Absorption conflicts — spacing doses apart defuses these."));
   list.forEach((s) => {
     const box = document.createElement("div");
     box.className = "engine-box schedule";
@@ -830,7 +832,7 @@ async function loadReview() {
     const res = await fetch("/api/review/next");
     const item = await res.json();
     if (!item.id) {
-      box.innerHTML = '<div class="ok-box">✓ Queue clear — nothing left to review.</div>';
+      box.innerHTML = '<div class="ok-box">' + t("msg_queue_clear", "✓ Queue clear — nothing left to review.") + "</div>";
       return;
     }
     box.innerHTML = "";
@@ -849,7 +851,7 @@ async function loadReview() {
     row.className = "row";
     const okBtn = document.createElement("button");
     okBtn.className = "btn primary";
-    okBtn.textContent = "✓ Verify";
+    okBtn.textContent = t("btn_verify", "✓ Verify");
     okBtn.addEventListener("click", async () => {
       await fetch("/api/review/" + item.id + "?status=verified&note=" + encodeURIComponent(reviewNote), { method: "POST" });
       reviewNote = "";
@@ -857,7 +859,7 @@ async function loadReview() {
     });
     const rejBtn = document.createElement("button");
     rejBtn.className = "btn";
-    rejBtn.textContent = "✗ Reject";
+    rejBtn.textContent = t("btn_reject", "✗ Reject");
     rejBtn.addEventListener("click", async () => {
       await fetch("/api/review/" + item.id + "?status=rejected&note=" + encodeURIComponent(reviewNote), { method: "POST" });
       reviewNote = "";
@@ -890,3 +892,10 @@ function flash(msg) {
 renderProfiles();
 renderCabinetCount();
 renderCabinet();
+document.addEventListener("medmatch:lang", () => {
+  renderProfiles();
+  renderCabinetCount();
+  renderCabinet();
+  if (document.querySelector(".tab[data-tab=\"check\"]").classList.contains("active")) runCheck();
+  if (document.querySelector(".tab[data-tab=\"review\"]").classList.contains("active")) loadReview();
+});

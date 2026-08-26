@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ProductScanResult, UserProfile } from '../types';
+import { ProductScanResult, UserProfile, SupportedLanguage } from '../types';
+import { getTranslation } from '../i18n';
 import { 
   Layers, 
   Sparkles, 
@@ -53,14 +54,17 @@ interface BatchScanModalProps {
   onClose: () => void;
   userProfile: UserProfile;
   onSelectResult: (result: ProductScanResult) => void;
+  language?: SupportedLanguage;
 }
 
 export const BatchScanModal: React.FC<BatchScanModalProps> = ({
   isOpen,
   onClose,
   userProfile,
-  onSelectResult
+  onSelectResult,
+  language = 'en'
 }) => {
+  const t = (key: string, fb: string) => getTranslation(language, key, fb);
   const [barcodeInput, setBarcodeInput] = useState('');
   const [barcodesList, setBarcodesList] = useState<string[]>([
     '3017620422003', // Nutella
@@ -115,9 +119,9 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
               <Layers className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold">Batch Product Audit — Meds & Supplements</h3>
+                {t('batchTitle', 'Batch Product Audit — Meds & Supplements')}
               <p className="text-xs text-slate-400">
-                Paste multiple barcodes or type medication/supplement names (one per add); each item is checked against the active member's medications by the MedMatch engine.
+                {t('batchSubtitle', 'Paste multiple barcodes or type medication/supplement names (one per add); each item is checked against the active member\'s medications by the MedMatch engine.')}
               </p>
             </div>
           </div>
@@ -134,7 +138,7 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
           {/* Barcode Queue Adder */}
           <div className="space-y-3">
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-              Add Barcodes to Queue ({barcodesList.length} Items):
+              {t('batchQueueLabel', 'Add Barcodes to Queue')} ({barcodesList.length} {t('batchItems', 'Items')}):
             </label>
             <div className="flex space-x-2">
               <div className="relative flex-1">
@@ -144,7 +148,7 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
                   value={barcodeInput}
                   onChange={(e) => setBarcodeInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAddBarcode()}
-                  placeholder="Barcode (3017620422003) or medication/supplement name (e.g. warfarin, St John's Wort)"
+                  placeholder={t('batchPlaceholder', "Barcode (3017620422003) or medication/supplement name (e.g. warfarin, St John's Wort)")}
                   className="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono"
                 />
               </div>
@@ -182,12 +186,12 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
               {loading ? (
                 <>
                   <RefreshCw className="w-4 h-4 animate-spin" />
-                  <span>Running MedMatch interaction checks...</span>
+                  <span>{t('batchRunning', 'Running MedMatch interaction checks...')}</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="w-4 h-4" />
-                  <span>Run Batch Safety Audit ({barcodesList.length} Items)</span>
+                  <span>{t('batchRunButton', 'Run Batch Safety Audit')} ({barcodesList.length} {t('batchItems', 'Items')})</span>
                 </>
               )}
             </button>
@@ -197,7 +201,7 @@ export const BatchScanModal: React.FC<BatchScanModalProps> = ({
           {results.length > 0 && (
             <div className="space-y-3 pt-4 border-t border-slate-200">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                Audit Summary ({results.length} Products Verified)
+                {t('batchAuditSummary', 'Audit Summary')} ({results.length} {t('batchVerified', 'Products Verified')})
               </h4>
 
               <div className="space-y-2">

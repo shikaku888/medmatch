@@ -17,11 +17,12 @@
       <span class="brand-tag">Safety Checker</span>
     </div>
     <select id="profile-select" title="Whose cabinet are you checking?" class="profile-select"></select>
+    <select id="lang-select" class="profile-select" title="Language / Ngôn ngữ"></select>
     <nav class="tabs" id="tabs">
-      <button class="tab active" data-tab="scan">Scan</button>
-      <button class="tab" data-tab="cabinet">My Cabinet <span class="pill" id="cabinet-count">0</span></button>
-      <button class="tab" data-tab="check">Check</button>
-      <button class="tab" data-tab="review">Review</button>
+      <button class="tab active" data-tab="scan" data-i18n="tab_scan">Scan</button>
+      <button class="tab" data-tab="cabinet"><span data-i18n="tab_cabinet">My Cabinet</span> <span class="pill" id="cabinet-count">0</span></button>
+      <button class="tab" data-tab="check" data-i18n="tab_check">Check</button>
+      <button class="tab" data-tab="review" data-i18n="tab_review">Review</button>
     </nav>
   </header>
 
@@ -29,37 +30,37 @@
     <!-- SCAN -->
     <section id="view-scan" class="view active">
       <div class="card">
-        <h2>Scan a product</h2>
-        <p class="muted">Point your camera at the barcode, or enter it manually.</p>
+        <h2 data-i18n="title_scan_product">Scan a product</h2>
+        <p class="muted" data-i18n="scan_intro">Point your camera at the barcode, or enter it manually.</p>
         <div class="scan-area" id="scan-area">
           <video id="camera" playsinline muted></video>
           <div class="scan-placeholder" id="scan-placeholder">
             <div class="scanner-icon">▦</div>
-            <button id="btn-camera" class="btn primary">Start camera</button>
+            <button id="btn-camera" class="btn primary" data-i18n="btn_start_camera">Start camera</button>
           </div>
         </div>
         <div class="row">
           <input id="barcode-input" type="text" inputmode="numeric" placeholder="…or type barcode (UPC/EAN)" />
-          <button id="btn-lookup" class="btn">Look up</button>
+          <button id="btn-lookup" class="btn" data-i18n="btn_lookup">Look up</button>
         </div>
         <div class="row" style="margin-top: 8px;">
           <input id="label-photo" type="file" accept="image/*" hidden />
-          <button id="btn-ocr" class="btn">Scan label text (OCR)</button>
+          <button id="btn-ocr" class="btn" data-i18n="btn_ocr">Scan label text (OCR)</button>
         </div>
         <div id="ocr-results" class="search-results"></div>
         <div class="row" style="margin-top: 8px;">
           <input id="product-input" type="text" placeholder="Search supplement product by name…" />
-          <button id="btn-product" class="btn">Search</button>
+          <button id="btn-product" class="btn" data-i18n="btn_search">Search</button>
         </div>
         <div id="product-results" class="search-results"></div>
         <p class="muted small" id="camera-hint"></p>
       </div>
 
       <div class="card" id="manual-add">
-        <h3>Add manually</h3>
+        <h3 data-i18n="title_manual_add">Add manually</h3>
         <div class="row">
           <input id="search-input" type="text" placeholder="e.g. turmeric, St. John's Wort, warfarin…" />
-          <button id="btn-search" class="btn">Search</button>
+          <button id="btn-search" class="btn" data-i18n="btn_search">Search</button>
         </div>
         <div id="search-results" class="search-results"></div>
       </div>
@@ -69,20 +70,20 @@
         <p class="muted" id="product-meta"></p>
         <div id="product-ingredients" class="chips"></div>
         <div id="product-warnings"></div>
-        <button id="btn-add-product" class="btn primary">Add to cabinet</button>
+        <button id="btn-add-product" class="btn primary" data-i18n="btn_add">Add to cabinet</button>
       </div>
     </section>
 
     <!-- CABINET -->
     <section id="view-cabinet" class="view">
       <div class="card">
-        <h2>My cabinet</h2>
-        <p class="muted">Your supplements and medications are stored only in this browser.</p>
+        <h2 data-i18n="title_cabinet">My cabinet</h2>
+        <p class="muted" data-i18n="cabinet_intro">Your supplements and medications are stored only in this browser.</p>
         <div id="cabinet-list"></div>
         <div class="row" style="margin-top: 8px;">
-          <input id="profile-age" type="number" min="1" max="120" inputmode="numeric" placeholder="Age (optional — enables Beers & QT risk checks)" />
+          <input id="profile-age" type="number" min="1" max="120" inputmode="numeric" data-i18n-placeholder="age_placeholder" placeholder="Age (optional — enables Beers & QT risk checks)" />
         </div>
-        <button id="btn-check" class="btn primary wide">Check for interactions</button>
+        <button id="btn-check" class="btn primary wide" data-i18n="btn_check_interactions">Check for interactions</button>
       </div>
     </section>
 
@@ -93,8 +94,8 @@
     <!-- REVIEW -->
     <section id="view-review" class="view">
       <div class="card">
-        <h2>Review queue</h2>
-        <p class="muted">Pharmacist triage for inferred interactions (trust 0.5). Verify or reject.</p>
+        <h2 data-i18n="title_review_queue">Review queue</h2>
+        <p class="muted" data-i18n="review_intro">Pharmacist triage for inferred interactions (trust 0.5). Verify or reject.</p>
         <div id="review-content"><div class="empty-note">Loading…</div></div>
       </div>
     </section>
@@ -103,9 +104,10 @@
   <footer class="disclaimers">
     <p class="fda">This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
     <p>MedMatch provides reference information from public data (FDA, NIH, EMA/HMPC, and published literature). It is not professional medical advice, diagnosis, or treatment. Always consult a licensed physician or pharmacist before changing any medication routine. Interaction data may be incomplete.</p>
-    <p class="privacy">Privacy: your product list never leaves this browser. No account, no tracking.</p>
+    <p class="privacy" data-i18n="privacy">Privacy: your product list never leaves this browser. No account, no tracking.</p>
   </footer>
 
+  <script src="/static/i18n.js"></script>
   <script src="/static/app.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
