@@ -343,3 +343,22 @@ main {
   main { padding: 12px 10px 20px; }
   .card { padding: 13px; }
 }
+
+/* inference-engine sections */
+.engine-box {
+  border-left: 4px solid var(--info);
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  background: #f8fafc;
+  border-radius: 0 8px 8px 0;
+}
+.engine-box.cascade { border-left-color: #7c3aed; }
+.engine-box.qt.level-high { border-left-color: var(--danger); background: var(--danger-soft); }
+.engine-box.qt.level-moderate { border-left-color: var(--warn); background: var(--warn-soft); }
+.engine-box .chain { font-size: 14px; margin-bottom: 6px; }
+.chain-role { color: var(--muted); font-size: 12.5px; }
+.engine-box .effect { margin: 0 0 4px; font-size: 13.5px; }
+.engine-box .meta { font-size: 12px; color: var(--muted); margin-bottom: 0; }
+.elyte-row, .beer-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.beer-row { margin-top: 6px; }
+.engine-note { font-size: 13px; margin: 4px 0 8px; }

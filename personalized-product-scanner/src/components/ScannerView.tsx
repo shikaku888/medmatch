@@ -673,7 +673,7 @@ export const ScannerView: React.FC<ScannerViewProps> = ({
                     Upload or snap a photo of the ingredients panel
                   </p>
                   <p className="text-[11px] text-slate-500">
-                    Gemini Vision AI extracts ingredients and assesses compatibility
+                    On-device OCR (Tesseract) extracts ingredients and assesses compatibility
                   </p>
                 </div>
               )}

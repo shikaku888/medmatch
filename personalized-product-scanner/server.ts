@@ -7,15 +7,15 @@ import { getProductFromOFF } from './server/services/off_client';
 import { searchUSDAFood } from './server/services/usda_client';
 import { analyzeCosmeticIngredients } from './server/services/inci_client';
 import { getPubMedResearch } from './server/services/pubmed_client';
-import { parseProductImageWithGemini, parseRawIngredientsTextWithGemini } from './server/services/gemini_vision';
+import { parseProductImage, parseIngredientsText } from './server/services/product_parser';
 import { assessProductMatch } from './server/services/matcher';
 import { generateSafeSwaps } from './server/services/smart_swaps';
-import { askGeminiDietitian } from './server/services/ai_chat';
+import { askMedMatchAdvisor } from './server/services/ai_chat';
 import { analyzeIngredientSafety, extractRegulatoryBadges } from './server/services/ingredient_safety';
 import { checkHerbDrugInteractions, HERB_DRUG_DATABASE } from './server/services/herb_drug_interactions';
 import { DEMO_PRODUCTS } from './server/demoData';
 import { SUPERMARKET_STORES, MARKET_PRODUCTS } from './server/marketPresets';
-import { parseAndAuditReceiptWithGemini } from './server/services/receipt_scanner';
+import { auditReceipt } from './server/services/receipt_scanner';
 import { getAllCrossReactivityRules } from './server/services/cross_reactivity';
 import { extractSkincareActives, analyzeSkincareRoutineConflicts } from './server/services/skincare_conflicts';
 import { ProductScanResult, FamilyProfile, UserRoutineProduct, SupportedCountry, MedMatchAnalysis, SafeSwapRecommendation } from './src/types';
@@ -212,7 +212,7 @@ async function startServer() {
     if (!question) return res.status(400).json({ error: 'Question is required' });
 
     const currentProfile = profile || db.getUserProfile();
-    const answer = await askGeminiDietitian(question, product, currentProfile);
+    const answer = await askMedMatchAdvisor(question, product, currentProfile);
     res.json({ answer });
   });
 
@@ -290,7 +290,7 @@ async function startServer() {
       const currentProfile = db.getUserProfile();
       const familyProfiles = db.getFamilyProfiles();
 
-      const auditResult = await parseAndAuditReceiptWithGemini(
+      const auditResult = await auditReceipt(
         { imageBase64, mimeType, receiptText, storeNameHint },
         currentProfile,
         familyProfiles
@@ -580,7 +580,7 @@ async function startServer() {
     res.json(fullResult);
   });
 
-  // Image Scan / OCR Endpoint (Gemini Vision)
+  // Image Scan / OCR Endpoint (local Tesseract OCR + rule-based parser)
   app.post('/api/scan/image', async (req, res) => {
     const { imageBase64, mimeType } = req.body;
 
@@ -590,7 +590,7 @@ async function startServer() {
 
     try {
       const currentProfile = db.getUserProfile();
-      const parsed = await parseProductImageWithGemini(imageBase64, mimeType || 'image/jpeg');
+      const parsed = await parseProductImage(imageBase64, mimeType || 'image/jpeg');
 
       let cosmeticProfile = undefined;
       if (parsed.productType === 'cosmetic') {
@@ -649,7 +649,7 @@ async function startServer() {
         skincareActiveCheck: matchAssessment.skincareActiveCheck,
         matchAssessment,
         medMatch,
-        source: 'gemini_vision',
+        source: 'local_scan',
         scannedAt: new Date().toISOString()
       };
 
@@ -671,7 +671,7 @@ async function startServer() {
 
     try {
       const currentProfile = db.getUserProfile();
-      const parsed = await parseRawIngredientsTextWithGemini(text, name);
+      const parsed = await parseIngredientsText(text, name);
 
       let cosmeticProfile = undefined;
       if (parsed.productType === 'cosmetic') {
@@ -728,7 +728,7 @@ async function startServer() {
         skincareActiveCheck: matchAssessment.skincareActiveCheck,
         matchAssessment,
         medMatch,
-        source: 'gemini_vision',
+        source: 'local_scan',
         scannedAt: new Date().toISOString()
       };
 

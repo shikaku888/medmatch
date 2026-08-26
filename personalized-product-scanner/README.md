@@ -15,6 +15,8 @@ View your app in AI Studio: https://ai.studio/apps/8c216a55-e60a-4f6f-821f-9f80b
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. (Optional) point `MEDMATCH_URL` at your FastAPI backend — default `http://127.0.0.1:8765`
 3. Run the app:
    `npm run dev`
+
+No API keys required: OCR runs on-device (Tesseract.js), the advisor is a deterministic rule-based synthesizer over the MedMatch 7-layer engine, and swap candidates come from the iDISK catalog.

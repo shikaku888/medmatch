@@ -243,7 +243,7 @@ export interface ProductScanResult {
     safeHighlights: string[];
   };
   medMatch?: MedMatchAnalysis;
-  source: 'openfoodfacts' | 'openbeautyfacts' | 'usda' | 'inci' | 'gemini_vision' | 'cached' | 'demo';
+  source: 'openfoodfacts' | 'openbeautyfacts' | 'usda' | 'inci' | 'local_scan' | 'cached' | 'demo';
   scannedAt: string;
 }
 

@@ -1,64 +1,147 @@
-import { GoogleGenAI, Type } from '@google/genai';
-import { UserProfile, FamilyProfile, SafeSwapRecommendation } from '../../src/types';
-import { DEMO_PRODUCTS } from '../demoData';
-import { MARKET_PRODUCTS } from '../marketPresets';
+/**
+ * Receipt & cart audit — local OCR (Tesseract.js) + rule-based analysis.
+ * Replaces the Gemini receipt parser. Item identification goes through the
+ * MedMatch backend (input normalizer + 7-layer interaction engine); allergen
+ * detection is keyword-based against each family member's profile.
+ */
+import type { UserProfile, FamilyProfile, ReceiptAuditResult, ParsedReceiptItem } from '../../src/types';
+import { ocrImageToText } from './ocr';
 import { analyzeIngredientSafety } from './ingredient_safety';
+import { normalizeIngredient, analyzeMedications } from './medmatch_client';
 
-let aiClient: GoogleGenAI | null = null;
+export type { ParsedReceiptItem, ReceiptAuditResult };
 
-function getGenAI(): GoogleGenAI {
-  if (!aiClient) {
-    aiClient = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
-      httpOptions: {
-        headers: {
-          'User-Agent': 'aistudio-build'
-        }
-      }
-    });
-  }
-  return aiClient;
+const MEDICATION_RE = /\b(mg|mcg|tablet|tablets|capsule|capsules|ibuprofen|paracetamol|acetaminophen|aspirin|warfarin|statin|metformin|omeprazole|amoxicillin|antibiotic)\b/i;
+const SUPPLEMENT_RE = /\b(vitamin|omega|probiotic|supplement|herbal|extract|multivitamin|zinc|magnesium|calcium|coq10|ginseng|turmeric|echinacea)\b/i;
+const COSMETIC_RE = /\b(shampoo|soap|cream|lotion|serum|cleanser|toothpaste|deodorant|cosmetic|skincare|sunscreen)\b/i;
+const HOUSEHOLD_RE = /\b(detergent|cleaner|paper towel|tissue|trash|sponge|bleach|dish soap|fabric)\b/i;
+const RECEIPT_NOISE_RE = /(total|subtotal|change|cash|card|visa|mastercard|debit|credit|tax|receipt|invoice|thank|store #|till|terminal|balance|points|saved|coupon|\$\s?\d)/i;
+const PRICE_TAIL_RE = /[\s\d.,$€£]*$/;
+const QTY_PREFIX_RE = /^\d+\s*[xX*]\s*/;
+
+function classifyLine(line: string): ParsedReceiptItem['productType'] {
+  if (MEDICATION_RE.test(line)) return 'medication';
+  if (SUPPLEMENT_RE.test(line)) return 'supplement';
+  if (COSMETIC_RE.test(line)) return 'cosmetic';
+  if (HOUSEHOLD_RE.test(line)) return 'household';
+  return 'food';
 }
 
-export interface ParsedReceiptItem {
-  id: string;
-  name: string;
-  category: string;
-  quantity?: number;
-  estimatedPrice?: string;
-  productType: 'food' | 'cosmetic' | 'household' | 'medication' | 'supplement';
-  ingredientsSummary: string;
-  detectedAllergens: string[];
-  flaggedAdditives: string[];
-  novaGroup?: number;
-  status: 'safe' | 'caution' | 'danger';
-  score: number; // 0-100
-  affectedFamilyMembers: string[]; // Names of family members who should avoid this item
-  warningReason?: string;
-  suggestedSwap?: {
-    name: string;
-    brand: string;
-    whyBetter: string;
+const ALLERGEN_KEYS: [RegExp, string][] = [
+  [/\bmilk|dairy|lactose|whey|cheese|yogurt\b/i, 'Milk'],
+  [/\begg|mayo(nnaise)?\b/i, 'Egg'],
+  [/\bpeanut\b/i, 'Peanuts'],
+  [/\balmond|cashew|walnut|hazelnut|pecan|pistachio|nut\b/i, 'Tree Nuts'],
+  [/\bsoy|soya|tofu|edamame\b/i, 'Soy'],
+  [/\bwheat|gluten|bread|pasta|barley|rye\b/i, 'Gluten / Wheat'],
+  [/\bsalmon|tuna|fish\b/i, 'Fish'],
+  [/\bshrimp|crab|lobster|shellfish|squid|mussel|oyster|clam\b/i, 'Shellfish'],
+  [/\bsesame\b/i, 'Sesame'],
+  [/\bcelery\b/i, 'Celery'],
+];
+
+function detectAllergens(line: string): string[] {
+  const found: string[] = [];
+  for (const [re, label] of ALLERGEN_KEYS) {
+    if (re.test(line)) found.push(label);
+  }
+  return found;
+}
+
+function memberAllergenOverlap(item: ParsedReceiptItem, member: FamilyProfile | UserProfile): string[] {
+  const known = [...(member.allergies || []), ...(member.customAllergens || [])].map((a) => a.toLowerCase());
+  if (!known.length) return [];
+  const haystack = [item.name, ...(item.detectedAllergens || [])].join(' ').toLowerCase();
+  return known.filter((k) => k && haystack.includes(k));
+}
+
+function statusFromCounts(majorCount: number, allergenHits: number, flagged: number): { status: ParsedReceiptItem['status']; score: number } {
+  if (allergenHits > 0 || majorCount > 0) return { status: 'danger', score: Math.max(5, 40 - majorCount * 10) };
+  if (flagged > 1) return { status: 'caution', score: 60 };
+  return { status: 'safe', score: 90 };
+}
+
+function parseReceiptLines(text: string): string[] {
+  return text
+    .split(/\r?\n/)
+    .map((l) => l.replace(/\s+/g, ' ').trim())
+    .filter((l) => l.length >= 3 && /\p{L}{3,}/u.test(l))
+    .filter((l) => !RECEIPT_NOISE_RE.test(l))
+    .slice(0, 24);
+}
+
+async function auditItem(
+  rawLine: string,
+  index: number,
+  activeProfile: UserProfile,
+  familyMembers: FamilyProfile[]
+): Promise<ParsedReceiptItem & { hitLabel: string | null }> {
+  const name = rawLine.replace(QTY_PREFIX_RE, '').replace(PRICE_TAIL_RE, '').replace(/\s+/g, ' ').trim() || `Item ${index + 1}`;
+  const productType = classifyLine(rawLine);
+  const detectedAllergens = detectAllergens(rawLine);
+  const safety = analyzeIngredientSafety([name]);
+  const flaggedAdditives = safety.filter((s) => s.hazardLevel !== 'safe').map((s) => s.name);
+
+  // Identify the item in the medical database (Lớp 1 normalizer).
+  // Strip dosage forms first: "Warfarin 5mg tablets" → "Warfarin".
+  const lookupName = name
+    .replace(/\b\d+(?:\.\d+)?\s*(mg|mcg|g|iu|ml)\b.*$/i, '')
+    .replace(/\b(tablets?|capsules?|softgels?|gummies|drops|syrup|oil)\b/gi, '')
+    .replace(/\s+/g, ' ').trim();
+  const hit = productType === 'medication' || productType === 'supplement'
+    ? await normalizeIngredient(lookupName)
+    : null;
+
+  const members = [{ ...activeProfile, name: activeProfile.name || 'You' } as UserProfile, ...familyMembers];
+  const affected = new Set<string>();
+  let allergenHitTotal = 0;
+  let worstMajor = 0;
+  let warningReason = '';
+
+  for (const member of members.slice(0, 6)) {
+    const allergenHits = memberAllergenOverlap({ name, detectedAllergens } as ParsedReceiptItem, member as FamilyProfile);
+    let majorCount = 0;
+    if (hit && (member.medications || []).length) {
+      try {
+        const analysis = await analyzeMedications(
+          [{ name: hit.label, kind: hit.kind, matched: { kind: hit.kind, id: hit.id } }],
+          { age: member.age, gender: member.gender, kidneyFunction: member.kidneyFunction, liverFunction: member.liverFunction }
+        );
+        majorCount = analysis.interactions.filter((i) => i.severity === 'major').length;
+        if (majorCount > 0) {
+          warningReason = `Interacts with ${member.name}'s medications (${analysis.interactions.filter((i) => i.severity === 'major').map((i) => `${i.a?.label || ''}×${i.b?.label || ''}`).filter(Boolean).join(', ')})`.trim();
+        }
+      } catch {
+        // backend unreachable — allergen checks still apply
+      }
+    }
+    if (allergenHits.length) {
+      allergenHitTotal++;
+      affected.add(member.name || 'Member');
+      if (!warningReason) warningReason = `Contains ${allergenHits.join(', ')} — allergen for ${member.name}`;
+    }
+    if (majorCount > 0) affected.add(member.name || 'Member');
+    worstMajor = Math.max(worstMajor, majorCount);
+  }
+  const { status, score } = statusFromCounts(worstMajor, allergenHitTotal, flaggedAdditives.length);
+  const hitLabel = hit ? hit.label : null;
+  return {
+    id: `item_${index + 1}`,
+    name,
+    category: productType === 'food' ? 'Grocery' : productType.charAt(0).toUpperCase() + productType.slice(1),
+    productType,
+    ingredientsSummary: hitLabel ? hitLabel : (productType === 'medication' || productType === 'supplement' ? name : ''),
+    detectedAllergens,
+    flaggedAdditives,
+    status,
+    score,
+    affectedFamilyMembers: [...affected],
+    warningReason: warningReason || (flaggedAdditives.length >= 2 ? `Flagged additives: ${flaggedAdditives.slice(0, 3).join(', ')}` : undefined),
+    hitLabel,
   };
 }
 
-export interface ReceiptAuditResult {
-  storeName: string;
-  auditDate: string;
-  totalItemsCount: number;
-  overallScore: number; // 0-100
-  status: 'safe' | 'caution' | 'danger';
-  safeItemsCount: number;
-  flaggedItemsCount: number;
-  highRiskCount: number;
-  ultraProcessedPercentage: number;
-  keyAllergensFound: string[];
-  criticalAdditivesFound: string[];
-  familyImpactSummary: string[];
-  items: ParsedReceiptItem[];
-}
-
-export async function parseAndAuditReceiptWithGemini(
+export async function auditReceipt(
   input: {
     imageBase64?: string;
     mimeType?: string;
@@ -68,218 +151,72 @@ export async function parseAndAuditReceiptWithGemini(
   activeProfile: UserProfile,
   allFamilyProfiles: FamilyProfile[]
 ): Promise<ReceiptAuditResult> {
-  const ai = getGenAI();
+  const text = (input.receiptText && input.receiptText.trim().length > 5)
+    ? input.receiptText
+    : await ocrImageToText(input.imageBase64 || '', input.mimeType || 'image/jpeg');
 
-  const familyContext = allFamilyProfiles.map(p => ({
-    name: p.name,
-    role: p.role,
-    age: p.age,
-    allergies: p.allergies || [],
-    diet: p.dietType,
-    conditions: p.specialConditions || [],
-    currentMedications: p.medications || []
-  }));
-
-  const systemPrompt = `You are an expert Clinical Toxicologist & Pharmacy-Grocery Receipt Auditor.
-Your task is to analyze a receipt / shopping cart (either from an OCR image or receipt text) that may contain groceries, personal care, cosmetics, AND medications or dietary supplements.
-1. Extract ALL purchased items. Classify each productType as 'food', 'cosmetic', 'household', 'medication' (OTC or prescription) or 'supplement' (vitamins, minerals, herbals).
-2. For each item:
-   - Identify standard common ingredients, additives (e.g. E-numbers, artificial colorants, high sodium, trans fats, preservatives like BHT/Parabens, endocrine disruptors). For medications/supplements, list active ingredients in ingredientsSummary.
-   - Check conflicts against ANY household member:
-     Active User: ${activeProfile.name || 'User'} (Allergies: ${activeProfile.allergies.join(', ') || 'None'}, Diet: ${activeProfile.dietType}, Conditions: ${activeProfile.specialConditions?.join(', ') || 'None'}, Medications: ${(activeProfile.medications || []).join(', ') || 'None'}, Age: ${activeProfile.age ?? 'n/a'})
-     Full Household Profiles: ${JSON.stringify(familyContext)}
-   - For 'medication'/'supplement' items: flag known interactions with any member's currentMedications or conditions (e.g. warfarin vs vitamin K supplements, NSAIDs vs hypertension; decongestants vs blood pressure). Put the interaction in warningReason and name affected members in affectedFamilyMembers. Mark status 'danger' for serious interaction risk, 'caution' for minor/uncertain.
-   - For food/cosmetic items: status 'danger' only for severe allergy or high toxicity.
-   - Assign a suitability score (0-100). NOVA group (1-4) for food only; omit for medications/supplements.
-   - If an item is flagged ('caution' or 'danger'), suggest a specific safer 'suggestedSwap' (e.g. swap Nutella with SunButter, swap a decongestant for a saline spray, swap a vitamin-K heavy supplement for a K-free formula).
-3. Compute overall cart score, ultra-processed ratio, and top family-wide warnings (medication interactions first, then allergies).`;
-
-  let response;
-
-  if (input.imageBase64) {
-    const imagePart = {
-      inlineData: {
-        data: input.imageBase64.replace(/^data:[^;]+;base64,/, ''),
-        mimeType: input.mimeType || 'image/jpeg'
-      }
-    };
-    response = await ai.models.generateContent({
-      model: 'gemini-3.7-flash',
-      contents: {
-        parts: [
-          imagePart,
-          { text: `${systemPrompt}\n\nParse this receipt image and return the structured audit JSON.` }
-        ]
-      },
-      config: {
-        responseMimeType: 'application/json',
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            storeName: { type: Type.STRING },
-            overallScore: { type: Type.NUMBER },
-            status: { type: Type.STRING, enum: ['safe', 'caution', 'danger'] },
-            ultraProcessedPercentage: { type: Type.NUMBER },
-            familyImpactSummary: {
-              type: Type.ARRAY,
-              items: { type: Type.STRING }
-            },
-            items: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  name: { type: Type.STRING },
-                  category: { type: Type.STRING },
-                  quantity: { type: Type.NUMBER },
-                  estimatedPrice: { type: Type.STRING },
-                  productType: { type: Type.STRING, enum: ['food', 'cosmetic', 'household', 'medication', 'supplement'] },
-                  ingredientsSummary: { type: Type.STRING },
-                  detectedAllergens: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                  },
-                  flaggedAdditives: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                  },
-                  novaGroup: { type: Type.NUMBER },
-                  status: { type: Type.STRING, enum: ['safe', 'caution', 'danger'] },
-                  score: { type: Type.NUMBER },
-                  affectedFamilyMembers: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                  },
-                  warningReason: { type: Type.STRING },
-                  suggestedSwap: {
-                    type: Type.OBJECT,
-                    properties: {
-                      name: { type: Type.STRING },
-                      brand: { type: Type.STRING },
-                      whyBetter: { type: Type.STRING }
-                    }
-                  }
-                },
-                required: ['name', 'category', 'status', 'score', 'ingredientsSummary']
-              }
-            }
-          },
-          required: ['storeName', 'overallScore', 'status', 'items', 'familyImpactSummary']
-        }
-      }
-    });
-  } else {
-    const textPrompt = `${systemPrompt}\n\nReceipt Text / Grocery Order:\n"""\n${input.receiptText || 'Supermarket Grocery Receipt'}\n"""\n\nStore hint: ${input.storeNameHint || 'Supermarket'}`;
-    response = await ai.models.generateContent({
-      model: 'gemini-3.7-flash',
-      contents: textPrompt,
-      config: {
-        responseMimeType: 'application/json',
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            storeName: { type: Type.STRING },
-            overallScore: { type: Type.NUMBER },
-            status: { type: Type.STRING, enum: ['safe', 'caution', 'danger'] },
-            ultraProcessedPercentage: { type: Type.NUMBER },
-            familyImpactSummary: {
-              type: Type.ARRAY,
-              items: { type: Type.STRING }
-            },
-            items: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  name: { type: Type.STRING },
-                  category: { type: Type.STRING },
-                  quantity: { type: Type.NUMBER },
-                  estimatedPrice: { type: Type.STRING },
-                  productType: { type: Type.STRING, enum: ['food', 'cosmetic', 'household', 'medication', 'supplement'] },
-                  ingredientsSummary: { type: Type.STRING },
-                  detectedAllergens: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                  },
-                  flaggedAdditives: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                  },
-                  novaGroup: { type: Type.NUMBER },
-                  status: { type: Type.STRING, enum: ['safe', 'caution', 'danger'] },
-                  score: { type: Type.NUMBER },
-                  affectedFamilyMembers: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                  },
-                  warningReason: { type: Type.STRING },
-                  suggestedSwap: {
-                    type: Type.OBJECT,
-                    properties: {
-                      name: { type: Type.STRING },
-                      brand: { type: Type.STRING },
-                      whyBetter: { type: Type.STRING }
-                    }
-                  }
-                },
-                required: ['name', 'category', 'status', 'score', 'ingredientsSummary']
-              }
-            }
-          },
-          required: ['storeName', 'overallScore', 'status', 'items', 'familyImpactSummary']
-        }
-      }
-    });
+  const lines = parseReceiptLines(text);
+  const audited: (ParsedReceiptItem & { hitLabel: string | null })[] = [];
+  for (let i = 0; i < Math.min(lines.length, 12); i++) {
+    audited.push(await auditItem(lines[i], i, activeProfile, allFamilyProfiles));
   }
 
-  const rawJson = response.text?.trim() || '{}';
-  const parsed = JSON.parse(rawJson);
+  // In-cart cross-check: interactions BETWEEN receipt items
+  // (e.g. Warfarin × St John's Wort bought together). Per-member medication
+  // checks already ran inside auditItem.
+  const identified = audited.filter((a) => a.hitLabel);
+  if (identified.length >= 2) {
+    try {
+      const analysis = await analyzeMedications(
+        identified.map((a) => ({ name: a.hitLabel! })),
+        { age: activeProfile.age, gender: activeProfile.gender, kidneyFunction: activeProfile.kidneyFunction, liverFunction: activeProfile.liverFunction }
+      );
+      for (const inter of analysis.interactions) {
+        if (inter.severity !== 'major' && inter.severity !== 'moderate') continue;
+        const la = (inter.a?.label || '').toLowerCase();
+        const lb = (inter.b?.label || '').toLowerCase();
+        const other = (label: string) => (label === la ? inter.b?.label : inter.a?.label);
+        for (const a of audited) {
+          const lbl = (a.hitLabel || '').toLowerCase();
+          if (!lbl || (lbl !== la && lbl !== lb)) continue;
+          a.status = inter.severity === 'major' ? 'danger' : a.status === 'danger' ? 'danger' : 'caution';
+          a.score = Math.min(a.score, inter.severity === 'major' ? 20 : 50);
+          a.affectedFamilyMembers = [...new Set([...a.affectedFamilyMembers, activeProfile.name || 'You'])];
+          a.warningReason = `In-cart interaction: ${inter.a?.label} × ${inter.b?.label} [${inter.severity}]${inter.mechanism ? ` — ${inter.mechanism}` : ''}. Also affects: ${other(lbl)}`;
+        }
+      }
+    } catch {
+      // backend unreachable — keep allergen-only audit
+    }
+  }
+  const items: ParsedReceiptItem[] = audited;
 
-  // Format and enrich items
-  const items: ParsedReceiptItem[] = (parsed.items || []).map((item: any, idx: number) => ({
-    id: `item_${Date.now()}_${idx}`,
-    name: item.name || 'Unnamed Grocery Item',
-    category: item.category || 'Pantry Item',
-    quantity: item.quantity || 1,
-    estimatedPrice: item.estimatedPrice,
-    productType: item.productType || 'food',
-    ingredientsSummary: item.ingredientsSummary || 'Standard ingredient mix',
-    detectedAllergens: item.detectedAllergens || [],
-    flaggedAdditives: item.flaggedAdditives || [],
-    novaGroup: item.novaGroup || 3,
-    status: item.status || (item.score < 50 ? 'danger' : item.score < 80 ? 'caution' : 'safe'),
-    score: typeof item.score === 'number' ? item.score : 70,
-    affectedFamilyMembers: item.affectedFamilyMembers || [],
-    warningReason: item.warningReason,
-    suggestedSwap: item.suggestedSwap
-  }));
+  const safeCount = items.filter((i) => i.status === 'safe').length;
+  const flagged = items.filter((i) => i.status === 'caution').length;
+  const danger = items.filter((i) => i.status === 'danger').length;
+  const overallScore = items.length ? Math.round(items.reduce((sum, i) => sum + i.score, 0) / items.length) : 100;
+  const ultraProcessed = items.filter((i) => i.flaggedAdditives.length >= 3).length;
 
-  const safeCount = items.filter(i => i.status === 'safe').length;
-  const flaggedCount = items.filter(i => i.status === 'caution').length;
-  const highRiskCount = items.filter(i => i.status === 'danger').length;
-
-  const allergensSet = new Set<string>();
-  const additivesSet = new Set<string>();
-  items.forEach(i => {
-    i.detectedAllergens.forEach(a => allergensSet.add(a));
-    i.flaggedAdditives.forEach(ad => additivesSet.add(ad));
-  });
+  const familyImpactSummary: string[] = [];
+  for (const item of items) {
+    for (const member of item.affectedFamilyMembers) {
+      familyImpactSummary.push(`${member}: avoid "${item.name}" — ${item.warningReason || 'flagged in audit'}`);
+    }
+  }
 
   return {
-    storeName: parsed.storeName || input.storeNameHint || 'Grocery Store',
+    storeName: input.storeNameHint || lines[0] || 'Unknown store',
     auditDate: new Date().toISOString(),
     totalItemsCount: items.length,
-    overallScore: Math.round(parsed.overallScore || (items.length > 0 ? items.reduce((a, b) => a + b.score, 0) / items.length : 80)),
-    status: parsed.status || (highRiskCount > 0 ? 'danger' : flaggedCount > 1 ? 'caution' : 'safe'),
+    overallScore,
+    status: danger > 0 ? 'danger' : flagged > 0 ? 'caution' : 'safe',
     safeItemsCount: safeCount,
-    flaggedItemsCount: flaggedCount,
-    highRiskCount: highRiskCount,
-    ultraProcessedPercentage: Math.round(parsed.ultraProcessedPercentage || (items.filter(i => (i.novaGroup || 1) >= 4).length / (items.length || 1) * 100)),
-    keyAllergensFound: Array.from(allergensSet),
-    criticalAdditivesFound: Array.from(additivesSet),
-    familyImpactSummary: parsed.familyImpactSummary || [
-      `${safeCount} out of ${items.length} items meet optimal family biological safety criteria.`
-    ],
-    items
+    flaggedItemsCount: flagged,
+    highRiskCount: danger,
+    ultraProcessedPercentage: items.length ? Math.round((ultraProcessed / items.length) * 100) : 0,
+    keyAllergensFound: [...new Set(items.flatMap((i) => i.detectedAllergens))],
+    criticalAdditivesFound: [...new Set(items.flatMap((i) => i.flaggedAdditives))].slice(0, 8),
+    familyImpactSummary: [...new Set(familyImpactSummary)].slice(0, 12),
+    items,
   };
 }

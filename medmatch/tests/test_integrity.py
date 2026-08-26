@@ -88,7 +88,10 @@ def test_engine_match_known_items():
 def test_analyze_smoke():
     eng = Engine()
     out = eng.analyze([{"name": "St. John's Wort"}, {"name": "warfarin"}])
-    assert set(out) == {"matched", "interactions", "unmatched", "depletions"}
+    # analyze returns the full 7-layer output: legacy keys + inference engines
+    # (cascades/schedule/qt_risk/electrolytes/beers per brain.md layer 4)
+    assert {"matched", "interactions", "unmatched", "depletions",
+            "cascades", "schedule", "qt_risk", "electrolytes", "beers"} == set(out)
     # hypericum + anticoagulants is the canonical major interaction in the dataset
     assert any(i["severity"] == "major" for i in out["interactions"])
 

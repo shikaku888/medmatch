@@ -827,7 +827,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
               {result.source === 'openfoodfacts' ? 'Open Food Facts (Public Database)' : 
                result.source === 'openbeautyfacts' ? 'Open Beauty Facts' : 
                result.source === 'usda' ? 'USDA FoodData Central' : 
-               result.source === 'gemini_vision' ? 'Gemini Vision AI Engine' : 'Verified Dataset'}
+               result.source === 'local_scan' ? 'On-device OCR Engine' : 'Verified Dataset'}
             </span>
           </div>
           <span>Evaluated {new Date(result.scannedAt).toLocaleTimeString()}</span>

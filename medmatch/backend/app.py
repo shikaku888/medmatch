@@ -288,8 +288,6 @@ async def class_effects(class_id: str, limit: int = 15):
             "effects": [{"effect": r["effect"], "reports": r["n"]} for r in rows],
             "source": "OnSIDES (CC BY 4.0, PubMedBERT from FDA/EMA/EMC/KEGG labels)"}
 
-@app.post("/api/rebuild")
-
 
 @app.get("/favicon.ico")
 async def favicon():

@@ -47,7 +47,7 @@ export const ProUpgradeModal: React.FC<ProUpgradeModalProps> = ({
       icon: Sparkles
     },
     {
-      title: 'Ask Gemini Clinical Dietitian',
+      title: 'Ask Clinical Dietitian',
       desc: 'Interactive AI consultation to evaluate toxicological risk, child safety, and preparation tips.',
       icon: Zap
     },

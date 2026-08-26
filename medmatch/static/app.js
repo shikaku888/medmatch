@@ -473,10 +473,12 @@ async function runCheck() {
         ? { name: c.label, kind: c.kind, matched: { kind: c.kind, id: c.id }, time: c.time || null }
         : { name: c.label }
     );
+    const ageVal = parseInt($("#profile-age") && $("#profile-age").value, 10);
+    const profile = Number.isFinite(ageVal) && ageVal > 0 ? { age: ageVal } : undefined;
     const res = await fetch("/api/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: payload }),
+      body: JSON.stringify({ items: payload, profile }),
     });
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
@@ -538,6 +540,11 @@ function renderCheckResults(data) {
     .slice()
     .sort((a, b) => (sevOrder[a.severity ?? "evidence"] ?? 3) - (sevOrder[b.severity ?? "evidence"] ?? 3))
     .forEach((inter) => box.appendChild(renderInteraction(inter)));
+  renderCascades(data.cascades);
+  renderQtRisk(data.qt_risk);
+  renderElectrolytes(data.electrolytes);
+  renderBeers(data.beers);
+  renderSchedule(data.schedule);
 
 
   if (data.depletions && data.depletions.length) {
@@ -666,6 +673,151 @@ function timingNote(inter) {
   note.className = "timing-note";
   note.textContent = "Timing: you take these at different times of day — separating doses by 2+ hours reduces this risk.";
   return note;
+}
+
+/* ---------- inference-engine sections (cascades / QT / electrolytes / Beers / schedule) ---------- */
+function sectionCard(title, subtitle) {
+  const card = document.createElement("div");
+  card.className = "card";
+  const h3 = document.createElement("h3");
+  h3.textContent = title;
+  card.appendChild(h3);
+  if (subtitle) {
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = subtitle;
+    card.appendChild(p);
+  }
+  return card;
+}
+
+function renderCascades(cascades) {
+  if (!Array.isArray(cascades) || !cascades.length) return;
+  const card = sectionCard(
+    "Hidden risk chains",
+    "Inferred from enzyme pathways — mechanism-based signal, not a directly documented interaction."
+  );
+  cascades.forEach((c) => {
+    const box = document.createElement("div");
+    box.className = "engine-box cascade";
+    const chain = document.createElement("div");
+    chain.className = "chain";
+    c.chain.forEach((step, i) => {
+      if (i) chain.appendChild(document.createTextNode(" → "));
+      const span = document.createElement("span");
+      span.className = "chain-step";
+      span.innerHTML = "<b>" + escapeHtml(step.label) + "</b> <span class='chain-role'>(" + escapeHtml(step.role) + ")</span>";
+      chain.appendChild(span);
+    });
+    const eff = document.createElement("p");
+    eff.className = "effect";
+    eff.textContent = c.effect;
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = "Enzymes: " + c.enzymes.map((e) => (e === "p_gp" ? "P-gp" : "CYP" + String(e).toUpperCase())).join(" → ")
+      + " · Trust: " + c.trust + " (inferred)";
+    box.append(chain, eff, meta);
+    card.appendChild(box);
+  });
+  $("#check-content").appendChild(card);
+}
+
+function renderQtRisk(entries) {
+  const q = Array.isArray(entries) ? entries[0] : null;
+  if (!q) return;
+  const card = sectionCard("QT prolongation risk", "Combining QT-prolonging drugs raises the chance of a dangerous heart rhythm (torsades).");
+  const box = document.createElement("div");
+  box.className = "engine-box qt level-" + q.level;
+  const head = document.createElement("div");
+  head.className = "head";
+  const pair = document.createElement("span");
+  pair.className = "pair";
+  pair.textContent = "QT risk: " + String(q.level).toUpperCase();
+  const sev = document.createElement("span");
+  sev.className = "sev " + (q.level === "high" ? "sev-major" : q.level === "moderate" ? "sev-warn" : "sev-minor");
+  sev.textContent = q.level;
+  head.append(pair, sev);
+  const detail = document.createElement("p");
+  detail.className = "effect";
+  detail.textContent = "QT-prolonging groups in your list: " + (q.qt_classes || []).join("; ") + ".";
+  const bits = [];
+  if (q.factors && q.factors.length) bits.push("Risk factors: " + q.factors.join(", ") + ".");
+  if (q.level === "high") bits.push("Discuss an ECG and a medication review with your doctor.");
+  else if (q.level !== "low") bits.push("Mention this combination at your next checkup.");
+  box.append(head, detail);
+  if (bits.length) {
+    const extra = document.createElement("p");
+    extra.className = "engine-note";
+    extra.textContent = bits.join(" ");
+    box.appendChild(extra);
+  }
+  card.appendChild(box);
+  $("#check-content").appendChild(card);
+}
+
+function renderElectrolytes(list) {
+  if (!Array.isArray(list) || !list.length) return;
+  const card = sectionCard("Electrolyte watch", "These medications can drain potassium/magnesium — an occasional blood test is worth it.");
+  list.forEach((e) => {
+    const row = document.createElement("div");
+    row.className = "elyte-row";
+    const sev = document.createElement("span");
+    sev.className = "sev sev-warn";
+    sev.textContent = "watch";
+    const label = document.createElement("span");
+    label.innerHTML = "<b>" + escapeHtml(e.electrolyte) + "</b> — from " + escapeHtml((e.sources || []).join(", "));
+    row.append(sev, label);
+    const why = document.createElement("p");
+    why.className = "engine-note";
+    why.textContent = (e.reasons || []).join(" ");
+    const risk = document.createElement("p");
+    risk.className = "effect";
+    risk.textContent = e.secondary_risk || "";
+    card.append(row, why, risk);
+  });
+  $("#check-content").appendChild(card);
+}
+
+function renderBeers(list) {
+  if (!Array.isArray(list) || !list.length) return;
+  const card = sectionCard("Beers Criteria (age 65+)", "AGS Beers 2023 — medications needing extra caution in older adults.");
+  list.forEach((b) => {
+    const row = document.createElement("div");
+    row.className = "beer-row";
+    const sev = document.createElement("span");
+    sev.className = "sev " + (b.level === "avoid" ? "sev-major" : "sev-warn");
+    sev.textContent = b.level;
+    const label = document.createElement("span");
+    label.innerHTML = "<b>" + escapeHtml(b.label) + "</b>";
+    row.append(sev, label);
+    if (b.note) {
+      const note = document.createElement("p");
+      note.className = "engine-note";
+      note.textContent = b.note;
+      card.append(row, note);
+    } else {
+      card.appendChild(row);
+    }
+  });
+  $("#check-content").appendChild(card);
+}
+
+function renderSchedule(list) {
+  if (!Array.isArray(list) || !list.length) return;
+  const card = sectionCard("Scheduling suggestions", "Absorption conflicts — spacing doses apart defuses these.");
+  list.forEach((s) => {
+    const box = document.createElement("div");
+    box.className = "engine-box schedule";
+    const main = document.createElement("p");
+    main.className = "effect";
+    main.innerHTML = "<b>" + escapeHtml(s.a) + "</b> and <b>" + escapeHtml(s.b) + "</b>: take at least " + s.min_hours + " hours apart.";
+    const why = document.createElement("p");
+    why.className = "meta";
+    why.textContent = s.reason || "";
+    box.append(main, why);
+    card.appendChild(box);
+  });
+  $("#check-content").appendChild(card);
 }
 
 

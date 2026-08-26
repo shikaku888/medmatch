@@ -332,7 +332,7 @@ export default function App() {
         warnings: [],
         safeHighlights: swap.cleanHighlights
       },
-      source: 'gemini_vision',
+      source: 'local_scan',
       scannedAt: new Date().toISOString()
     };
 
@@ -359,7 +359,7 @@ export default function App() {
         warnings: [],
         safeHighlights: swap.cleanHighlights
       },
-      source: 'gemini_vision',
+      source: 'local_scan',
       scannedAt: new Date().toISOString()
     };
 
@@ -625,7 +625,7 @@ export default function App() {
             <span>•</span>
             <span className="font-medium">NCBI PubMed Studies</span>
             <span>•</span>
-            <span className="font-medium">Gemini 3.7 Vision & Clinical AI</span>
+            <span className="font-medium">On-device OCR & Clinical Engine</span>
           </div>
         </div>
       </footer>
