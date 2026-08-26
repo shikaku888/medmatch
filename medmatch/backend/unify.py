@@ -159,10 +159,14 @@ def build_unified(conn: sqlite3.Connection) -> dict:
     for r in conn.execute("SELECT cls_src, cls_mentioned, severity, effect, source, trust FROM dailymed_interactions"):
         add("drug_class", r["cls_src"], "drug_class", r["cls_mentioned"], r["severity"], r["effect"],
             None, r["source"], r["trust"])
-    # ddinter
-    for r in conn.execute("SELECT cls_a, cls_b, severity, source, trust, drug_a, drug_b FROM ddinter_interactions"):
-        add("drug_class", r["cls_a"], "drug_class", r["cls_b"], r["severity"],
-            f"{r['drug_a']} + {r['drug_b']}", None, r["source"], r["trust"])
+    # ddinter (CC BY-NC-SA — absent in commercial builds; re-import for research)
+    has_ddinter = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='ddinter_interactions'"
+    ).fetchone()
+    if has_ddinter:
+        for r in conn.execute("SELECT cls_a, cls_b, severity, source, trust, drug_a, drug_b FROM ddinter_interactions"):
+            add("drug_class", r["cls_a"], "drug_class", r["cls_b"], r["severity"],
+                f"{r['drug_a']} + {r['drug_b']}", None, r["source"], r["trust"])
     # suppai (class-mapped only)
     for r in conn.execute("SELECT herb_id, class_id, drug_name, doi, trust FROM suppai_interactions WHERE class_id IS NOT NULL"):
         add("herb", r["herb_id"], "drug_class", r["class_id"], "moderate",
@@ -175,10 +179,14 @@ def build_unified(conn: sqlite3.Connection) -> dict:
     for r in conn.execute("SELECT herb_a, herb_b, doi, trust FROM herb_herb_evidence"):
         add("herb", r["herb_a"], "herb", r["herb_b"], "moderate",
             "Evidence-backed supplement interaction", None, "SUPP.AI (herb-herb)", r["trust"], r["doi"])
-    # drugfood evidence
-    for r in conn.execute("SELECT cls_a, food_id, severity, effect, source, trust FROM drugfood_evidence"):
-        add("drug_class", r["cls_a"], "food", r["food_id"], r["severity"], r["effect"],
-            None, r["source"], r["trust"])
+    # drugfood evidence (DrugBank via Kaggle, CC BY-NC — absent in commercial builds)
+    has_dfe = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='drugfood_evidence'"
+    ).fetchone()
+    if has_dfe:
+        for r in conn.execute("SELECT cls_a, food_id, severity, effect, source, trust FROM drugfood_evidence"):
+            add("drug_class", r["cls_a"], "food", r["food_id"], r["severity"], r["effect"],
+                None, r["source"], r["trust"])
     # cyp inference
     roles = conn.execute("SELECT * FROM cyp_roles").fetchall()
     by_entity: dict[tuple, dict[str, set]] = {}

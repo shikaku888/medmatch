@@ -28,3 +28,6 @@ Thumbs.db
 lookup_cache.db
 lookup_cache.db-shm
 lookup_cache.db-wal
+
+# NC-licensed research backups (never distribute)
+medmatch/backend/data/_nc_backup/

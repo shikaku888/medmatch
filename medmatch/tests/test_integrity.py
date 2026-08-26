@@ -325,3 +325,16 @@ def test_unified_integrity(conn):
         " WHERE pair_key = 'drug_class:anticoagulantes|herb:hypericum'"
     ).fetchone()
     assert r is not None and len(__import__("json").loads(r[0])) >= 2
+
+def test_commercial_license_clean(conn):
+    """Commercial build contract: NC-licensed sources must be absent from the DB
+    and cited nowhere in the unified layer (DDInter CC BY-NC-SA, DrugBank CC BY-NC)."""
+    for table in ("ddinter_interactions", "drugfood_evidence"):
+        assert conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)
+        ).fetchone() is None, f"NC table {table} must be dropped in commercial builds"
+    bad = conn.execute(
+        "SELECT COUNT(*) FROM interaction_unified"
+        " WHERE evidence LIKE '%ddinter%' OR evidence LIKE '%DrugBank%' OR evidence LIKE '%Kaggle%'"
+    ).fetchone()[0]
+    assert bad == 0, f"{bad} unified rows still cite NC sources"

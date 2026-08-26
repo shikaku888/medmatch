@@ -80,11 +80,11 @@ medmatch/
 | [tapirro/herb-drug-interaction-checker](https://github.com/tapirro/herb-drug-interaction-checker) | 565 tương tác thảo dược–thuốc (đã dịch EN) | MIT |
 | FDA labeling (biên soạn thủ công) | 57 luật drug-drug + 8 luật drug-level | Kiến thức công khai |
 | [DailyMed](https://dailymed.nlm.nih.gov) (SPL labels, parse tự động) | **803 cặp drug-drug** (465 major) trích từ section DRUG INTERACTIONS của nhãn FDA, kèm trích dẫn label | Public domain (US gov) |
-| [DDInter 2.0](https://ddinter2.scbdd.com) | 1,144 cặp class-level (686 độc quyền) từ 222K cặp drug-level, severity + cơ chế | ⚠️ CC BY-NC-SA — gắn cờ, gỡ bằng `DELETE FROM ddinter_interactions` khi release thương mại |
+| ~~DDInter 2.0~~ | ❌ **Đã gỡ khỏi commercial build** (1,144 cặp class-level, CC BY-NC-SA). Backup nghiên cứu: `backend/data/_nc_backup/`. Re-import: đặt CSV rồi `python -m backend.ddinter` | ⚠️ CC BY-NC-SA — chỉ dùng research, KHÔNG phân phối
 | [Verified Supplement Evidence](https://github.com/erinheit451/verified-supplement-evidence) | 🏆 21 luật **thuốc làm cạn kiệt dinh dưỡng** (statin→CoQ10, PPI→B12/Mg...) + 72 gợi ý sản phẩm | MIT |
-| [Kaggle drug-food](https://www.kaggle.com/datasets/shayanhusain/drug-food-interactions-dataset) | 98 cặp drug-food (71 độc quyền) từ 1,423 drugs DrugBank 6.0 | ⚠️ CC BY-NC (DrugBank) — gắn cờ license |
+| ~~Kaggle drug-food (DrugBank 6.0)~~ | ❌ **Đã gỡ khỏi commercial build** (98 cặp, CC BY-NC). Backup: `backend/data/_nc_backup/drugfood_evidence.json`. Re-import: `python -m backend.drugfood_kaggle` | ⚠️ CC BY-NC — chỉ dùng research
 | [PubChem PUG REST](https://pubchem.ncbi.nlm.nih.gov/rest/pug) | 33 hoạt chất marker của 32 thảo dược → CID + CAS + formula (join key cho lớp hợp nhất + dedup: saw_palmetto ≡ pygeum qua β-Sitosterol) | Public domain |
-| Lớp hợp nhất (`backend/unify.py`) | `interaction_unified` 23,448 cặp (24,452 rows từ 9 nguồn, 403 severity conflicts, 104 inferred-only) + `standard_ingredient` 1,284 + `ingredient_synonyms` 6,745 | Nội bộ |
+| Lớp hợp nhất (`backend/unify.py`) | `interaction_unified` 22,671 cặp (23,210 rows từ 7 nguồn, 226 severity conflicts) — **commercial build, không NC** + `standard_ingredient` 1,284 + `ingredient_synonyms` 9,086 | Nội bộ |
 | [OnSIDES](https://github.com/tatonetti-lab/onsides) | 7,554 cặp (class, drug, tác dụng phụ MedDRA PT) từ 6.9M rows nhãn FDA/EMA/EMC/KEGG | CC BY 4.0 |
 | AI verification | 184 cặp được model đánh giá: 125 đúng / 52 sai / 7 không chắc → phát hiện & lọc 59 artifact phủ định | Nội bộ |
 
