@@ -49,6 +49,22 @@ const COMEDOGENIC_RATINGS: Record<string, number> = {
   'ceramide': 0
 };
 
+const IRRITATION_RATINGS: Record<string, number> = {
+  'fragrance': 3,
+  'parfum': 3,
+  'essential oil': 2,
+  'alcohol denat': 2,
+  'denatured alcohol': 2,
+  'sodium lauryl sulfate': 2,
+  'sodium laureth sulfate': 2,
+  'eugenol': 2,
+  'limonene': 2,
+  'linalool': 2,
+  'menthol': 2,
+  'retinol': 2,
+  'salicylic acid': 1
+};
+
 export function analyzeCosmeticIngredients(ingredientsList: string[], ingredientsText: string): CosmeticProfile {
   const textLower = (ingredientsText + ' ' + ingredientsList.join(' ')).toLowerCase();
 
@@ -59,17 +75,17 @@ export function analyzeCosmeticIngredients(ingredientsList: string[], ingredient
   const hasRetinoids = RETINOID_NAMES.some(r => textLower.includes(r));
   const hasSalicylicAcid = SALICYLIC_NAMES.some(sa => textLower.includes(sa));
 
-  // Calculate highest comedogenic rating
   let maxComedogenic = 0;
   for (const ing of ingredientsList) {
     const ingLower = ing.toLowerCase().trim();
     for (const [key, rating] of Object.entries(COMEDOGENIC_RATINGS)) {
-      if (ingLower.includes(key)) {
-        if (rating > maxComedogenic) maxComedogenic = rating;
-      }
+      if (ingLower.includes(key) && rating > maxComedogenic) maxComedogenic = rating;
     }
   }
 
+  const irritationIngredients = Object.keys(IRRITATION_RATINGS).filter((key) => textLower.includes(key));
+  const maxIrritation = Math.max(...irritationIngredients.map((key) => IRRITATION_RATINGS[key]), 0);
+  const irritationRisk = maxIrritation >= 3 ? 'high' : maxIrritation >= 2 ? 'moderate' : 'low';
   const summaryParts: string[] = [];
   if (hasFragrance) summaryParts.push('Contains fragrance/essential allergens');
   if (hasParabens) summaryParts.push('Contains preservative parabens');
@@ -78,10 +94,13 @@ export function analyzeCosmeticIngredients(ingredientsList: string[], ingredient
   if (hasRetinoids) summaryParts.push('Contains active Vitamin A/Retinoids');
   if (hasSalicylicAcid) summaryParts.push('Contains BHA/Salicylic Acid');
   if (maxComedogenic >= 3) summaryParts.push(`Pore-clogging potential (rating ${maxComedogenic}/5)`);
+  if (irritationRisk !== 'low') summaryParts.push(`Irritation potential (${irritationRisk})`);
 
   return {
     category: 'Cosmetic / Personal Care',
     comedogenicRating: maxComedogenic,
+    irritationRisk,
+    irritationIngredients,
     hasFragrance,
     hasParabens,
     hasSulfates,

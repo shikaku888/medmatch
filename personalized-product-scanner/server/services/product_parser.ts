@@ -12,6 +12,7 @@ export interface ParsedProduct {
   productType: 'food' | 'cosmetic';
   ingredientsText: string;
   ingredientsList: string[];
+  hasIngredientSection?: boolean;
   allergens: string[];
   labels: string[];
   nutrition?: NutritionFacts;
@@ -126,10 +127,9 @@ export function parseIngredientsText(rawText: string, suggestedName?: string): P
 
   // Brand: explicit "Brand:" line, else nothing (OCR rarely yields a clean company line).
   const brand = detectBrand(lines);
-
-  // Ingredient section: everything from the header line on, else the whole text.
   const headerIdx = lines.findIndex((l) => INGREDIENT_SECTION_RE.test(l));
-  const ingredientsText = headerIdx >= 0
+  const hasIngredientSection = headerIdx >= 0;
+  const ingredientsText = hasIngredientSection
     ? lines.slice(headerIdx).join(', ').replace(/^[^:]*:\s*/, '')
     : lines.join(', ');
   const ingredientsList = splitIngredients(ingredientsText);
@@ -140,6 +140,7 @@ export function parseIngredientsText(rawText: string, suggestedName?: string): P
     productType: COSMETIC_RE.test(raw) ? 'cosmetic' : 'food',
     ingredientsText,
     ingredientsList,
+    hasIngredientSection,
     allergens: detectAllergens(raw),
     labels: detectLabels(raw),
   };

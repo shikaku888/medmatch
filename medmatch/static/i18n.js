@@ -20,8 +20,8 @@
       title_elytes: "Electrolyte watch", title_beers: "Beers Criteria (age 65+)",
       title_schedule: "Scheduling suggestions",
       scan_intro: "Point your camera at the barcode, or enter it manually.",
-      cabinet_intro: "Your supplements and medications are stored only in this browser.",
-      review_intro: "Pharmacist triage for inferred interactions (trust 0.5). Verify or reject.",
+      cabinet_intro: "Cabinet stays in this browser; scanner profile and history may be stored on our server under a random device token.",
+      review_intro: "Reference from public data. Not clinician-verified — discuss with a licensed physician or pharmacist.",
       unmatched_intro: "These items were not recognized — check spelling or add them via search:",
       depletions_intro: "These medications may deplete nutrients over time — worth discussing supplementation with your doctor.",
       cascades_intro: "Inferred from enzyme pathways — mechanism-based signal, not a directly documented interaction.",
@@ -42,43 +42,7 @@
       age_placeholder: "Age (optional — enables Beers & QT risk checks)",
       timing_note: "Timing: you take these at different times of day — separating doses by 2+ hours reduces this risk.",
       fda_extra: "Information above is an automated reference from public databases, not medical advice. Consult a licensed physician or pharmacist.",
-      privacy: "Privacy: your product list never leaves this browser. No account, no tracking."
-    },
-    vi: {
-      tab_scan: "Quét sản phẩm", tab_cabinet: "Tủ thuốc", tab_check: "Kiểm tra", tab_review: "Duyệt",
-      btn_start_camera: "Bật camera", btn_lookup: "Tra mã", btn_ocr: "Quét chữ trên nhãn (OCR)",
-      btn_search: "Tìm kiếm", btn_check_interactions: "Kiểm tra tương tác", btn_print: "In / Lưu PDF",
-      btn_verify: "✓ Xác nhận", btn_reject: "✗ Loại bỏ", btn_add: "Thêm",
-      title_scan_product: "Quét sản phẩm", title_manual_add: "Thêm thủ công",
-      title_cabinet: "Tủ thuốc của tôi", title_review_queue: "Hàng chờ duyệt",
-      title_unmatched: "Không nhận dạng được", title_depletions: "Cảnh báo cạn kiệt dinh dưỡng",
-      title_cascades: "Chuỗi rủi ro ẩn", title_qt: "Nguy cơ kéo dài khoảng QT",
-      title_elytes: "Cảnh báo điện giải", title_beers: "Tiêu chuẩn Beers (từ 65 tuổi)",
-      title_schedule: "Gợi ý lịch uống",
-      scan_intro: "Hướng camera vào mã vạch hoặc nhập thủ công.",
-      cabinet_intro: "TPCN và thuốc của bạn chỉ được lưu trong trình duyệt này.",
-      review_intro: "Duyệt bởi dược sĩ cho các tương tác suy luận (tin cậy 0.5). Xác nhận hoặc loại.",
-      unmatched_intro: "Các mục sau không được nhận dạng — kiểm tra chính tả hoặc thêm qua tìm kiếm:",
-      depletions_intro: "Các thuốc này có thể làm cạn kiệt dinh dưỡng theo thời gian — nên trao đổi bổ sung với bác sĩ.",
-      cascades_intro: "Suy luận từ đường dẫn enzyme — tín hiệu theo cơ chế, không phải tương tác được ghi nhận trực tiếp.",
-      qt_intro: "Kết hợp nhiều thuốc kéo dài QT làm tăng nguy cơ rối loạn nhịp nguy hiểm (torsades).",
-      elytes_intro: "Các thuốc này có thể làm mất kali/magie — nên xét nghiệm máu định kỳ.",
-      beers_intro: "AGS Beers 2023 — thuốc cần thận trọng ở người cao tuổi.",
-      schedule_intro: "Xung đột hấp thu — tách giờ uống làm giảm rủi ro.",
-      msg_nothing: "Chưa có gì để kiểm tra", msg_nothing_intro: "Hãy thêm thực phẩm chức năng và thuốc của bạn trước.",
-      msg_analyzing: "Đang phân tích", msg_items: "mục…",
-      msg_unreachable: "Không kết nối được máy chủ — backend đang chạy chưa?",
-      msg_no_interactions: "Không có tương tác đã ghi nhận",
-      msg_none_found: "✓ Không tìm thấy tương tác nào được ghi nhận giữa các mục này.",
-      msg_queue_clear: "✓ Hàng chờ trống — không còn gì để duyệt.",
-      status_major: "nghiêm trọng", status_moderate: "trung bình", status_minor: "nhẹ",
-      status_evidence: "Dựa trên bằng chứng", status_watch: "theo dõi", status_avoid: "tránh", status_caution: "thận trọng",
-      summary_major: "cảnh báo nghiêm trọng", summary_warnings_found: "được phát hiện",
-      summary_may_deplete: "Có thể làm cạn kiệt",
-      age_placeholder: "Tuổi (tùy chọn — bật kiểm tra Beers & QT)",
-      timing_note: "Thời điểm: bạn uống các thuốc này ở khung giờ khác nhau — cách nhau 2+ giờ giúp giảm rủi ro.",
-      fda_extra: "Thông tin trên là tra cứu tự động từ cơ sở dữ liệu công khai, không phải tư vấn y tế. Hãy tham khảo bác sĩ hoặc dược sĩ.",
-      privacy: "Riêng tư: danh sách sản phẩm không rời trình duyệt của bạn. Không tài khoản, không theo dõi."
+      privacy: "Privacy: cabinet is local; scanner profile/history are server-side under a random device token. No account, no ad tracking."
     },
     fr: {
       tab_scan: "Scanner", tab_cabinet: "Mon armoire", tab_check: "Vérifier", tab_review: "Révision",
@@ -92,7 +56,7 @@
       title_elytes: "Surveillance des électrolytes", title_beers: "Critères de Beers (65+)",
       title_schedule: "Suggestions d'horaires",
       scan_intro: "Visez le code-barres ou saisissez-le manuellement.",
-      cabinet_intro: "Vos compléments et médicaments sont stockés uniquement dans ce navigateur.",
+      cabinet_intro: "L'armoire reste dans ce navigateur ; le profil et l'historique du scanner peuvent être stockés sur notre serveur avec un jeton aléatoire.",
       review_intro: "Triage pharmacien des interactions inférées (confiance 0.5). Valider ou rejeter.",
       unmatched_intro: "Éléments non reconnus — vérifiez l'orthographe ou ajoutez-les via la recherche :",
       depletions_intro: "Ces médicaments peuvent épuiser des nutriments — à discuter avec votre médecin.",
@@ -114,7 +78,7 @@
       age_placeholder: "Âge (optionnel — active Beers & QT)",
       timing_note: "Horaire : vous les prenez à des moments différents — espacer de 2 h+ réduit ce risque.",
       fda_extra: "Les informations ci-dessus sont une référence automatisée issue de bases publiques, pas un avis médical.",
-      privacy: "Confidentialité : votre liste ne quitte jamais ce navigateur. Aucun compte, aucun traçage."
+      privacy: "Confidentialité : l'armoire est locale ; le profil et l'historique du scanner sont côté serveur avec un jeton aléatoire. Aucun compte, aucun suivi publicitaire."
     },
     de: {
       tab_scan: "Scannen", tab_cabinet: "Mein Schrank", tab_check: "Prüfen", tab_review: "Prüfung",
@@ -128,7 +92,7 @@
       title_elytes: "Elektrolyt-Watch", title_beers: "Beers-Kriterien (ab 65)",
       title_schedule: "Einnahmezeit-Empfehlungen",
       scan_intro: "Kamera auf den Barcode richten oder manuell eingeben.",
-      cabinet_intro: "Ihre Präparate werden nur in diesem Browser gespeichert.",
+      cabinet_intro: "Ihr Schrank bleibt in diesem Browser; Scanner-Profil und Verlauf können mit einem zufälligen Geräte-Token auf unserem Server gespeichert werden.",
       review_intro: "Apotheker-Sichtung abgeleiteter Interaktionen (Vertrauen 0,5). Bestätigen oder ablehnen.",
       unmatched_intro: "Diese Elemente wurden nicht erkannt — Schreibweise prüfen oder per Suche hinzufügen:",
       depletions_intro: "Diese Medikamente können Nährstoffe erschöpfen — mit dem Arzt besprechen.",
@@ -150,7 +114,7 @@
       age_placeholder: "Alter (optional — aktiviert Beers & QT)",
       timing_note: "Zeitplan: Sie nehmen diese zu unterschiedlichen Zeiten ein — 2+ Stunden Abstand reduziert das Risiko.",
       fda_extra: "Die obigen Informationen sind automatisierte Referenzen aus öffentlichen Datenbanken, kein medizinischer Rat.",
-      privacy: "Datenschutz: Ihre Liste verlässt diesen Browser nie. Kein Konto, kein Tracking."
+      privacy: "Datenschutz: Der Schrank ist lokal; Scanner-Profil und Verlauf liegen mit einem zufälligen Geräte-Token auf dem Server. Kein Konto, kein Werbetracking."
     },
     it: {
       tab_scan: "Scansiona", tab_cabinet: "La mia dispensa", tab_check: "Verifica", tab_review: "Revisione",
@@ -164,7 +128,7 @@
       title_elytes: "Sorveglianza elettroliti", title_beers: "Criteri di Beers (65+)",
       title_schedule: "Suggerimenti di orari",
       scan_intro: "Punta la fotocamera sul codice a barre o inseriscilo manualmente.",
-      cabinet_intro: "I tuoi integratori e farmaci sono salvati solo in questo browser.",
+      cabinet_intro: "La tua dispensa resta in questo browser; profilo e cronologia dello scanner possono essere salvati sul nostro server con un token casuale.",
       review_intro: "Triage del farmacista per interazioni inferite (affidabilità 0.5). Conferma o rifiuta.",
       unmatched_intro: "Elementi non riconosciuti — controlla la grafia o aggiungili tramite ricerca:",
       depletions_intro: "Questi farmaci possono esaurire i nutrienti — vale la pena parlarne con il medico.",
@@ -186,12 +150,11 @@
       age_placeholder: "Età (opzionale — attiva Beers e QT)",
       timing_note: "Orari: li assumi in momenti diversi — distanziare di 2+ ore riduce il rischio.",
       fda_extra: "Le informazioni sopra sono riferimenti automatici da banche dati pubbliche, non consulenza medica.",
-      privacy: "Privacy: la tua lista non lascia mai questo browser. Nessun account, nessun tracciamento."
+      privacy: "Privacy: la dispensa è locale; profilo e cronologia dello scanner sono sul server con un token casuale. Nessun account, nessun tracciamento pubblicitario."
     },
     es: {
       tab_scan: "Escanear", tab_cabinet: "Mi armario", tab_check: "Comprobar", tab_review: "Revisión",
       btn_start_camera: "Iniciar cámara", btn_lookup: "Buscar", btn_ocr: "Escanear texto (OCR)",
-      btn_search: "Buscar", btn_check_interactions: "Comprobar interacciones", btn_print: "Imprimir / PDF",
       btn_verify: "✓ Verificar", btn_reject: "✗ Rechazar", btn_add: "Añadir",
       title_scan_product: "Escanear un producto", title_manual_add: "Añadir manualmente",
       title_cabinet: "Mi armario", title_review_queue: "Cola de revisión",
@@ -200,7 +163,7 @@
       title_elytes: "Vigilancia de electrolitos", title_beers: "Criterios de Beers (65+)",
       title_schedule: "Sugerencias de horario",
       scan_intro: "Apunta la cámara al código de barras o introdúcelo manualmente.",
-      cabinet_intro: "Tus suplementos y medicamentos se guardan solo en este navegador.",
+      cabinet_intro: "El armario permanece en este navegador; el perfil y el historial del escáner pueden guardarse en nuestro servidor con un token aleatorio.",
       review_intro: "Clasificación farmacéutica de interacciones inferidas (confianza 0.5). Verificar o rechazar.",
       unmatched_intro: "Estos elementos no se reconocieron — revisa la ortografía o añádelos mediante búsqueda:",
       depletions_intro: "Estos medicamentos pueden agotar nutrientes — vale la pena comentarlo con tu médico.",
@@ -222,12 +185,12 @@
       age_placeholder: "Edad (opcional — activa Beers y QT)",
       timing_note: "Horario: los tomas a distintas horas — separarlos 2+ horas reduce este riesgo.",
       fda_extra: "La información anterior es una referencia automatizada de bases de datos públicas, no consejo médico.",
-      privacy: "Privacidad: tu lista nunca sale de este navegador. Sin cuenta, sin rastreo."
+      privacy: "Privacidad: el armario es local; el perfil y el historial del escáner están en el servidor con un token aleatorio. Sin cuenta, sin seguimiento publicitario."
     }
   };
 
   const LANGS = [
-    { code: "en", label: "🇺🇸 EN" }, { code: "vi", label: "🇻🇳 VI" }, { code: "fr", label: "🇫🇷 FR" },
+    { code: "en", label: "🇺🇸 EN" }, { code: "fr", label: "🇫🇷 FR" },
     { code: "de", label: "🇩🇪 DE" }, { code: "it", label: "🇮🇹 IT" }, { code: "es", label: "🇪🇸 ES" }
   ];
   const STORE_KEY = "medmatch_lang";

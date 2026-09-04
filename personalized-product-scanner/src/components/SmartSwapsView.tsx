@@ -80,13 +80,13 @@ export const SmartSwapsView: React.FC<SmartSwapsViewProps> = ({
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>{t('aiEngineBadge', 'AI Recommendation Engine • Pro Tier')}</span>
+            <span>{t('profileBasedRecommendations', 'Based on your profile')}</span>
           </div>
           <h2 className="text-2xl font-bold tracking-tight">
             {t('smartSwapsTitle', 'Smart Safe Swaps')}
           </h2>
           <p className="text-sm text-slate-300 mt-1 leading-relaxed">
-            {t('smartSwapsSubtitle', 'Algorithmic clean alternatives formulated without your specific allergens and tailored to your diet.')}
+            {t('smartSwapsSubtitle', 'Alternatives selected from available product information and your preferences.')}
           </p>
         </div>
 

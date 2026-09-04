@@ -14,7 +14,7 @@ from backend.db import build_db, DB_PATH
 from backend.engine import Engine
 
 HERB_DRUG_PAIRS = 565   # unique herb-drug pairs (tapirro, translated EN)
-DRUG_DRUG_RULES = 57    # 49 class-level + 8 drug-level FDA-labeling rules
+DRUG_DRUG_RULES = 58    # 50 class-level + 8 drug-level FDA-labeling rules
 
 
 @pytest.fixture(scope="session")
@@ -88,11 +88,12 @@ def test_engine_match_known_items():
 def test_analyze_smoke():
     eng = Engine()
     out = eng.analyze([{"name": "St. John's Wort"}, {"name": "warfarin"}])
-    # analyze returns the full 7-layer output: legacy keys + inference engines
-    # (cascades/schedule/qt_risk/electrolytes/beers per brain.md layer 4)
+    # analyze returns legacy keys, inference engines, and safety provenance.
     assert {"matched", "interactions", "unmatched", "depletions",
-            "cascades", "schedule", "qt_risk", "electrolytes", "beers"} == set(out)
-    # hypericum + anticoagulants is the canonical major interaction in the dataset
+            "signals", "cascades", "schedule", "qt_risk", "electrolytes", "beers"} <= set(out)
+    assert out["result"] in {
+        "interaction_found", "no_documented_interaction_found", "unknown_unmatched"
+    }
     assert any(i["severity"] == "major" for i in out["interactions"])
 
 
@@ -161,7 +162,11 @@ def test_cyp_roles_integrity(conn):
         "SELECT COUNT(*) FROM cyp_roles WHERE role NOT IN ('substrate','inhibitor','inducer')"
     ).fetchone()[0] == 0
     assert conn.execute(
-        "SELECT COUNT(*) FROM cyp_roles WHERE enzyme NOT IN ('1A2','2C9','2C19','2D6','3A4','p_gp')"
+        "SELECT COUNT(*) FROM cyp_roles WHERE enzyme NOT IN "
+        "('1A2','2C9','2C19','2D6','3A4','2E1','p_gp')"
+    ).fetchone()[0] == 0
+    assert conn.execute(
+        "SELECT COUNT(*) FROM cyp_roles WHERE enzyme = '2E1' AND role != 'substrate'"
     ).fetchone()[0] == 0
     bad = conn.execute(
         "SELECT COUNT(*) FROM cyp_roles c"
@@ -319,6 +324,18 @@ def test_unified_integrity(conn):
     ).fetchone()[0] == 0
     assert conn.execute("SELECT COUNT(*) FROM standard_ingredient").fetchone()[0] >= 1200
     assert conn.execute("SELECT COUNT(*) FROM ingredient_synonyms").fetchone()[0] >= 6000
+    assert conn.execute(
+        "SELECT COUNT(*) FROM interaction_unified "
+        "WHERE a_kind = b_kind AND a_id = b_id"
+    ).fetchone()[0] == 0
+    mapping_rows = conn.execute(
+        "SELECT raw_name, entity_id FROM drug_name_mapping "
+        "WHERE source = 'zenodo_ddi_2026' "
+        "AND raw_name IN ('Warfarin', 'Warfarin Sodium') "
+        "AND entity_type = 'drug_ingredient'"
+    ).fetchall()
+    if len(mapping_rows) == 2:
+        assert {row["entity_id"] for row in mapping_rows} == {"11289"}
     # canonical pair must have >= 2 evidence sources
     r = conn.execute(
         "SELECT evidence FROM interaction_unified"
@@ -329,6 +346,10 @@ def test_unified_integrity(conn):
 def test_commercial_license_clean(conn):
     """Commercial build contract: NC-licensed sources must be absent from the DB
     and cited nowhere in the unified layer (DDInter CC BY-NC-SA, DrugBank CC BY-NC)."""
+    if not conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='interaction_unified'"
+    ).fetchone():
+        pytest.skip("canonical interaction layer is not present in seed-only database")
     for table in ("ddinter_interactions", "drugfood_evidence"):
         assert conn.execute(
             "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)

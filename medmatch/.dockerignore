@@ -1,0 +1,29 @@
+# VCS, local tooling and generated Python files
+.git
+.gitignore
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# The full source DB is never shipped; deploy/runtime/medmatch.db is the
+# explicitly generated compact runtime snapshot.
+backend/medmatch.db*
+backend/data/
+
+# Tests and planning files are not copied by Dockerfile. The public privacy
+# policy is copied explicitly.
+tests/
+NEXT_WORK_PLAN.md
+README.md
+
+# Local secrets and development certificates
+.env
+.env.*
+*.pem
+*.key
+
+# Runtime device data and local logs
+**/devices/
+*.log

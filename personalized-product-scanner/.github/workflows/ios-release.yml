@@ -1,0 +1,127 @@
+name: ios-release
+
+# Build iOS and upload to TestFlight on a macOS runner.
+# Required repository secrets:
+#   APPSTORE_ISSUER_ID, APPSTORE_KEY_ID, APPSTORE_P8_B64, TEAM_ID
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["ios-v*"]
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Build web bundle
+        run: |
+          SCANNER_BASE=/scanner/ SCANNER_OUT=dist-scanner bun run build
+
+      - name: Apply production scanner URL
+        env:
+          SCANNER_URL: ${{ vars.SCANNER_URL }}
+        run: |
+          test -n "$SCANNER_URL"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path("capacitor.config.json")
+          config = json.loads(path.read_text(encoding="utf-8"))
+          config.setdefault("server", {})["url"] = os.environ["SCANNER_URL"].rstrip("/") + "/"
+          path.write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Validate release configuration
+        env:
+          SCANNER_URL: ${{ vars.SCANNER_URL }}
+        run: bun run release:check
+
+      - name: Generate iOS project (Capacitor)
+        run: |
+          npx cap add ios
+          npx cap sync ios
+          python3 - <<'PY'
+          import plistlib
+          from pathlib import Path
+
+          path = Path("ios/App/App/Info.plist")
+          with path.open("rb") as handle:
+              plist = plistlib.load(handle)
+          plist["NSCameraUsageDescription"] = (
+              "MedMatch uses the camera to scan product barcodes and ingredient labels."
+          )
+          with path.open("wb") as handle:
+              plistlib.dump(plist, handle)
+          PY
+
+      - name: Verify Xcode version
+        run: xcodebuild -version
+
+
+      - name: Set up Ruby + fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: false
+
+      - name: Install fastlane
+        run: gem install fastlane --no-document
+
+      - name: Decode API key
+        env:
+          APPSTORE_P8_B64: ${{ secrets.APPSTORE_P8_B64 }}
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+        run: |
+          mkdir -p fastlane ~/apikey
+          echo "$APPSTORE_P8_B64" | base64 --decode > ~/apikey/AuthKey_${APPSTORE_KEY_ID}.p8
+          python3 - <<'PY'
+          import base64
+          import json
+          import os
+          from pathlib import Path
+
+          key = base64.b64decode(os.environ["APPSTORE_P8_B64"]).decode("utf-8")
+          Path("fastlane/api.json").write_text(
+              json.dumps({
+                  "key_id": os.environ["APPSTORE_KEY_ID"],
+                  "issuer_id": os.environ["APPSTORE_ISSUER_ID"],
+                  "key": key,
+                  "in_house": False,
+              }),
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Build & upload to TestFlight
+        env:
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+          XCODE_APP_STORE_CONNECT_API_KEY_PATH: ${{ github.workspace }}/fastlane/api.json
+        run: |
+          cd ios/App
+          fastlane gym \
+            --workspace App.xcworkspace \
+            --scheme App \
+            --export_method app-store \
+            --output_directory ../build \
+            --export_options '{"method":"app-store","signingStyle":"automatic","teamID":"'"$TEAM_ID"'"}' \
+            --xcargs "-allowProvisioningUpdates" \
+            --xcodebuild_formatter xcbeautify
+          fastlane pilot upload \
+            --api_key_path ../../fastlane/api.json \
+            --ipa ../build/App.ipa \
+            --skip_waiting_for_build_processing true
+
+      - name: Upload ipa artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-ipa
+          path: ios/build/*.ipa

@@ -28,20 +28,20 @@ gcloud config set project %PROJECT_ID% || exit /b 1
 echo == Enabling APIs (first run only)
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com storage.googleapis.com --quiet
 
-echo == Uploading database to GCS (297MB, one-time; re-run to refresh data)
+echo == Uploading database to GCS (current unified database; one-time; re-run to refresh data)
 gcloud storage buckets create gs://%BUCKET% --location=%REGION% --quiet 2>nul
-gcloud storage cp "H:\aisuckhoe\medmatch\backend\medmatch.db" gs://%BUCKET%/medmatch.db || exit /b 1
+gcloud storage cp "G:\aisuckhoe\medmatch\backend\medmatch.db" gs://%BUCKET%/medmatch.db || exit /b 1
 
 echo == Deploying Cloud Run service %SERVICE%
 gcloud run deploy %SERVICE% ^
-  --source "H:\aisuckhoe" ^
+  --source "G:\aisuckhoe" ^
   --dockerfile deploy/Dockerfile ^
   --region %REGION% ^
   --allow-unauthenticated ^
   --memory 1Gi --cpu 1 --max-instances 1 --concurrency 40 ^
   --add-volume name=dbvol,type=cloud-storage,bucket=%BUCKET% ^
   --mount name=dbvol,path=/app/dbvolume ^
-  --set-env-vars "MEDMATCH_DB=/app/dbvolume/medmatch.db,NODE_ENV=production" ^
+  --set-env-vars "MEDMATCH_DB=/app/dbvolume/medmatch.db" ^
   --quiet || exit /b 1
 
 for /f "delims=" %%U in ('gcloud run services describe %SERVICE% --region %REGION% --format "value(status.url)"') do set URL=%%U

@@ -1,0 +1,24 @@
+{
+  "appId": "vn.medmatch.scanner",
+  "appName": "MedMatch AI",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always",
+    "backgroundColor": "#0f172a",
+    "limitsNavigationsToAppBoundDomains": true
+  },
+  "server": {
+    "url": "https://REPLACE-WITH-YOUR-DOMAIN/scanner/",
+    "cleartext": false,
+    "androidScheme": "https"
+  },
+  "android": {
+    "packageName": "vn.medmatch.scanner",
+    "backgroundColor": "#0f172a",
+    "permissions": [
+      "CAMERA",
+      "INTERNET"
+    ]
+  }
+}

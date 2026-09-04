@@ -1,0 +1,16 @@
+{
+  "name": "MedMatch AI — Health Scanner",
+  "short_name": "Scanner",
+  "description": "Scan products, receipts and labels; check drug & supplement interactions on-device evidence.",
+  "id": "/scanner/",
+  "start_url": "/scanner/",
+  "scope": "/scanner/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1220",
+  "theme_color": "#0e7490",
+  "icons": [
+    { "src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/static/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

@@ -19,6 +19,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from .engine import normalize
+from .license_registry import register_release
 
 BASE = "https://dailymed.nlm.nih.gov/dailymed/services/v2"
 DATA_DIR = Path(__file__).parent / "data"
@@ -242,6 +243,12 @@ def run(conn: sqlite3.Connection, limit: int | None, delay: float,
         if stats["drugs"] % 25 == 0:
             print(f"drugs={stats['drugs']} inserted={stats['inserted']} errors={stats['errors']}")
     conn.commit()
+    register_release(
+        conn, "dailymed", "DailyMed SPL API (drug_interactions section 34067-9)",
+        version="api", source_url="https://dailymed.nlm.nih.gov/dailymed/services/v2",
+        terms_url="https://dailymed.nlm.nih.gov/dailymed/disclaimer.cfm",
+        licence_name="Public Domain / CC0", commercial_status="core_open",
+        parser_version="dailymed.run")
     return stats
 
 

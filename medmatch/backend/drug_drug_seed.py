@@ -46,6 +46,10 @@ DRUG_DRUG_RULES = [
          mechanism="Corticosteroids can both potentiate anticoagulation and irritate the GI mucosa.",
          source="FDA corticosteroid labeling"),
     # --- Serotonergic / CNS ---
+    dict(cls_a="isrs", cls_b="aines", severity="major",
+         effect="Increased risk of gastrointestinal bleeding when SSRIs are combined with NSAIDs.",
+         mechanism="SSRIs impair platelet serotonin-mediated aggregation; NSAIDs inhibit platelet function and injure the gastrointestinal mucosa.",
+         source="FDA SSRI and NSAID labeling"),
     dict(cls_a="isrs", cls_b="imao", severity="major",
          effect="Serotonin syndrome: agitation, hyperthermia, rigidity; potentially fatal. Contraindicated combination.",
          mechanism="Additive serotonergic activity; MAOIs require a 14-day washout before starting SSRIs.",

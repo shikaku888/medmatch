@@ -34,3 +34,21 @@ medmatch/backend/data/_nc_backup/
 
 # DSLD bulk download (public domain, ~800MB — user-supplied, not distributed)
 medmatch/backend/data/dsld/
+# Local user data and generated test artifacts
+personalized-product-scanner/data_storage.json
+.pytest-*/
+.locale-smoke-devices/
+*.db
+*.db-*
+*.db.*
+
+# Local archives and development certificates
+*.tar
+*.tar.gz
+*.rar
+*.pem
+
+# Generated frontend bundles outside the canonical static tree
+personalized-product-scanner/dist-*/
+personalized-product-scanner/aisuckhoemedmatchstaticscanner/
+medmatch/-b

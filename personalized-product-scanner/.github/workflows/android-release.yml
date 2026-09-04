@@ -1,0 +1,83 @@
+name: android-release
+
+# Build Android App Bundle (.aab) — chạy trên runner Linux miễn phí.
+# Secrets cần thiết (repo Settings → Secrets → Actions):
+#   ANDROID_KEYSTORE_B64 : file keystore.jks nén base64 (tự tạo 1 lần:
+#       keytool -genkeypair -v -keystore medmatch.jks -alias medmatch \
+#         -keyalg RSA -keysize 2048 -validity 10000
+#       base64 -i medmatch.jks -o keystore.b64   (macOS/Linux)
+#   ANDROID_KEYSTORE_PASSWORD : mật khẩu keystore
+#   ANDROID_KEY_ALIAS : alias (vd medmatch)
+#   ANDROID_KEY_PASSWORD : mật khẩu key
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["android-v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Build web bundle
+        run: |
+          SCANNER_BASE=/scanner/ SCANNER_OUT=dist-scanner bun run build
+
+      - name: Apply production scanner URL
+        env:
+          SCANNER_URL: ${{ vars.SCANNER_URL }}
+        run: |
+          test -n "$SCANNER_URL"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path("capacitor.config.json")
+          config = json.loads(path.read_text(encoding="utf-8"))
+          config.setdefault("server", {})["url"] = os.environ["SCANNER_URL"].rstrip("/") + "/"
+          path.write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Validate release configuration
+        env:
+          SCANNER_URL: ${{ vars.SCANNER_URL }}
+        run: bun run release:check
+
+      - name: Generate Android project (Capacitor)
+        run: |
+          if [ ! -d android ]; then npx cap add android; fi
+          npx cap sync android
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_B64 }}" | base64 --decode > android/app/medmatch.jks
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Build signed AAB
+        working-directory: android
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          ./gradlew bundleRelease \
+            -Pandroid.injected.signing.store.file=medmatch.jks \
+            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
+            --no-daemon
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-bundle
+          path: android/app/build/outputs/bundle/release/*.aab

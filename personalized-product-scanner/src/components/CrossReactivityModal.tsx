@@ -102,7 +102,7 @@ export const CrossReactivityModal: React.FC<CrossReactivityModalProps> = ({
                   {t('crossTitle', 'Biological Cross-Reactivity Matrix')}
                 </h3>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
-                  Clinical Immunology Standards
+                  Reference guidance
                 </span>
               </div>
               <p className="text-xs text-slate-500">
@@ -318,7 +318,7 @@ export const CrossReactivityModal: React.FC<CrossReactivityModalProps> = ({
         <div className="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center space-x-2">
             <Stethoscope className="w-4 h-4 text-slate-400" />
-            <span>Clinical reference: EAACI Molecular Allergology Guidelines & World Allergy Organization (WAO).</span>
+            <span>Reference sources: EAACI Molecular Allergology Guidelines & World Allergy Organization (WAO).</span>
           </div>
           <button
             onClick={onClose}

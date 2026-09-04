@@ -185,9 +185,6 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="text-lg font-bold">{t('receiptTitle', 'Batch Receipt & Shopping Cart Audit')}</h3>
-                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[10px] font-bold uppercase tracking-wider">
-                  AI Vision 3.7
-                </span>
               </div>
               <p className="text-xs text-slate-400 mt-0.5">
                 Scan pharmacy & grocery receipts or paste carts for multi-profile medication-interaction and allergen screening.
@@ -402,12 +399,12 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
                 {loading ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>AI is auditing all items against family medication & allergy profiles...</span>
+                    <span>Checking the items…</span>
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4" />
-                    <span>Run Receipt Safety Audit Now</span>
+                    <span>Review receipt</span>
                   </>
                 )}
               </button>
@@ -448,9 +445,9 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
                         </span>
                       </div>
                       <h4 className="text-xl font-extrabold text-slate-900 mt-0.5">
-                        {auditResult.status === 'safe' && 'Cart Meets Family Biological Safety Standards'}
-                        {auditResult.status === 'caution' && 'Cart Has Flagged Items Requiring Caution'}
-                        {auditResult.status === 'danger' && 'Warning: High Risk Items Detected in Cart'}
+                        {auditResult.status === 'safe' && 'No flagged items found'}
+                        {auditResult.status === 'caution' && 'Some items need your attention'}
+                        {auditResult.status === 'danger' && 'Some items need careful review'}
                       </h4>
                       <p className="text-xs text-slate-700 mt-1 max-w-xl">
                         {auditResult.familyImpactSummary[0] || 'Full audit completed across all scanned receipt items.'}
@@ -461,7 +458,7 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
                   {/* Score Pill */}
                   <div className="flex items-center space-x-3 bg-white px-4 py-3 rounded-xl border border-slate-200 shadow-xs shrink-0 self-start md:self-auto">
                     <div className="text-right">
-                      <div className="text-[11px] font-bold text-slate-500 uppercase tracking-tight">Cart Safety Score</div>
+                      <div className="text-[11px] font-bold text-slate-500 uppercase tracking-tight">Screening score</div>
                       <div className="text-2xl font-black text-slate-900">{auditResult.overallScore}/100</div>
                     </div>
                     <div className={`w-3 h-10 rounded-full ${
@@ -473,19 +470,19 @@ export const ReceiptCartAuditModal: React.FC<ReceiptCartAuditModalProps> = ({
                 {/* Key Summary Stats Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4 pt-4 border-t border-slate-200/60">
                   <div className="bg-white/80 p-2.5 rounded-xl border border-slate-200/60">
-                    <div className="text-[11px] text-slate-500 font-medium">Total Items</div>
+                    <div className="text-[11px] text-slate-500 font-medium">Total items</div>
                     <div className="text-base font-bold text-slate-900">{auditResult.totalItemsCount} items</div>
                   </div>
                   <div className="bg-white/80 p-2.5 rounded-xl border border-slate-200/60">
-                    <div className="text-[11px] text-emerald-600 font-medium">Safe for Family</div>
+                    <div className="text-[11px] text-emerald-600 font-medium">No flags</div>
                     <div className="text-base font-bold text-emerald-700">{auditResult.safeItemsCount} items</div>
                   </div>
                   <div className="bg-white/80 p-2.5 rounded-xl border border-slate-200/60">
-                    <div className="text-[11px] text-amber-600 font-medium">Use Caution</div>
+                    <div className="text-[11px] text-amber-600 font-medium">Review</div>
                     <div className="text-base font-bold text-amber-700">{auditResult.flaggedItemsCount} items</div>
                   </div>
                   <div className="bg-white/80 p-2.5 rounded-xl border border-slate-200/60">
-                    <div className="text-[11px] text-rose-600 font-medium">High Allergy/Toxin Risk</div>
+                    <div className="text-[11px] text-rose-600 font-medium">Higher concern</div>
                     <div className="text-base font-bold text-rose-700">{auditResult.highRiskCount} items</div>
                   </div>
                 </div>

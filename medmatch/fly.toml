@@ -1,0 +1,44 @@
+# Fly.io — `fly launch --no-deploy && fly deploy` (không cần VPS thủ công)
+app = "medmatch-api"
+primary_region = "fra"   # Frankfurt — trung tâm DE/FR/IT/UK; US user ~95ms qua Cloudflare
+
+[build]
+
+[env]
+  PORT = "8080"
+  MEDMATCH_DB = "/data/medmatch.db"
+  MEDMATCH_DB_MANIFEST = "/data/medmatch.db.manifest.json"
+  MEDMATCH_R5_EVALUATION = "/data/medmatch.db.evaluation.json"
+  REQUIRE_R5_EVALUATION = "1"
+  RATE_LIMIT_DB = "/data/rate-limit.db"
+  TRUST_PROXY_HEADERS = "1"
+  SCANNER_DATA_DIR = "/data/devices"
+  CANONICAL_EVIDENCE_READ = "1"
+
+[[mounts]]
+  source = "medmatch_data"
+  destination = "/data"
+  # Runtime snapshot is currently ~2.96 GB; keep headroom for device data.
+  initial_size = "5gb"
+
+[[http_service]]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 1
+  [[http_service.checks]]
+    grace_period = "60s"
+    interval = "30s"
+    method = "GET"
+    timeout = "10s"
+    path = "/api/health"
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 40
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "1gb"
+
+[metrics]
+  path = "/api/health"

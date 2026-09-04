@@ -1,0 +1,5 @@
+# Ignore large data files and database
+backend/medmatch.db
+backend/data/
+# Generated compact runtime snapshot; rebuild from backend/medmatch.db before deploy.
+deploy/runtime/

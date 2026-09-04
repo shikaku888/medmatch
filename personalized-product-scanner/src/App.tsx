@@ -10,6 +10,7 @@ import {
   SupportedCountry
 } from './types';
 import { Header, AppTab } from './components/Header';
+import { AdminContributionView } from './components/AdminContributionView';
 import { ScannerView } from './components/ScannerView';
 import { ScanResultCard } from './components/ScanResultCard';
 import { ProfileView } from './components/ProfileView';
@@ -20,7 +21,6 @@ import { SmartSwapsView } from './components/SmartSwapsView';
 import { HealthDashboardView } from './components/HealthDashboardView';
 import { FamilyProfilesModal } from './components/FamilyProfilesModal';
 import { AiDietitianChatModal } from './components/AiDietitianChatModal';
-import { ProUpgradeModal } from './components/ProUpgradeModal';
 import { BatchScanModal } from './components/BatchScanModal';
 import { ReceiptCartAuditModal } from './components/ReceiptCartAuditModal';
 import { SupermarketCatalogModal } from './components/SupermarketCatalogModal';
@@ -28,6 +28,7 @@ import { CrossReactivityModal } from './components/CrossReactivityModal';
 import { SkincareRoutineRadarModal } from './components/SkincareRoutineRadarModal';
 import { HerbDrugModal } from './components/HerbDrugModal';
 import { getTranslation } from './i18n';
+import { OnboardingFlow } from './components/OnboardingFlow';
 import { 
   ShieldCheck, 
   Sparkles, 
@@ -46,15 +47,18 @@ import {
 } from 'lucide-react';
 
 export default function App() {
+  if (new URLSearchParams(window.location.search).get('admin') === 'contributions') {
+    return <AdminContributionView />;
+  }
   const [currentTab, setCurrentTab] = useState<AppTab>('scanner');
   
   // User Profile
   const [userProfile, setUserProfile] = useState<UserProfile>({
     id: 'profile_primary',
-    name: 'Alex Rivera',
-    role: 'Primary Account',
+    name: '',
+    role: '',
     avatarColor: 'blue',
-    allergies: ['peanut', 'milk'],
+    allergies: [],
     customAllergens: [],
     dietType: 'omnivore',
     specialConditions: [],
@@ -66,9 +70,8 @@ export default function App() {
   const [history, setHistory] = useState<ScanHistoryItem[]>([]);
   const [demoProducts, setDemoProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [recoveryMode, setRecoveryMode] = useState<'photo' | 'text' | undefined>();
 
-  // Pro Subscription State
-  const [isProUser, setIsProUser] = useState(false);
 
   // Family Profiles List
   const [familyProfiles, setFamilyProfiles] = useState<FamilyProfile[]>([]);
@@ -77,13 +80,13 @@ export default function App() {
   const [selectedEvidence, setSelectedEvidence] = useState<ResearchData | null>(null);
   const [isFamilyModalOpen, setIsFamilyModalOpen] = useState(false);
   const [isAiChatModalOpen, setIsAiChatModalOpen] = useState(false);
-  const [isProModalOpen, setIsProModalOpen] = useState(false);
   const [isBatchModalOpen, setIsBatchModalOpen] = useState(false);
   const [isReceiptAuditModalOpen, setIsReceiptAuditModalOpen] = useState(false);
   const [isMarketCatalogModalOpen, setIsMarketCatalogModalOpen] = useState(false);
   const [isCrossReactivityModalOpen, setIsCrossReactivityModalOpen] = useState(false);
   const [isSkincareRadarModalOpen, setIsSkincareRadarModalOpen] = useState(false);
   const [isHerbDrugModalOpen, setIsHerbDrugModalOpen] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   // Compare State
   const [compareProductA, setCompareProductA] = useState<ProductScanResult | null>(null);
@@ -102,7 +105,7 @@ export default function App() {
       const res = await fetch('/api/profile');
       if (res.ok) {
         const data: UserProfile = await res.json();
-        const validLanguages: SupportedLanguage[] = ['en', 'vi', 'fr', 'de', 'it', 'es'];
+        const validLanguages: SupportedLanguage[] = ['en', 'vi', 'fr', 'de', 'it', 'es', 'ja'];
         const validCountries: SupportedCountry[] = ['US', 'UK', 'FR', 'DE', 'IT', 'ES'];
 
         const rawLang = localStorage.getItem('medmatch_lang') as SupportedLanguage | null;
@@ -117,6 +120,10 @@ export default function App() {
           country: savedCountry || (validCountries.includes(data.country as any) ? data.country : 'US')
         };
         setUserProfile(merged);
+        const onboarded = localStorage.getItem('mm_onboarded');
+        if (!onboarded && !(merged.medications || []).length) {
+          setShowOnboarding(true);
+        }
       }
     } catch (e) {
       console.warn('Could not load profile:', e);
@@ -226,6 +233,32 @@ export default function App() {
     }
   };
 
+  const handleOnboardingSave = async (updated: UserProfile) => {
+    try {
+      const res = await fetch('/api/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      });
+      if (res.ok) {
+        const saved = await res.json();
+        setUserProfile(saved);
+      }
+    } catch (e) {
+      console.error('onboarding save failed:', e);
+    }
+    localStorage.setItem('mm_onboarded', '1');
+    setShowOnboarding(false);
+    if (currentScanResult && currentScanResult.barcode) {
+      reEvaluateCurrentProduct(currentScanResult.barcode);
+    }
+  };
+
+  const handleOnboardingSkip = () => {
+    localStorage.setItem('mm_onboarded', '1');
+    setShowOnboarding(false);
+  };
+
   const handleApplyPreset = async (presetKey: string) => {
     let presetProfile: Partial<UserProfile> = {};
 
@@ -285,6 +318,51 @@ export default function App() {
     }
   };
 
+  const handleExportData = async () => {
+    const response = await fetch('/api/data/export');
+    if (!response.ok) throw new Error('Data export failed');
+    const payload = await response.json();
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `medmatch-data-${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleDeleteData = async () => {
+    const response = await fetch('/api/data', { method: 'DELETE' });
+    if (!response.ok) throw new Error('Data deletion failed');
+    localStorage.clear();
+    setCurrentScanResult(null);
+    setHistory([]);
+    setFamilyProfiles([{
+      id: 'profile_primary',
+      name: 'You',
+      role: 'Primary Account',
+      avatarColor: 'blue',
+      allergies: [],
+      customAllergens: [],
+      dietType: 'omnivore',
+      specialConditions: [],
+      medications: []
+    }]);
+    setUserProfile({
+      id: 'profile_primary',
+      name: 'You',
+      role: 'Primary Account',
+      avatarColor: 'blue',
+      allergies: [],
+      customAllergens: [],
+      dietType: 'omnivore',
+      specialConditions: [],
+      medications: [],
+      updatedAt: new Date().toISOString()
+    });
+    setShowOnboarding(true);
+  };
+
   const handleToggleFavorite = async (id: string) => {
     try {
       await fetch('/api/history/favorite', {
@@ -321,14 +399,14 @@ export default function App() {
       brand: swap.brand,
       productType: swap.productType,
       imageUrl: swap.imageUrl,
-      ingredientsText: swap.cleanHighlights.join(', ') + ' - Verified 100% compliant recipe.',
+      ingredientsText: swap.cleanHighlights.join(', ') + ' - Product facts available for comparison.',
       ingredientsList: swap.cleanHighlights,
       allergens: [],
       labels: swap.certificationBadges || ['Clean Verified', 'Allergen Safe'],
       matchAssessment: {
         status: 'safe',
         score: swap.score,
-        summary: `Recommended Safe Swap: 100% compliant with your personal profile. ${swap.whyBetter.join('. ')}`,
+        summary: `Suggested alternative based on your profile and available product information. ${swap.whyBetter.join('. ')}`,
         warnings: [],
         safeHighlights: swap.cleanHighlights
       },
@@ -348,14 +426,14 @@ export default function App() {
       brand: swap.brand,
       productType: swap.productType,
       imageUrl: swap.imageUrl,
-      ingredientsText: swap.cleanHighlights.join(', ') + ' - Verified 100% compliant recipe.',
+      ingredientsText: swap.cleanHighlights.join(', ') + ' - Product facts available for comparison.',
       ingredientsList: swap.cleanHighlights,
       allergens: [],
       labels: swap.certificationBadges || ['Clean Verified', 'Allergen Safe'],
       matchAssessment: {
         status: 'safe',
         score: swap.score,
-        summary: `Recommended Safe Swap: 100% compliant with your personal profile. ${swap.whyBetter.join('. ')}`,
+        summary: `Suggested alternative based on your profile and available product information. ${swap.whyBetter.join('. ')}`,
         warnings: [],
         safeHighlights: swap.cleanHighlights
       },
@@ -374,8 +452,22 @@ export default function App() {
     ...history.filter(h => h.fullResult).map(h => h.fullResult!)
   ].filter((v, i, a) => a.findIndex(t => t.barcode === v.barcode) === i);
 
+  const footerCopy = ({
+    en: { description: 'Personalized product safety screening', references: 'Data references: Open Food Facts, USDA, PubMed', disclaimer: 'Not medical advice. Check the package when unsure.' },
+    vi: { description: 'Sàng lọc an toàn sản phẩm theo hồ sơ cá nhân', references: 'Nguồn dữ liệu: Open Food Facts, USDA, PubMed', disclaimer: 'Không thay thế tư vấn y tế. Hãy kiểm tra bao bì khi chưa chắc chắn.' },
+    fr: { description: 'Vérification personnalisée de la sécurité des produits', references: 'Sources : Open Food Facts, USDA, PubMed', disclaimer: 'Ne remplace pas un avis médical. Vérifiez l’emballage en cas de doute.' },
+    de: { description: 'Persönliche Sicherheitsprüfung von Produkten', references: 'Datenquellen: Open Food Facts, USDA, PubMed', disclaimer: 'Kein medizinischer Rat. Prüfen Sie im Zweifel die Verpackung.' },
+    it: { description: 'Controllo personalizzato della sicurezza dei prodotti', references: 'Fonti: Open Food Facts, USDA, PubMed', disclaimer: 'Non sostituisce il parere medico. Controlla la confezione in caso di dubbio.' },
+    es: { description: 'Comprobación personalizada de la seguridad del producto', references: 'Fuentes: Open Food Facts, USDA, PubMed', disclaimer: 'No es consejo médico. Comprueba el envase si tienes dudas.' },
+    ja: { description: 'プロフィールに合わせた商品の安全確認', references: 'データ参照元：Open Food Facts、USDA、PubMed', disclaimer: '医療上の助言に代わるものではありません。迷ったときは容器を確認してください。' }
+  } as const)[userProfile.language || 'en'] || {
+    description: 'Personalized product safety screening',
+    references: 'Data references: Open Food Facts, USDA, PubMed',
+    disclaimer: 'Not medical advice. Check the package when unsure.'
+  };
+
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#f8fafc] text-slate-900 flex flex-col font-sans selection:bg-blue-500 selection:text-white">
       {/* Top Header & Navigation */}
       <Header
         currentTab={currentTab}
@@ -391,9 +483,14 @@ export default function App() {
         onOpenCrossReactivityModal={() => setIsCrossReactivityModalOpen(true)}
         onOpenSkincareRadarModal={() => setIsSkincareRadarModalOpen(true)}
         onOpenHerbDrugModal={() => setIsHerbDrugModalOpen(true)}
-        onOpenProModal={() => setIsProModalOpen(true)}
-        isProUser={isProUser}
       />
+      {showOnboarding && (
+        <OnboardingFlow
+          initialProfile={userProfile}
+          onSave={handleOnboardingSave}
+          onSkip={handleOnboardingSkip}
+        />
+      )}
 
       {/* Main Content Stage */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 pb-24 md:pb-8">
@@ -408,6 +505,7 @@ export default function App() {
               demoProducts={demoProducts}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
+              recoveryMode={recoveryMode}
               onOpenReceiptAuditModal={() => setIsReceiptAuditModalOpen(true)}
               onOpenMarketCatalogModal={() => setIsMarketCatalogModalOpen(true)}
               onOpenBatchScanModal={() => setIsBatchModalOpen(true)}
@@ -436,6 +534,7 @@ export default function App() {
                 <ScanResultCard
                   result={currentScanResult}
                   language={userProfile.language}
+                  profile={userProfile}
                   onOpenEvidence={(res) => setSelectedEvidence(res)}
                   onCompareWith={handleStartCompare}
                   onOpenAiChat={() => setIsAiChatModalOpen(true)}
@@ -444,6 +543,11 @@ export default function App() {
                   onOpenSkincareRadar={() => setIsSkincareRadarModalOpen(true)}
                   onRescan={() => {
                     setCurrentScanResult(null);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  onRecoveryMode={(mode) => {
+                    setCurrentScanResult(null);
+                    setRecoveryMode(mode);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                 />
@@ -470,13 +574,9 @@ export default function App() {
             <HealthDashboardView
               userProfile={userProfile}
               history={history}
-              onOpenProModal={() => setIsProModalOpen(true)}
-              isProUser={isProUser}
             />
           </div>
         )}
-
-        {/* TAB 4: PROFILE VIEW */}
         {currentTab === 'profile' && (
           <div className="animate-fade-in">
             <ProfileView
@@ -484,10 +584,11 @@ export default function App() {
               userProfile={userProfile}
               onSaveProfile={handleSaveProfile}
               onApplyPreset={handleApplyPreset}
+              onExportData={handleExportData}
+              onDeleteData={handleDeleteData}
             />
           </div>
         )}
-
         {/* TAB 5: HISTORY VIEW */}
         {currentTab === 'history' && (
           <div className="animate-fade-in">
@@ -553,16 +654,7 @@ export default function App() {
         />
       )}
 
-      {/* 4. Pro Upgrade Modal */}
-      <ProUpgradeModal
-        language={userProfile.language || 'en'}
-        isOpen={isProModalOpen}
-        onClose={() => setIsProModalOpen(false)}
-        onUpgradeSuccess={() => setIsProUser(true)}
-        isProUser={isProUser}
-      />
-
-      {/* 5. Batch / Pantry Audit Scanner Modal */}
+      {/* 4. Batch / Pantry Audit Scanner Modal */}
       <BatchScanModal
         language={userProfile.language || 'en'}
         isOpen={isBatchModalOpen}
@@ -625,16 +717,14 @@ export default function App() {
       <footer className="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500 mt-12 mb-16 md:mb-0">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-slate-800">MedMatch AI</span>
+            <span className="font-bold text-slate-800">MedMatch</span>
             <span>•</span>
-            <p>© {new Date().getFullYear()} Clinical Product Suitability, Safe Swaps & Toxic Exposure Radar</p>
+            <p>© {new Date().getFullYear()} {footerCopy.description}</p>
           </div>
-          <div className="flex items-center space-x-4 text-slate-600 text-xs">
-            <span className="font-medium">Open Food Facts & USDA</span>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-slate-600 text-xs">
+            <span>{footerCopy.references}</span>
             <span>•</span>
-            <span className="font-medium">NCBI PubMed Studies</span>
-            <span>•</span>
-            <span className="font-medium">On-device OCR & Clinical Engine</span>
+            <span>{footerCopy.disclaimer}</span>
           </div>
         </div>
       </footer>

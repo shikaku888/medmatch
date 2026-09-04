@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>MedMatch SwiftUI Preview</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>
+*{box-sizing:border-box;font-family:-apple-system,system-ui,sans-serif}
+body{background:#0b0c15;color:#f2f2f7;max-width:420px;margin:0 auto;padding:24px}
+h1{font-size:22px;font-weight:700;margin:0 0 6px}
+.sub{color:#8e8e93;font-size:13px;margin-bottom:16px}
+.card{background:#1c1c2e;border-radius:14px;padding:14px 16px;margin:10px 0}
+.row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.badge{font-size:11px;padding:2px 6px;border-radius:6px;background:#34c759;color:#fff}
+.badge-warn{background:#ff9500}
+.btn{display:block;width:100%;padding:12px;border-radius:12px;background:#007aff;color:#fff;text-align:center;text-decoration:none;font-weight:600;margin:10px 0}
+.banner{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.85);color:#fff;padding:10px 14px;font-size:11px;text-align:center;z-index:10}
+</style></head><body>
+<h1>MedMatch</h1>
+<p class="sub">Reference only — not medical advice</p>
+
+<div class="card">
+  <h3 style="margin:0 0 10px;font-size:15px">My Cabinet (local only)</h3>
+  <div class="row"><span>Ibuprofen 200mg</span><span class="badge">drug</span></div>
+  <div class="row"><span>Vitamin D3 1000IU</span><span class="badge">supplement</span></div>
+  <div class="row"><span>Omega-3 Fish Oil</span><span class="badge-warn">CYP inferred</span></div>
+</div>
+
+<div class="card" style="background:#2c2c44">
+  <h3 style="margin:0 0 10px;font-size:15px">Scan Barcode / OCR</h3>
+  <a href="#" class="btn">Start Camera</a>
+</div>
+
+<div class="card">
+  <h3 style="margin:0 0 10px;font-size:15px">Subscription</h3>
+  <div class="row"><span>Pro — $19/mo (unlimited)</span><button class="btn" style="width:auto;padding:6px 12px">Buy</button></div>
+  <div class="row"><span>Caregiver — $69/mo</span><button class="btn" style="width:auto;padding:6px 12px">Buy</button></div>
+  <p style="font-size:12px;color:#8e8e93">Free: 5 scans/month · Restore in App Settings</p>
+</div>
+
+<div style="margin-top:20px;padding:10px;background:#1c1c2e;border-radius:12px;font-size:13px;line-height:1.5;color:#e5e5ea">
+  <strong>Reference information only.</strong> Not a diagnosis or treatment. Always consult a licensed physician or pharmacist. Interaction data may be incomplete. FDA statement: <em>"This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."</em>
+</div>
+
+<div class="banner">Privacy: your product list stays on this device. No account, no tracking.</div>
+
+</body></html>

@@ -1,0 +1,8 @@
+# Caddy terminates HTTPS and proxies only to the internal API container.
+# Set MEDMATCH_DOMAIN in the compose .env file; Caddy obtains Let's Encrypt
+# certificates automatically after DNS points the domain to this VPS.
+
+{$MEDMATCH_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy medmatch:8080
+}

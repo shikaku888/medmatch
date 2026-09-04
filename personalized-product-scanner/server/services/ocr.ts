@@ -17,8 +17,15 @@ async function getWorker(): Promise<Worker> {
 
 export async function ocrImageToText(imageBase64: string, mimeType = 'image/jpeg'): Promise<string> {
   if (!imageBase64) return '';
-  const worker = await getWorker();
-  const buffer = Buffer.from(imageBase64, 'base64');
-  const { data } = await worker.recognize(buffer);
-  return (data.text || '').trim();
+  try {
+    const encoded = imageBase64.includes(',') ? imageBase64.split(',', 2)[1] : imageBase64;
+    const buffer = Buffer.from(encoded.replace(/\s+/g, ''), 'base64');
+    if (!buffer.length) return '';
+    const worker = await getWorker();
+    const { data } = await worker.recognize(buffer);
+    return (data.text || '').trim();
+  } catch (error) {
+    console.warn(`OCR failed for ${mimeType}:`, error instanceof Error ? error.message : error);
+    return '';
+  }
 }

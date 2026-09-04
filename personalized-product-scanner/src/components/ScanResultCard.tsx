@@ -1,6 +1,7 @@
 	import React, { useState } from 'react';
-	import { getTranslation } from '../i18n';
-	import { ProductScanResult, MatchWarning, ResearchData, IngredientSafetyItem, CrossReactivityAlert, RoutineAuditCheckResult, SupportedLanguage } from '../types';
+	import { getTranslation, localizeText } from '../i18n';
+import { ScheduleTimeline } from './ScheduleTimeline';
+	import { ProductScanResult, MatchWarning, ResearchData, IngredientSafetyItem, CrossReactivityAlert, RoutineAuditCheckResult, SupportedLanguage, UserProfile } from '../types';
 	import { MedMatchResults } from './MedMatchResults';
 	import {
 	  ShieldCheck,
@@ -37,6 +38,7 @@
 interface ScanResultCardProps {
   result: ProductScanResult;
   language?: SupportedLanguage;
+  profile?: UserProfile;
   onOpenEvidence: (research: ResearchData) => void;
   onCompareWith?: (product: ProductScanResult) => void;
   onOpenAiChat?: () => void;
@@ -45,11 +47,13 @@ interface ScanResultCardProps {
   onOpenSkincareRadar?: () => void;
   onOpenHerbDrugModal?: () => void;
   onRescan?: () => void;
+  onRecoveryMode?: (mode: 'photo' | 'text') => void;
 }
 
 export const ScanResultCard: React.FC<ScanResultCardProps> = ({
   result,
   language = 'en',
+  profile,
   onOpenEvidence,
   onCompareWith,
   onOpenAiChat,
@@ -57,24 +61,54 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
   onOpenCrossReactivity,
   onOpenSkincareRadar,
   onOpenHerbDrugModal,
-  onRescan
+  onRescan,
+  onRecoveryMode
 }) => {
   const [showFullIngredients, setShowFullIngredients] = useState(false);
   const [showCleanChemistry, setShowCleanChemistry] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [reminderScheduled, setReminderScheduled] = useState(false);
 
   const t = (key: Parameters<typeof getTranslation>[1]) => getTranslation(language as SupportedLanguage, key);
+  const localize = (text: string) => localizeText(language, text);
 
   const { matchAssessment } = result;
   const { status, score, summary, warnings, safeHighlights } = matchAssessment;
 
   const handleShare = () => {
-    const text = `Product: ${result.productName}\nPersonal Fit Status: ${status.toUpperCase()} (${score}/100)\nClean Score: ${result.cleanScoreBreakdown?.cleanScore || score}/100\n${summary}\nScanned with SuitSafe.`;
+    const text = `${t('productLabel')}: ${result.productName}\n${t('profileStatusLabel')}: ${status.toUpperCase()} (${score}/100)\n${t('cleanScore')}: ${result.cleanScoreBreakdown?.cleanScore || score}/100\n${localize(summary)}\n${t('scanAttribution')}.`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+  const scheduleSpacingReminder = async () => {
+    const hours = Math.max(...(result.medMatch?.schedule || []).map((item) => item.min_hours), 0);
+    const when = new Date(Date.now() + hours * 60 * 60 * 1000);
+    if (typeof Notification !== 'undefined' && Notification.permission === 'default') await Notification.requestPermission();
+    const response = await fetch('/api/reminders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        label: `${result.productName} — ${hours}h spacing`,
+        medication: result.medMatch?.schedule?.[0]?.b || '',
+        time: `${String(when.getHours()).padStart(2, '0')}:${String(when.getMinutes()).padStart(2, '0')}`,
+        days: [when.getDay()],
+        enabled: true,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      })
+    });
+    if (response.ok) setReminderScheduled(true);
+  };
+
+  const medicationInteractions = result.medMatch?.interactions || [];
+  const hasMajorMedicationInteraction = medicationInteractions.some(
+    (interaction) => interaction.severity === 'major'
+  );
+  const personalizedUrgency = result.medMatch?.personalization?.personalizedUrgency;
+  const hasMedicationInteraction = medicationInteractions.some(
+    (interaction) => Boolean(interaction.severity)
+  );
 
   // Status Styling Configurations
   const statusConfig = {
@@ -85,8 +119,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
       badgeBg: 'bg-emerald-700 text-white font-bold',
       icon: ShieldCheck,
       iconColor: 'text-emerald-700',
-      iconBg: 'bg-emerald-100 border-emerald-200 text-emerald-800',
-      label: 'COMPATIBLE WITH PROFILE',
+      label: t('statusCompatible'),
       headerBg: 'bg-gradient-to-b from-emerald-50/80 to-white'
     },
     caution: {
@@ -96,8 +129,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
       badgeBg: 'bg-amber-600 text-white font-bold',
       icon: Info,
       iconColor: 'text-amber-700',
-      iconBg: 'bg-amber-100 border-amber-200 text-amber-800',
-      label: 'MINOR CAUTIONS IDENTIFIED',
+      label: hasMedicationInteraction ? t('statusMinorMedication') : t('statusMinorCaution'),
       headerBg: 'bg-gradient-to-b from-amber-50/80 to-white'
     },
     warning: {
@@ -107,8 +139,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
       badgeBg: 'bg-amber-700 text-white font-bold',
       icon: AlertTriangle,
       iconColor: 'text-amber-800',
-      iconBg: 'bg-amber-100 border-amber-200 text-amber-800',
-      label: 'DIETARY OR CONDITION CONFLICT',
+      label: hasMedicationInteraction ? t('statusMedicationWarning') : t('statusDietConflict'),
       headerBg: 'bg-gradient-to-b from-amber-50/80 to-white'
     },
     danger: {
@@ -118,8 +149,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
       badgeBg: 'bg-rose-700 text-white font-bold',
       icon: AlertOctagon,
       iconColor: 'text-rose-700',
-      iconBg: 'bg-rose-100 border-rose-200 text-rose-800',
-      label: 'ALLERGEN ALERT / CRITICAL CONFLICT',
+      label: hasMajorMedicationInteraction ? t('statusMajorMedication') : t('statusCriticalConflict'),
       headerBg: 'bg-gradient-to-b from-rose-50/80 to-white'
     }
   }[status];
@@ -131,12 +161,15 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
   const cautionCount = safetyItems.filter(i => i.hazardLevel === 'caution').length;
 
   const cleanScore = result.cleanScoreBreakdown?.cleanScore ?? score;
+  const safetyEvidence = result.safetyEvidence;
+  const recallSignals = safetyEvidence?.recalls || [];
+  const caersSignals = safetyEvidence?.caers || [];
 
   const getCleanScoreColor = (sc: number) => {
-    if (sc >= 75) return { text: 'text-emerald-700', bg: 'bg-emerald-500', pill: 'bg-emerald-100 text-emerald-800', label: 'Excellent' };
-    if (sc >= 50) return { text: 'text-amber-600', bg: 'bg-amber-500', pill: 'bg-amber-100 text-amber-800', label: 'Good / Moderate' };
-    if (sc >= 25) return { text: 'text-orange-600', bg: 'bg-orange-500', pill: 'bg-orange-100 text-orange-800', label: 'Mediocre' };
-    return { text: 'text-rose-600', bg: 'bg-rose-500', pill: 'bg-rose-100 text-rose-800', label: 'Poor / Bad' };
+    if (sc >= 75) return { text: 'text-emerald-700', bg: 'bg-emerald-500', pill: 'bg-emerald-100 text-emerald-800', label: t('scoreExcellent') };
+    if (sc >= 50) return { text: 'text-amber-600', bg: 'bg-amber-500', pill: 'bg-amber-100 text-amber-800', label: t('scoreGood') };
+    if (sc >= 25) return { text: 'text-orange-600', bg: 'bg-orange-500', pill: 'bg-orange-100 text-orange-800', label: t('scoreMediocre') };
+    return { text: 'text-rose-600', bg: 'bg-rose-500', pill: 'bg-rose-100 text-rose-800', label: t('scorePoor') };
   };
 
   const cleanScoreStyle = getCleanScoreColor(cleanScore);
@@ -150,7 +183,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
       <div className={`p-6 ${statusConfig.headerBg} border-b border-slate-200`}>
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start space-x-4">
-            <div className={`p-3 rounded-xl ${statusConfig.iconBg} border shadow-2xs shrink-0`}>
+            <div className={`p-3 rounded-xl ${statusConfig.badgeBg} border shadow-2xs shrink-0`}>
               <StatusIcon className={`w-7 h-7 ${statusConfig.iconColor}`} />
             </div>
             <div>
@@ -230,7 +263,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
 
         {/* Executive Summary */}
         <div className="mt-4 p-3.5 rounded-lg bg-white border border-slate-200 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <span>{summary}</span>
+          <span>{localize(summary)}</span>
 
           {/* Pro Action Triggers */}
           <div className="flex items-center space-x-2 shrink-0">
@@ -244,7 +277,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
               </button>
             )}
 
-            {score < 90 && onOpenSmartSwaps && (
+            {(score < 90 || personalizedUrgency === 'high' || personalizedUrgency === 'moderate') && onOpenSmartSwaps && (
               <button
                 onClick={onOpenSmartSwaps}
                 className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition-colors"
@@ -253,6 +286,11 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
               </button>
             )}
           </div>
+        {(hasMajorMedicationInteraction || personalizedUrgency === 'high') && (
+          <div data-testid="result-next-action" className="mt-3 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-950">
+            <strong>{t('nextAction')}</strong> {t('pharmacistAdvice')}
+          </div>
+        )}
         </div>
       </div>
 
@@ -262,16 +300,55 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
         {/* SECTION: MEDMATCH AI INTERACTION CHECK (FastAPI backend, evidence-backed) */}
         {result.medMatch && (
           <div className="p-4 rounded-xl bg-white border-2 border-teal-300 space-y-3 shadow-xs">
-            <MedMatchResults analysis={result.medMatch} language={language} />
+            <MedMatchResults analysis={result.medMatch} language={language} profile={profile} onRecoveryMode={onRecoveryMode} />
+            <ScheduleTimeline
+              schedule={result.medMatch.schedule || []}
+              herbAlerts={result.herbDrugAlerts || []}
+              language={language}
+            />
+            {(result.medMatch.schedule || []).length > 0 && (
+              <button
+                type="button"
+                onClick={scheduleSpacingReminder}
+                disabled={reminderScheduled}
+                className="rounded-lg border border-teal-300 bg-teal-50 px-3 py-2 text-xs font-bold text-teal-900 disabled:opacity-60"
+              >
+                {reminderScheduled ? 'Spacing reminder scheduled' : `Set reminder after ${Math.max(...result.medMatch.schedule.map((item) => item.min_hours))}h`}
+              </button>
+            )}
             {onOpenHerbDrugModal && (
               <button
                 onClick={onOpenHerbDrugModal}
                 className="text-xs font-bold text-teal-800 hover:underline flex items-center space-x-1"
               >
                 <Pill className="w-3.5 h-3.5" />
-                <span>Pharmacology Compendium (71,900 evidence-backed pairs)</span>
+                <span>{t('medicationSources')}</span>
               </button>
             )}
+          </div>
+        )}
+
+        {safetyEvidence && (
+          <div data-testid="product-safety-signals" className={`p-4 rounded-xl border space-y-3 ${recallSignals.length > 0 ? 'bg-rose-50 border-rose-300' : caersSignals.length > 0 ? 'bg-amber-50 border-amber-300' : 'bg-slate-50 border-slate-200'}`}>
+            <div className="flex items-center space-x-2">
+              <ShieldCheck className="w-4 h-4 text-slate-700" />
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">Product safety signals</h3>
+            </div>
+            {recallSignals.map((recall) => (
+              <div key={`${recall.event_id}-${recall.recall_initiation_date || ''}`} className="rounded-lg bg-white border border-rose-200 p-3 text-xs text-rose-950 space-y-1">
+                <p className="font-bold">FDA recall · {recall.classification || 'classification unavailable'} · {recall.status || 'status unavailable'}</p>
+                <p>{recall.product_description || 'Product description unavailable.'}</p>
+                <p className="font-medium">{recall.reason_for_recall || 'Reason unavailable.'}</p>
+                {recall.source_url && <a className="font-bold underline" href={recall.source_url} target="_blank" rel="noreferrer">Verify FDA notice</a>}
+              </div>
+            ))}
+            {caersSignals.slice(0, 5).map((event) => (
+              <div key={`${event.product_name}-${event.reaction}`} className="rounded-lg bg-white border border-amber-200 p-3 text-xs text-amber-950">
+                <p className="font-bold">CAERS signal · {event.reaction} · {event.case_count} case(s)</p>
+                <p>Product: {event.product_name}. Reports are voluntary and unvalidated; they do not prove causality or incidence.</p>
+              </div>
+            ))}
+            {recallSignals.length === 0 && caersSignals.length === 0 && <p className="text-xs text-slate-700">No matching recall or CAERS signal was found. This is not a safety clearance.</p>}
           </div>
         )}
 
@@ -322,10 +399,10 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-2">
                 <Award className="w-4 h-4 text-blue-600" />
-                <span>Yuka Clean Formulation Matrix (0-100)</span>
+                <span>{t('cleanMatrix')}</span>
               </h3>
               <span className="text-[11px] font-bold text-slate-600">
-                Score: {result.cleanScoreBreakdown.totalScore}/100
+                {t('scoreLabel')}: {result.cleanScoreBreakdown.totalScore}/100
               </span>
             </div>
 
@@ -333,8 +410,8 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
               {/* Nutritional Quality: 60% */}
               <div className="p-3 rounded-lg bg-white border border-slate-200 space-y-1 shadow-2xs">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-700">🥗 Nutrition Quality</span>
-                  <span className="font-extrabold text-blue-700">60% Weight</span>
+                  <span className="font-bold text-slate-700">🥗 {t('nutritionQuality')}</span>
+                  <span className="font-extrabold text-blue-700">60% {t('weightLabel')}</span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                   <div 
@@ -351,8 +428,8 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
               {/* Additives & Toxins: 30% */}
               <div className="p-3 rounded-lg bg-white border border-slate-200 space-y-1 shadow-2xs">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-700">🧪 Clean Additives</span>
-                  <span className="font-extrabold text-amber-700">30% Weight</span>
+                  <span className="font-bold text-slate-700">🧪 {t('cleanAdditives')}</span>
+                  <span className="font-extrabold text-amber-700">30% {t('weightLabel')}</span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                   <div 
@@ -371,8 +448,8 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
               {/* Organic / Bio: 10% */}
               <div className="p-3 rounded-lg bg-white border border-slate-200 space-y-1 shadow-2xs">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-700">🌿 Organic / Bio</span>
-                  <span className="font-extrabold text-emerald-700">10% Weight</span>
+                  <span className="font-bold text-slate-700">🌿 {t('organicBio')}</span>
+                  <span className="font-extrabold text-emerald-700">10% {t('weightLabel')}</span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                   <div 
@@ -381,7 +458,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
                   />
                 </div>
                 <div className="flex justify-between text-[10px] text-slate-500">
-                  <span>{result.cleanScoreBreakdown.organicBioBonus > 0 ? 'Certified Bio (+10)' : 'Conventional (0)'}</span>
+                  <span>{result.cleanScoreBreakdown.organicBioBonus > 0 ? t('certifiedBio') : t('conventional')}</span>
                   <span className="font-bold text-slate-800">{result.cleanScoreBreakdown.organicBioBonus}/100</span>
                 </div>
               </div>
@@ -395,9 +472,9 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center space-x-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
-                <span>Personal Profile Conflicts ({warnings.length})</span>
+                <span>{t('profileConflicts')} ({warnings.length})</span>
               </h3>
-              <span className="text-xs text-slate-400">Targeted ingredient evaluation</span>
+              <span className="text-xs text-slate-400">{t('targetedEvaluation')}</span>
             </div>
 
             <div className="space-y-2.5">
@@ -422,18 +499,18 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
                             ? 'bg-amber-600 text-white'
                             : 'bg-slate-200 text-slate-800'
                         }`}>
-                          {warn.level} Priority
+                          {warn.level} {t('priority')}
                         </span>
                         <h4 className="font-bold text-sm text-slate-900">
-                          {warn.title}
+                          {localize(warn.title)}
                         </h4>
                       </div>
                       <p className="text-xs text-slate-700 leading-relaxed font-normal">
-                        {warn.message}
+                        {localize(warn.message)}
                       </p>
                       {warn.explanation && (
                         <p className="text-xs text-slate-500 italic">
-                          {warn.explanation}
+                          {localize(warn.explanation)}
                         </p>
                       )}
                     </div>
@@ -444,7 +521,7 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
                         id={`evidence-btn-${warn.id}`}
                         onClick={() => onOpenEvidence(warn.research!)}
                         className="shrink-0 flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition-colors shadow-2xs"
-                        title="Click to view peer-reviewed NCBI PubMed studies"
+                        title={t('evidenceTitle')}
                       >
                         <BookOpen className="w-3.5 h-3.5 text-blue-600" />
                         <span>{warn.research.studyCount}+ PubMed Studies</span>
@@ -454,6 +531,13 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
                 </div>
               ))}
             </div>
+          </div>
+        ) : medicationInteractions.length > 0 ? (
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-3">
+            <ShieldCheck className="w-5 h-5 text-slate-500 shrink-0" />
+            <p className="text-xs text-slate-700 font-semibold">
+              No allergen, diet, or condition conflicts identified. Medication findings are shown in the MedMatch review above.
+            </p>
           </div>
         ) : (
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center space-x-3">
@@ -815,6 +899,16 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
                   </div>
                 </div>
               )}
+
+              {result.excipients && result.excipients.length > 0 && (
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 space-y-1">
+                  <span className="block text-[10px] text-amber-800 uppercase tracking-wider font-bold">
+                    Inactive ingredients / excipients ({result.excipients.length}):
+                  </span>
+                  <p className="text-[11px] text-amber-950 leading-relaxed">{result.excipients.join(', ')}</p>
+                  <p className="text-[10px] text-amber-800">Review these separately for allergy or intolerance concerns; this is not a clinical allergy clearance.</p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -822,15 +916,21 @@ export const ScanResultCard: React.FC<ScanResultCardProps> = ({
         {/* SECTION 6: DATA SOURCE ATTRIBUTION */}
         <div className="flex flex-wrap items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-200">
           <div className="flex items-center space-x-2">
-            <span>Verified Source:</span>
+            <span>Information source:</span>
             <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold border border-slate-200 text-[11px]">
-              {result.source === 'openfoodfacts' ? 'Open Food Facts (Public Database)' : 
-               result.source === 'openbeautyfacts' ? 'Open Beauty Facts' : 
-               result.source === 'usda' ? 'USDA FoodData Central' : 
-               result.source === 'local_scan' ? 'On-device OCR Engine' : 'Verified Dataset'}
+              {result.source === 'community_verified' ? 'Community-submitted product' :
+               result.source === 'openfoodfacts' ? 'Open Food Facts' :
+               result.source === 'openbeautyfacts' ? 'Open Beauty Facts' :
+               result.source === 'usda' ? 'USDA FoodData Central' :
+               result.source === 'local_scan' ? 'Label OCR' : 'Product database'}
             </span>
+            {result.matchConfidence !== undefined && (
+              <span className="text-[10px] text-emerald-700 font-bold">
+                {Math.round(result.matchConfidence * 100)}% match confidence
+              </span>
+            )}
           </div>
-          <span>Evaluated {new Date(result.scannedAt).toLocaleTimeString()}</span>
+          <span>Checked {new Date(result.scannedAt).toLocaleTimeString()}</span>
         </div>
 
         {/* ACTION BUTTONS */}

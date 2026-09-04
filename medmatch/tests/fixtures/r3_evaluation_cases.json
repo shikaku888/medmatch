@@ -1,0 +1,12 @@
+[
+  {"id":"drug-drug-warfarin-levothyroxine","category":"drug-drug","items":["warfarin","levothyroxine"],"profile":{},"assert":{"result_in":["interaction_found","unknown_unmatched"]}},
+  {"id":"drug-food-warfarin","category":"drug-food","items":["warfarin","cranberry"],"profile":{},"assert":{"has_unknown_or_interaction":true}},
+  {"id":"herb-drug-turmeric-warfarin","category":"herb-drug","items":["turmeric","warfarin"],"profile":{},"assert":{"result_in":["interaction_found","unknown_unmatched"]}},
+  {"id":"pregnancy-trimester-two","category":"pregnancy","items":["turmeric","warfarin"],"profile":{"pregnancyStatus":"pregnant","pregnancyTrimester":2},"assert":{"personalizedUrgency":"high"}},
+  {"id":"renal-egfr-context","category":"renal","items":["warfarin"],"profile":{"eGFR":42},"assert":{"contextHas":"renal"}},
+  {"id":"qt-potassium-context","category":"qt","items":["amiodarone","warfarin"],"profile":{"labs":[{"name":"K","value":3.1,"unit":"mmol/L","observedAt":"2026-01-01","referenceRange":"3.5-5.0"}]},"assert":{"has_context":true}},
+  {"id":"allergy-peanut","category":"allergy","items":["peanut"],"profile":{"allergies":["peanut"]},"assert":{"has_context":true}},
+  {"id":"dose-route-timing","category":"dose-timing","items":["warfarin"],"profile":{"medicationDetails":[{"ingredient":"warfarin","strength":"5 mg","dose":1,"unit":"tablet","route":"oral","frequency":"once daily","timing":"08:00"}]},"assert":{"medicationMetadataPreserved":true}},
+  {"id":"herb-herb-turmeric-ginkgo","category":"herb-herb","items":["turmeric","ginkgo"],"profile":{},"assert":{"result_in":["interaction_found","no_documented_interaction_found","unknown_unmatched"]}},
+  {"id":"disease-contraindication-hypertension","category":"disease-contraindication","items":["licorice"],"profile":{"specialConditions":["hypertension"]},"assert":{"has_context":true}}
+]

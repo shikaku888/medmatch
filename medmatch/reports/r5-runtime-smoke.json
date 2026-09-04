@@ -1,0 +1,109 @@
+{
+  "fixtureVersion": "r5-safety-matrix.v1",
+  "generatedAt": "2026-09-02T15:49:24.928877+00:00",
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "cases": [
+    {
+      "id": "drug-drug-warfarin-levothyroxine",
+      "category": "drug-drug",
+      "result": "interaction_found",
+      "urgency": "moderate",
+      "checks": {
+        "result_in": true
+      },
+      "passed": true
+    },
+    {
+      "id": "drug-food-warfarin",
+      "category": "drug-food",
+      "result": "unknown_unmatched",
+      "urgency": "unknown",
+      "checks": {
+        "has_unknown_or_interaction": true
+      },
+      "passed": true
+    },
+    {
+      "id": "herb-drug-turmeric-warfarin",
+      "category": "herb-drug",
+      "result": "interaction_found",
+      "urgency": "moderate",
+      "checks": {
+        "result_in": true
+      },
+      "passed": true
+    },
+    {
+      "id": "pregnancy-trimester-two",
+      "category": "pregnancy",
+      "result": "interaction_found",
+      "urgency": "high",
+      "checks": {
+        "personalizedUrgency": true
+      },
+      "passed": true
+    },
+    {
+      "id": "renal-egfr-context",
+      "category": "renal",
+      "result": "no_documented_interaction_found",
+      "urgency": "unknown",
+      "checks": {
+        "contextHas": true
+      },
+      "passed": true
+    },
+    {
+      "id": "qt-potassium-context",
+      "category": "qt",
+      "result": "interaction_found",
+      "urgency": "high",
+      "checks": {
+        "has_context": true
+      },
+      "passed": true
+    },
+    {
+      "id": "allergy-peanut",
+      "category": "allergy",
+      "result": "unknown_unmatched",
+      "urgency": "unknown",
+      "checks": {
+        "has_context": true
+      },
+      "passed": true
+    },
+    {
+      "id": "dose-route-timing",
+      "category": "dose-timing",
+      "result": "no_documented_interaction_found",
+      "urgency": "unknown",
+      "checks": {
+        "medicationMetadataPreserved": true
+      },
+      "passed": true
+    },
+    {
+      "id": "herb-herb-turmeric-ginkgo",
+      "category": "herb-herb",
+      "result": "no_documented_interaction_found",
+      "urgency": "unknown",
+      "checks": {
+        "result_in": true
+      },
+      "passed": true
+    },
+    {
+      "id": "disease-contraindication-hypertension",
+      "category": "disease-contraindication",
+      "result": "no_documented_interaction_found",
+      "urgency": "unknown",
+      "checks": {
+        "has_context": true
+      },
+      "passed": true
+    }
+  ]
+}

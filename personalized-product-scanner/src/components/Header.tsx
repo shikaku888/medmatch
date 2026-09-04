@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserProfile, SupportedLanguage } from '../types';
+import { UserProfile, SupportedLanguage, SupportedCountry } from '../types';
 import { getTranslation, LANGUAGE_OPTIONS } from '../i18n';
 import { 
   Scan, 
@@ -12,7 +12,6 @@ import {
   Users,
   Layers,
   Award,
-  Crown,
   Dna,
   Zap,
   Globe,
@@ -34,10 +33,8 @@ interface HeaderProps {
   onOpenCrossReactivityModal?: () => void;
   onOpenSkincareRadarModal?: () => void;
   onOpenHerbDrugModal?: () => void;
-  onOpenProModal: () => void;
   onLanguageChange: (lang: SupportedLanguage) => void;
-  onCountryChange?: (country: any) => void;
-  isProUser: boolean;
+  onCountryChange?: (country: SupportedCountry) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -52,10 +49,10 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCrossReactivityModal,
   onOpenSkincareRadarModal,
   onOpenHerbDrugModal,
-  onOpenProModal,
   onLanguageChange,
-  isProUser
+  onCountryChange
 }) => {
+
   const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const lang = userProfile.language || 'en';
@@ -66,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 bg-[#0f172a] border-b border-slate-800 text-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-2">
+        <div className="flex flex-wrap items-center justify-between min-h-14 gap-x-2 gap-y-1 py-1.5">
           
           {/* Logo & Identity */}
           <div 
@@ -82,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="font-bold text-base tracking-tight text-white group-hover:text-blue-400 transition-colors">
                   MedMatch AI
                 </span>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                <span className="hidden sm:inline-flex text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
                   Interaction Checker
                 </span>
               </div>
@@ -93,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Household Member & Language Picker */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2">
+          <div className="flex flex-wrap items-center justify-end space-x-1.5 sm:space-x-2 max-w-full min-w-0">
             
             {/* Language Selector */}
             <div className="relative">
@@ -196,7 +193,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="skincare-radar-header-btn"
                 onClick={onOpenSkincareRadarModal}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-teal-300 hover:text-teal-200 transition-colors"
+                className="hidden 2xl:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-teal-300 hover:text-teal-200 transition-colors"
                 title={t('skincareRadar')}
               >
                 <Zap className="w-3.5 h-3.5 text-teal-400" />
@@ -208,7 +205,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="market-catalog-header-btn"
                 onClick={onOpenMarketCatalogModal}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-slate-300 transition-colors"
+                className="hidden 2xl:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-slate-300 transition-colors"
                 title={t('supermarkets')}
               >
                 <Layers className="w-3.5 h-3.5 text-blue-400" />
@@ -218,7 +215,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Desktop Navigation Controls */}
-          <nav className="hidden md:flex items-center space-x-1 sm:space-x-1.5 overflow-x-auto scrollbar-none py-1">
+          <nav className="hidden lg:flex items-center space-x-1 sm:space-x-1.5 overflow-x-auto scrollbar-none py-0.5 w-full justify-end">
             <button
               id="nav-scanner-tab"
               onClick={() => setCurrentTab('scanner')}
@@ -243,9 +240,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>{t('safeSwaps')}</span>
-              <span className="px-1 py-0.2 rounded text-[8px] font-extrabold bg-amber-400 text-slate-950 uppercase hidden lg:inline">
-                AI
-              </span>
             </button>
 
             <button
@@ -307,19 +301,6 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{t('profile')}</span>
             </button>
 
-            {/* Pro Upgrade CTA */}
-            <button
-              id="pro-upgrade-btn"
-              onClick={onOpenProModal}
-              className={`flex items-center space-x-1 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs ${
-                isProUser
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'
-                  : 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 hover:brightness-110'
-              }`}
-            >
-              <Crown className="w-3.5 h-3.5" />
-              <span>{isProUser ? 'PRO' : 'PRO'}</span>
-            </button>
           </nav>
 
           {/* Mobile Right Controls */}

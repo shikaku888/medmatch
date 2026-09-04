@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+:root {
+  --font-sans: Inter, "Noto Sans JP", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  font-family: var(--font-sans);
+}
+
+#root .font-sans {
+  font-family: Inter, "Noto Sans JP", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
+}

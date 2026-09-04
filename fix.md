@@ -1,0 +1,6 @@
+
+I only have experience with Yuka so take this with a grain of salt. I think if you’re just wanting further information it can be a good place to start since there are so many ingredients out there. I would never use apps like this as a source of truth without checking some references at least tho. So many ingredients fit the saying “the dose makes the poison”. If you drink coffee or eat any sort of fried potato for example, you’re consuming acrylamide which is a carcinogen. The app would likely tell you this if you scanned in such a food item. It most likely won’t tell you what the “harmful” amount is. As far as things like endocrine disruptors etc I don’t have as much knowledge on the accuracy.
+
+The issues behind the global supply chain, raw materials, and how they are used in food are very complex and one app won’t give you the full picture. It’s hard for me to give perspective as a non scientist, but that’s how I see it.
+
+Side rant that the concern about carcinogens should start with what’s in our water. That goes into all our food too!

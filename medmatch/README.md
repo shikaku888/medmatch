@@ -4,9 +4,38 @@
 
 > ⚕️ Thông tin tham khảo, KHÔNG phải tư vấn y tế. Xem phần [Pháp lý](#pháp-lý).
 
+## Goal của MedMatch
+
+MedMatch được tạo ra để giúp mỗi người hiểu **nguy cơ của toàn bộ những gì họ
+đang dùng** — thuốc kê đơn, thuốc không kê đơn, thực phẩm bổ sung, thảo dược,
+thực phẩm, hoạt chất và các sản phẩm mới — trong chính bối cảnh sức khỏe của họ.
+
+Mục tiêu không phải là sở hữu một danh sách sản phẩm lớn, mà là xây dựng một
+engine có độ bao phủ ngày càng rộng bằng cách:
+
+- chuẩn hóa mọi sản phẩm về hoạt chất và entity có định danh;
+- hợp nhất càng nhiều nguồn dữ liệu hợp pháp, đáng tin cậy và có version càng tốt;
+- cá nhân hóa theo thuốc, liều, thời điểm dùng, bệnh nền, thai kỳ, xét nghiệm và
+  chức năng gan/thận;
+- phân biệt rõ bằng chứng lâm sàng, tín hiệu quan sát được và suy luận cơ chế;
+- cảnh báo được cả tương tác đã biết lẫn rủi ro tiềm ẩn, nhưng không biến
+  “chưa tìm thấy bằng chứng” thành “an toàn”;
+- giải thích được vì sao cảnh báo áp dụng cho từng người và cung cấp đường
+  truy nguyên nội bộ cho mọi kết luận.
+
+Nguồn dữ liệu thương mại chỉ được dùng khi có quyền sử dụng phù hợp. UI có thể
+hiển thị ngắn gọn, nhưng backend phải giữ provenance, phiên bản, thời điểm cập
+nhật và record ID; không được mô tả sai nguồn dữ liệu. Khi bằng chứng chưa đủ,
+MedMatch phải nói rõ giới hạn và hướng người dùng đến dược sĩ/bác sĩ thay vì
+đưa ra cảm giác an toàn giả.
+
+Đây là **safety-first, coverage-expanding, evidence-traceable** — mục tiêu bất
+biến của mọi phase phát triển tiếp theo.
+
+
 ---
 
-## Tóm tắt 3 file plan đã nghiên cứu (`H:\aisuckhoe`)
+## Tóm tắt 3 file plan đã nghiên cứu (`G:\aisuckhoe`)
 
 ### plan1.md — Phân tích & cải tiến mở rộng
 - **Nguồn dữ liệu cốt lõi**: tapirro/herb-drug-interaction-checker (MIT, 592 tương tác TPCN–thuốc), DDInter 2.0 (240K drug-drug, license NC-SA), MedData API ($29/tháng), PubChem, RxNorm, openFDA.
@@ -38,7 +67,7 @@ Plan khuyến nghị bắt đầu với **tapirro herb-drug + RxNorm + PubChem**
 ## Chạy thử
 
 ```bash
-cd H:\aisuckhoe\medmatch
+cd G:\aisuckhoe\medmatch
 pip install -r requirements.txt
 python -m backend.db            # seed SQLite (chỉ cần 1 lần)
 python -m uvicorn backend.app:app --host 127.0.0.1 --port 8765
@@ -54,6 +83,132 @@ python -m pytest tests/ -v
 
 Quét camera barcode cần Chrome/Edge (BarcodeDetector API); trình duyệt khác nhập tay.
 
+---
+
+## Product Scanner (app tích hợp)
+
+React SPA từ `G:\aisuckhoe\personalized-product-scanner` đã được tích hợp và chạy **cùng 1 server FastAPI** (Express BFF cũ đã bỏ, toàn bộ service được port sang Python trong `backend/scanner/`):
+
+- UI mới: `http://127.0.0.1:8765/scanner/` (tab 🛒 Scanner ở app chính) — quét barcode/OCR nhãn/hóa đơn, tủ skincare, dị ứng chéo, AI chat, smart swaps, cửa hàng.
+- Backend: cùng origin — `/api/scan`, `/api/scan/image|text|receipt`, `/api/batch-scan`, `/api/profile`, `/api/family-profiles`, `/api/smart-swaps`, `/api/ai-chat`, `/api/analytics`, `/api/markets`, …
+- Dữ liệu scanner: lưu server-side trong `SCANNER_DATA_DIR` theo cookie `mt_device`; local dev mặc định là `backend/data/devices/`, production là `/data/devices`.
+
+## Chuẩn bị deploy public
+
+Runtime image không copy full source DB hoặc raw datasets. `backend/medmatch.db`
+và `deploy/runtime/` đều gitignored; build input phải được restore từ một
+protected artifact/volume ngoài repository, không commit DB vào source control.
+Trên máy ingest/CI có disk lớn hơn VPS:
+
+```bash
+python deploy/build_runtime_db.py \
+  --source backend/medmatch.cleaned.db \
+  --output deploy/runtime/medmatch.db \
+  --force
+docker build -t medmatch-api:local .
+docker save medmatch-api:local | gzip > medmatch-api.tar.gz
+```
+
+Chỉ upload các artifact đã kiểm tra sang VPS:
+
+```bash
+scp medmatch-api.tar.gz user@vps:/srv/medmatch/
+scp deploy/runtime/medmatch.db* user@vps:/srv/medmatch/runtime/
+ssh user@vps 'docker load < /srv/medmatch/medmatch-api.tar.gz'
+```
+
+Smoke local ở terminal khác:
+
+```bash
+curl -f http://127.0.0.1:8080/api/health
+curl -f http://127.0.0.1:8080/api/privacy
+curl -f http://127.0.0.1:8080/api/provenance
+curl -f -X POST http://127.0.0.1:8080/api/analyze \
+  -H "Content-Type: application/json" \
+  --data '{"items":[{"name":"warfarin","kind":"medication"}],"profile":{}}'
+curl -f -X POST http://127.0.0.1:8080/api/scan \
+  -H "Content-Type: application/json" \
+  --data '{"barcode":"3017620422003"}'
+curl -f -X POST http://127.0.0.1:8080/api/user-data/purge
+```
+
+Purge phải chạy với cookie smoke riêng, không dùng cookie của người dùng thật.
+
+Backup/restore dùng SQLite online backup, không cần dừng API. Sidecar manifest
+được sao chép và cập nhật checksum cho từng artifact; không restore DB mà bỏ
+qua manifest.
+
+Fly.io dùng `fly.toml`, volume `medmatch_data` tối thiểu 5 GB và secret
+`ADMIN_API_TOKEN` phải được cấu hình ngoài repository. Chỉ chạy `fly deploy`
+sau khi image build, runtime DB integrity/checksum và smoke đều pass. Refresh
+data là quy trình build snapshot mới rồi deploy, không chạy importer trong API
+boot.
+
+VPS Docker Compose dùng Caddy cho HTTPS và giữ API không public trực tiếp:
+
+```bash
+mkdir -p /srv/medmatch/runtime /srv/medmatch/devices /srv/medmatch/state /srv/medmatch/graph
+chmod 700 /srv/medmatch/devices /srv/medmatch/state /srv/medmatch/graph
+cat > .env <<'EOF'
+MEDMATCH_DOMAIN=api.example.com
+MEDMATCH_RUNTIME_DIR=/srv/medmatch/runtime
+MEDMATCH_DEVICES_DIR=/srv/medmatch/devices
+MEDMATCH_STATE_DIR=/srv/medmatch/state
+MEDMATCH_GRAPH_DIR=/srv/medmatch/graph
+ADMIN_API_TOKEN=thay-bang-token-ngau-nhien
+EOF
+
+# Copy medmatch.db, medmatch.db.manifest.json, and
+# medmatch.db.evaluation.json into /srv/medmatch/runtime first.
+docker compose config
+docker load < /srv/medmatch/medmatch-api.tar.gz
+docker compose up -d
+curl -f https://api.example.com/api/health
+```
+
+`/srv/medmatch/runtime` chứa snapshot clinical read-only; `/srv/medmatch/devices`
+chứa dữ liệu scanner theo thiết bị và có thể chứa PHI; `/srv/medmatch/state`
+chứa rate-limit state; `/srv/medmatch/graph` chứa các product facts đã được
+admin duyệt từ contribution pipeline. Bốn volume này nằm ngoài image. Không
+commit `.env`, token, device data, hoặc bản sao database vào repository. Caddy
+tự xin và gia hạn Let's Encrypt certificate; DNS của `MEDMATCH_DOMAIN` phải
+trỏ về VPS trước khi khởi động service.
+
+```bash
+python deploy/backup_runtime_db.py backup \
+  --source /data/medmatch.db \
+  --output /backup/medmatch-YYYYMMDD-HHMMSS.db
+
+python deploy/backup_runtime_db.py restore \
+  --source /backup/medmatch-YYYYMMDD-HHMMSS.db \
+  --target /data/medmatch.db \
+  --force
+```
+
+Rebuild SPA sau khi sửa frontend:
+
+```bash
+cd G:\aisuckhoe\personalized-product-scanner
+bun install
+SCANNER_BASE=/scanner/ SCANNER_OUT=dist-scanner bun run build
+xcopy /E /Y dist-scanner G:\aisuckhoe\medmatch\static\scanner\
+```
+
+## Test trên điện thoại (Wi-Fi nhà)
+
+Camera + cài PWA yêu cầu HTTPS → dùng cert self-signed kèm sẵn:
+
+```bat
+start_https.bat        # sinh backend/data/dev_cert.pem lần đầu, chạy cổng 8443
+```
+
+1. Điện thoại nối **cùng Wi-Fi** với máy tính.
+2. Mở `https://<LAN-IP>:8443/scanner/` (IP hiện ra khi chạy script, vd `https://192.168.50.226:8443/scanner/`).
+3. Chrome cảnh báo cert → **Advanced → Proceed** (chỉ lần đầu). Sau đó camera barcode, OCR ảnh hoạt động bình thường.
+4. Trên Android Chrome: menu ⋮ → *Add to Home screen* để cài như app.
+
+Chế độ HTTP thường cho test trên PC: `start.bat` (cổng 8765).
+
 ## Cấu trúc
 
 ```
@@ -67,9 +222,14 @@ medmatch/
 │   ├── cyp_seed.py       # CYP450 roles (substrate/inhibitor/inducer) cho suy luận
 │   ├── rxnorm.py         # map tên thuốc → RxCUI (199 tên, chuẩn hóa xuyên nguồn)
 │   ├── suppai.py         # crawl SUPP.AI interactions + evidence (DOI/PMID)
+│   ├── scanner/          # Product Scanner backend (port từ Express BFF:
+│   │                     #   router.py, storage.py, ext_clients.py,
+│   │                     #   personalization.py, herbal_skincare.py,
+│   │                     #   advisor.py, parsing.py, medmatch_bridge.py)
 │   ├── idisk.py          # import iDISK 2.0 interactions + DSI knowledgebase
 │   └── data/             # tapirro JSON gốc + bản dịch + rxnorm_map.json + idisk/
 ├── static/               # frontend vanilla JS + PWA (manifest, sw.js, OCR)
+│   └── scanner/          # Product Scanner SPA build (React, Vite → /scanner/)
 ├── tests/                # pytest integrity suite
 ```
 
@@ -115,7 +275,8 @@ python -m backend.unify                 # build lớp hợp nhất (unified + sy
 - Phân tích theo thời gian dùng: chọn giờ uống cho từng item; cặp khác giờ hiển thị ghi chú "tách giờ uống giảm rủi ro".
 - Báo cáo PDF: nút "Print / Save as PDF" trên kết quả check (print CSS tự tách kết quả).
 - Engine suy luận CYP450: phát hiện tương tác "ẩn" qua enzyme pathway — trust 0.5, hiển thị enzyme.
-- Caregiver mode: nhiều hồ sơ tủ thuốc (localStorage), dropdown trên topbar.
+- Caregiver mode: nhiều hồ sơ tủ thuốc, lưu server-side theo cookie `mt_device`
+  opaque random (không account).
 - PWA: manifest + service worker — cài được lên màn hình chính.
 - OCR nhãn: nút "Scan label text" (Tesseract.js lazy-load) — chụp ảnh nhãn, nhận diện thành phần.
 - Product search: 69,348 sản phẩm iDISK (NHP Canada) — tìm theo tên, auto-add thành phần vào tủ.
@@ -124,8 +285,11 @@ python -m backend.unify                 # build lớp hợp nhất (unified + sy
 
 ## Privacy
 
-- Cabinet lưu trong `localStorage` — **dữ liệu không rời trình duyệt**, không account, không tracking (GDPR-friendly mặc định).
-- Nếu sau này đồng bộ lên backend → dữ liệu trở thành PHI → **phải** áp dụng HIPAA checklist trong plan1 (mã hóa, BAA, audit log) trước khi làm.
+- Legacy vanilla cabinet/profile data dùng `localStorage`.
+- Scanner profile, family profiles và history được gửi tới backend và lưu
+  server-side theo cookie `mt_device` opaque random token; hiện chưa có account.
+- Full policy được expose tại `/privacy`; UI footer và `GET /api/privacy` dùng
+  cùng contract retention/endpoint với policy.
 
 ## Pháp lý
 
@@ -133,9 +297,9 @@ python -m backend.unify                 # build lớp hợp nhất (unified + sy
 - App ở mức "cung cấp thông tin tham khảo" (không chẩn đoán/kê liều) → nằm trong enforcement discretion của FDA; tham vấn luật sư y tế trước khi phát hành App Store.
 - Luật drug-drug chỉ là tóm tắt; không đảm bảo đầy đủ.
 
-## Roadmap (từ 3 plan)
+## Roadmap
 
-1. **Phase 2 — Data union**: import SUPP.AI (59K tương tác + DOI evidence), NIH DSLD, iDISK 2.0; xếp hạng độ tin cậy nguồn.
-2. **Phase 2 — Tính năng**: phân tích tủ thuốc theo thời gian dùng, tương tác thuốc–thực phẩm, xuất báo cáo PDF.
-3. **Phase 3 — Khác biệt cạnh tranh**: engine suy luận CYP450 (phát hiện tương tác ẩn), chế độ caregiver đa hồ sơ.
-4. **Mobile**: bọc thành PWA/React Native (camera + OCR nhãn qua Vision/Tesseract) — plan1 có cấu hình OCR chi tiết.
+Roadmap thực thi hiện tại nằm ở
+[`NEXT_WORK_PLAN.md`](NEXT_WORK_PLAN.md#roadmap-hiện-tại--sau-phase-2).
+Thứ tự ưu tiên: release/privacy/deploy gate → meds-first onboarding và result
+UX → dose/timing/patient safety → beta coverage operations → mobile/business.

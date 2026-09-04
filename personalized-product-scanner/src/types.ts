@@ -1,5 +1,5 @@
 export type SupportedCountry = 'US' | 'UK' | 'FR' | 'DE' | 'IT' | 'ES';
-export type SupportedLanguage = 'en' | 'vi' | 'fr' | 'de' | 'it' | 'es';
+export type SupportedLanguage = 'en' | 'vi' | 'fr' | 'de' | 'it' | 'es' | 'ja';
 
 export type AllergenKey =
   | 'peanut'
@@ -45,6 +45,34 @@ export type SpecialCondition =
   | 'hypertension'
   | 'acne_prone';
 
+export interface MedicationDetail {
+  id?: string;
+  ingredient: string;
+  brand?: string;
+  strength?: string;
+  dose?: number | string;
+  unit?: string;
+  route?: string;
+  formulation?: string;
+  frequency?: string;
+  timing?: string;
+}
+
+export interface PharmacogenomicsContext {
+  genotype?: string;
+  phenotype?: string;
+  indication?: string;
+}
+
+export interface LabContext {
+  id?: string;
+  name: string;
+  value?: number | string;
+  unit?: string;
+  observedAt?: string;
+  referenceRange?: string;
+}
+
 export interface UserProfile {
   id?: string;
   name?: string;
@@ -57,11 +85,17 @@ export interface UserProfile {
   medications?: string[];
   age?: number;
   gender?: 'male' | 'female' | 'other';
+  pregnancyTrimester?: number;
   pregnancyStatus?: 'not_applicable' | 'trying_to_conceive' | 'pregnant' | 'breastfeeding';
   kidneyFunction?: 'normal' | 'mild_impairment' | 'moderate_impairment' | 'severe_impairment';
+  eGFR?: number;
   liverFunction?: 'normal' | 'mild_impairment' | 'moderate_impairment' | 'severe_impairment';
+  medicationDetails?: MedicationDetail[];
+  labs?: LabContext[];
+  pharmacogenomics?: PharmacogenomicsContext;
   dietType: DietType;
   specialConditions: SpecialCondition[];
+  scheduleTimes?: Record<string, string>; // user-tuned times "HH:MM" per entity label
   updatedAt?: string;
 }
 
@@ -76,9 +110,15 @@ export interface FamilyProfile {
   medications?: string[];
   age?: number;
   gender?: 'male' | 'female' | 'other';
+  pregnancyTrimester?: number;
   pregnancyStatus?: 'not_applicable' | 'trying_to_conceive' | 'pregnant' | 'breastfeeding';
   kidneyFunction?: 'normal' | 'mild_impairment' | 'moderate_impairment' | 'severe_impairment';
+  eGFR?: number;
   liverFunction?: 'normal' | 'mild_impairment' | 'moderate_impairment' | 'severe_impairment';
+  medicationDetails?: MedicationDetail[];
+  labs?: LabContext[];
+  pharmacogenomics?: PharmacogenomicsContext;
+  scheduleTimes?: Record<string, string>;
   dietType: DietType;
   specialConditions: SpecialCondition[];
 }
@@ -205,7 +245,9 @@ export interface NutritionFacts {
 
 export interface CosmeticProfile {
   category?: string;
-  comedogenicRating?: number; // 0-5
+  comedogenicRating?: number;
+  irritationRisk?: 'low' | 'moderate' | 'high';
+  irritationIngredients?: string[];
   hasFragrance?: boolean;
   hasParabens?: boolean;
   hasSulfates?: boolean;
@@ -215,6 +257,19 @@ export interface CosmeticProfile {
   safetySummary?: string;
 }
 
+export type ProductScanSource =
+  | 'openfoodfacts'
+  | 'openbeautyfacts'
+  | 'usda'
+  | 'local_scan'
+  | 'local_index'
+  | 'cached'
+  | 'demo'
+  | 'community_verified'
+  | 'name-recognition'
+  | 'product-index'
+  | `product-index:${string}`;
+
 export interface ProductScanResult {
   barcode: string;
   productName: string;
@@ -222,9 +277,19 @@ export interface ProductScanResult {
   countryOfOrigin?: string;
   productType: 'food' | 'cosmetic' | 'supplement';
   imageUrl?: string;
+  identityCode?: string;
+  matchConfidence?: number;
+  matchReasons?: string[];
   ingredientsText: string;
   ingredientsList: string[];
+  excipients?: string[];
   allergens: string[];
+  safetyEvidence?: {
+    status?: 'signal_found' | 'no_signal_found' | 'unavailable';
+    recalls?: { event_id: string; product_type?: string; classification?: string; status?: string; product_description?: string; reason_for_recall?: string; recall_initiation_date?: string; source_url?: string }[];
+    caers?: { product_name: string; reaction: string; case_count: number; serious_count: number; first_seen?: string; last_seen?: string }[];
+    limitations?: string[];
+  };
   labels: string[];
   nutrition?: NutritionFacts;
   cosmetic?: CosmeticProfile;
@@ -239,11 +304,12 @@ export interface ProductScanResult {
     status: 'safe' | 'caution' | 'warning' | 'danger';
     score: number; // 0-100
     summary: string;
+    medicationSummary?: string;
     warnings: MatchWarning[];
     safeHighlights: string[];
   };
   medMatch?: MedMatchAnalysis;
-  source: 'openfoodfacts' | 'openbeautyfacts' | 'usda' | 'inci' | 'local_scan' | 'cached' | 'demo';
+  source: ProductScanSource;
   scannedAt: string;
 }
 
@@ -548,7 +614,143 @@ export interface MedMatchScheduleConflict {
   min_hours: number;
 }
 
+export interface MedMatchEvidenceIntersection {
+  ingredient_id: string;
+  ingredient_name: string;
+  sources: string[];
+  source_count: number;
+  onsides_effect_count: number;
+  onsides_row_count: number;
+  onsides_label_count: number;
+  onsides_regions: string[];
+  onsides_high_confidence_count: number;
+  faers_case_count: number;
+  faers_term_count: number;
+  label_count: number;
+  match_method: string;
+  ontology_version: string;
+  built_at: string;
+  drug_id?: string;
+  drug_label?: string;
+}
+
+export interface MedMatchAtcRecord {
+  struct_id: string;
+  atc_code: string;
+  chemical_substance?: string | null;
+  l1_name?: string | null;
+  l2_name?: string | null;
+  l3_name?: string | null;
+  l4_name?: string | null;
+}
+
+export interface MedMatchTargetRecord {
+  struct_id: string;
+  target_id?: string | null;
+  target_name?: string | null;
+  target_class?: string | null;
+  action_type?: string | null;
+  moa?: string | null;
+  act_source_url?: string | null;
+  moa_source_url?: string | null;
+}
+
+export interface MedMatchLactationRecord {
+  substance_name: string;
+  revised_date?: string | null;
+  summary_of_use?: string | null;
+  drug_levels?: string | null;
+  infant_effects?: string | null;
+  lactation_effects?: string | null;
+  alternate_drugs?: string | null;
+  source_url?: string | null;
+}
+
+export interface MedMatchRecallRecord {
+  event_id: string;
+  product_type?: string | null;
+  classification?: string | null;
+  status?: string | null;
+  product_description?: string | null;
+  reason_for_recall?: string | null;
+  recall_initiation_date?: string | null;
+  source_url?: string | null;
+}
+
+export interface MedMatchCaersEvent {
+  product_name: string;
+  reaction: string;
+  case_count: number;
+  serious_count: number;
+  first_seen?: string | null;
+  last_seen?: string | null;
+}
+
+export interface MedMatchClinicalSummary {
+  drug_id: string;
+  scope?: 'drug' | 'drug_class';
+  layers?: {
+    atc?: { status?: string; atc?: MedMatchAtcRecord[]; limitations?: string[] };
+    mechanism?: { status?: string; targets?: MedMatchTargetRecord[]; limitations?: string[] };
+    indications?: { status?: string; indications?: Record<string, unknown>[]; limitations?: string[] };
+    lactation?: { status?: string; records?: MedMatchLactationRecord[]; limitations?: string[] };
+    recalls?: { status?: string; recalls?: MedMatchRecallRecord[]; limitations?: string[] };
+    caers?: { status?: string; events?: MedMatchCaersEvent[]; limitations?: string[] };
+  };
+  limitations?: string[];
+}
+
+export interface PatientContextMedication {
+  ingredient?: string | null;
+  brand?: string | null;
+  strength?: string | null;
+  dose?: number | string | null;
+  unit?: string | null;
+  route?: string | null;
+  frequency?: string | null;
+  timing?: string | null;
+  formulation?: string | null;
+}
+
+export interface PatientContextSummary {
+  contextVersion?: string;
+  age?: number | string | null;
+  pregnancy?: { status?: string | null; trimester?: number | string | null };
+  lactation?: { status?: string | null };
+  renal?: { status?: string | null; eGFR?: number | string | null; stage?: string | null };
+  hepatic?: { status?: string | null };
+  conditions?: string[];
+  medications?: PatientContextMedication[];
+  allergies?: string[];
+  labs?: { name?: string | null; value?: number | string | null; unit?: string | null; observedAt?: string | null; referenceRange?: string | null }[];
+  pharmacogenomics?: PharmacogenomicsContext;
+}
+
+export interface PersonalizationSummary {
+  contextVersion?: string;
+  personalizedUrgency?: 'low' | 'moderate' | 'high' | 'unknown';
+  reasons?: { factor: string; impact?: string; reason: string }[];
+  missingContext?: string[];
+  severityIsEvidenceOnly?: boolean;
+}
+
 export interface MedMatchAnalysis {
+  result?: 'interaction_found' | 'no_documented_interaction_found' | 'unknown_unmatched' | 'safe';
+  patientContext?: PatientContextSummary;
+  personalization?: PersonalizationSummary;
+  coverage?: 'partial' | 'complete';
+  checkedSources?: string[];
+  dataFreshness?: {
+    generatedAt?: string;
+    releases?: Record<string, {
+      version?: string | null;
+      period_start?: string | null;
+      period_end?: string | null;
+      downloaded_at?: string | null;
+      sha256?: string | null;
+    }>;
+  };
+  message?: string;
   matched: { input: string; kind: string; id: string; label: string }[];
   interactions: MedMatchInteraction[];
   unmatched: string[];

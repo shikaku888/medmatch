@@ -500,10 +500,15 @@ function renderCheckResults(data) {
   const minor = data.interactions.filter((i) => i.severity === "minor").length;
   const evidence = data.interactions.length - major - moderate - minor;
   if (!data.interactions.length) {
-    h2.textContent = t("msg_no_interactions", "No known interactions");
+    const unknown = data.result === "unknown_unmatched" || data.unmatched.length > 0;
+    h2.textContent = unknown
+      ? t("msg_unknown_result", "Result unknown")
+      : t("msg_no_interactions", "No documented interaction found");
     const ok = document.createElement("div");
-    ok.className = "ok-box";
-    ok.textContent = t("msg_none_found", "✓ No documented interactions were found among these items.");
+    ok.className = unknown ? "warn-box" : "neutral-box";
+    ok.textContent = unknown
+      ? t("msg_unknown_safety", "Some items could not be standardized. This result does not prove the combination is safe.")
+      : t("msg_none_found", "No documented interaction was found in the checked sources. This does not prove the combination is safe.");
     head.append(h2, ok);
   } else {
     h2.textContent = major
@@ -595,6 +600,7 @@ function renderCheckResults(data) {
   save.appendChild(btn);
   box.appendChild(save);
 }
+
 
 function renderInteraction(inter) {
   const isEvidence = inter.type === "herb-drug-evidence" || !inter.severity;

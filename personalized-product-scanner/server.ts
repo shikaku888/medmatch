@@ -19,8 +19,9 @@ import { auditReceipt } from './server/services/receipt_scanner';
 import { getAllCrossReactivityRules } from './server/services/cross_reactivity';
 import { extractSkincareActives, analyzeSkincareRoutineConflicts } from './server/services/skincare_conflicts';
 import { ProductScanResult, FamilyProfile, UserRoutineProduct, SupportedCountry, MedMatchAnalysis, SafeSwapRecommendation } from './src/types';
-import { normalizeIngredient, analyzeMedications, medMatchStats, medMatchFetch } from './server/services/medmatch_client';
+import { normalizeIngredient, analyzeMedications, medMatchStats, medMatchFetch, lookupBarcode } from './server/services/medmatch_client';
 import { cacheStats, cacheSearch, cacheClear } from './server/services/lookup_cache';
+import { createScanDraft, getScanDraft, deleteScanDraft } from './server/scan_drafts';
 
 dotenv.config();
 
@@ -544,6 +545,145 @@ async function startServer() {
     }
   });
 
+  // Resolve a scanned value into a reviewable draft. This route never runs
+  // safety analysis or writes scan history.
+  app.post('/api/scan/draft', async (req, res) => {
+    const rawValue = String(req.body?.value || req.body?.barcode || '').trim();
+    if (!rawValue) return res.status(400).json({ error: 'QR code or barcode is required' });
+
+    let barcode = rawValue;
+    let amazonId: string | undefined;
+    try {
+      const url = new URL(rawValue);
+      if (!/(^|\.)amazon\./i.test(url.hostname)) {
+        return res.status(400).json({ error: 'Only Amazon product links are supported for QR URLs' });
+      }
+      amazonId = url.pathname.match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})/i)?.[1]?.toUpperCase();
+      barcode = '';
+    } catch {
+      // Plain barcode input.
+    }
+
+    if (!barcode && !amazonId) {
+      return res.status(400).json({ error: 'Could not identify a product code in this QR value' });
+    }
+
+    try {
+      const asRecord = (value: unknown): Record<string, unknown> => (
+        value && typeof value === 'object' ? value as Record<string, unknown> : {}
+      );
+      let product: Record<string, unknown> = {};
+      let source = 'unknown';
+      if (barcode) {
+        try {
+          product = asRecord(await lookupBarcode(barcode));
+          source = String(product.source || 'medmatch');
+        } catch {
+          product = asRecord(await getProductFromOFF(barcode, db.getUserProfile().country));
+          source = String(product.source || 'openfoodfacts');
+        }
+      }
+
+      if (!Object.keys(product).length && amazonId) {
+        return res.status(424).json({
+          error: 'Amazon product details are not configured',
+          amazonProductId: amazonId,
+          hint: 'Please photograph the ingredient label to continue'
+        });
+      }
+      if (!Object.keys(product).length) return res.status(404).json({ error: 'Product not found', barcode });
+
+      const ingredientsList = Array.isArray(product.ingredientsList)
+        ? product.ingredientsList.filter((v: unknown): v is string => typeof v === 'string' && v.trim().length > 0).slice(0, 40)
+        : Array.isArray(product.ingredients)
+          ? product.ingredients.filter((v: unknown): v is string => typeof v === 'string' && v.trim().length > 0).slice(0, 40)
+          : [];
+      const draft = createScanDraft({
+        inputType: 'code',
+        inputValue: rawValue,
+        product: {
+          productName: product.productName || product.name || 'Unknown product',
+          brand: product.brand || product.brands || '',
+          productType: product.productType || 'supplement',
+          imageUrl: product.imageUrl || product.image_url,
+          barcode: product.barcode || barcode,
+          amazonProductId: amazonId
+        },
+        ingredientsList,
+        ingredientsText: typeof product.ingredientsText === 'string'
+          ? product.ingredientsText
+          : ingredientsList.join(', '),
+        source
+      });
+      res.json({
+        draftId: draft.id,
+        status: 'waiting_confirmation',
+        dataCompleteness: draft.ingredientsList.length ? 'partial' : 'missing',
+        product: draft.product,
+        ingredientsList: draft.ingredientsList,
+        ingredientsText: draft.ingredientsText,
+        source: draft.source,
+        expiresAt: draft.expiresAt
+      });
+    } catch (err: unknown) {
+      res.status(502).json({ error: err instanceof Error ? err.message : 'Could not resolve product' });
+    }
+  });
+
+  // OCR-only draft. Analysis starts only after the user confirms the result.
+  app.post('/api/scan/draft/image', async (req, res) => {
+    const imageBase64 = req.body?.imageBase64;
+    if (!imageBase64) return res.status(400).json({ error: 'Image base64 data is required' });
+    try {
+      const parsed = await parseProductImage(imageBase64, req.body?.mimeType || 'image/jpeg');
+      const draft = createScanDraft({
+        inputType: 'ingredient_photo',
+        product: {
+          productName: parsed.productName || 'Chưa xác định tên sản phẩm',
+          brand: parsed.brand || '',
+          productType: parsed.productType || 'supplement',
+          imageUrl: undefined,
+          evidenceImage: true
+        },
+        ingredientsList: (parsed.ingredientsList || []).slice(0, 40),
+        ingredientsText: parsed.ingredientsText || '',
+        mimeType: req.body?.mimeType || 'image/jpeg',
+        source: 'local_scan'
+      });
+      res.json({
+        draftId: draft.id,
+        status: 'waiting_confirmation',
+        dataCompleteness: parsed.hasIngredientSection && draft.ingredientsList.length ? 'partial' : 'missing',
+        product: draft.product,
+        ingredientsList: draft.ingredientsList,
+        ingredientsText: draft.ingredientsText,
+        source: draft.source,
+        expiresAt: draft.expiresAt
+      });
+    } catch (err: unknown) {
+      res.status(500).json({ error: err instanceof Error ? err.message : 'Could not read ingredient photo' });
+    }
+  });
+
+  app.post('/api/scan/draft/:id/confirm', (req, res) => {
+    const draft = getScanDraft(req.params.id);
+    if (!draft) return res.status(404).json({ error: 'Scan draft expired or not found' });
+    const ingredientsList = Array.isArray(req.body?.ingredientsList)
+      ? req.body.ingredientsList.filter((v: unknown): v is string => typeof v === 'string' && v.trim().length > 0).slice(0, 40)
+      : draft.ingredientsList;
+    if (!ingredientsList.length) return res.status(422).json({ error: 'At least one ingredient must be confirmed' });
+    deleteScanDraft(draft.id);
+    res.json({
+      confirmed: true,
+      inputType: draft.inputType,
+      inputValue: draft.inputValue,
+      product: draft.product,
+      ingredientsList,
+      ingredientsText: ingredientsList.join(', '),
+      source: draft.source
+    });
+  });
+
   // Main Barcode Scan Endpoint
   app.post('/api/scan', async (req, res) => {
     const { barcode, query } = req.body;
@@ -592,7 +732,33 @@ async function startServer() {
       source = 'demo';
     }
 
-    // 2. Query Open Food Facts / Open Beauty Facts with country routing
+    // 2. Query the unified local product index before public food sources.
+    if (!productData && cleanBarcode) {
+      try {
+        const local = await lookupBarcode(cleanBarcode);
+        if (local && typeof local === 'object') {
+          const item = local as Record<string, unknown>;
+          const ingredients = Array.isArray(item.ingredients)
+            ? item.ingredients.filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+            : [];
+          productData = {
+            productName: typeof item.name === 'string' ? item.name : `Product ${cleanBarcode}`,
+            brand: typeof item.brands === 'string' ? item.brands : '',
+            productType: item.product_type === 'drug' ? 'supplement' : 'supplement',
+            imageUrl: typeof item.imageUrl === 'string' ? item.imageUrl : undefined,
+            ingredientsText: ingredients.join(', '),
+            ingredientsList: ingredients,
+            allergens: [],
+            labels: []
+          };
+          source = 'local_index';
+        }
+      } catch (err: unknown) {
+        console.warn('Local product index unavailable:', err instanceof Error ? err.message : err);
+      }
+    }
+
+    // 3. Query Open Food Facts / Open Beauty Facts with country routing
     if (!productData && cleanBarcode) {
       const offRes = await getProductFromOFF(cleanBarcode, currentProfile.country);
       if (offRes) {
@@ -600,8 +766,7 @@ async function startServer() {
         source = offRes.source;
       }
     }
-
-    // 3. Query USDA FoodData Central fallback (if searching by name/query or barcode lookup)
+    // 4. Query USDA FoodData Central fallback (if searching by name/query or barcode lookup)
     if (!productData && (query || cleanBarcode)) {
       const usdaRes = await searchUSDAFood(query || cleanBarcode);
       if (usdaRes) {

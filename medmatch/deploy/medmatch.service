@@ -1,0 +1,26 @@
+# Systemd unit — MedMatch API server (chạy cùng file này với code)
+# Copy vào /etc/systemd/system/medmatch.service rồi:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now medmatch
+
+[Unit]
+Description=MedMatch AI FastAPI server
+After=network-online.target
+
+[Service]
+Type=simple
+# SỬA đường dẫn cho đúng nơi bạn copy project trên VPS
+WorkingDirectory=/opt/medmatch
+ExecStart=/opt/medmatch/.venv/bin/python -m uvicorn backend.app:app --host 127.0.0.1 --port 8765 --workers 2
+Restart=always
+RestartSec=3
+StateDirectory=medmatch
+UMask=0077
+Environment=PYTHONUNBUFFERED=1
+Environment=MEDMATCH_DB=/var/lib/medmatch/medmatch.db
+Environment=MEDMATCH_DB_MANIFEST=/var/lib/medmatch/medmatch.db.manifest.json
+Environment=MEDMATCH_DB_READ_ONLY=1
+Environment=RATE_LIMIT_DB=/var/lib/medmatch/rate-limit.db
+Environment=SCANNER_DATA_DIR=/var/lib/medmatch/devices
+Environment=TRUST_PROXY_HEADERS=1
+[Install]
+WantedBy=multi-user.target

@@ -8,7 +8,6 @@ import {
   Flame,
   FileText,
   Printer,
-  Sparkles,
   CheckCircle,
   HeartPulse,
   Pill,
@@ -21,15 +20,11 @@ import {
 interface HealthDashboardViewProps {
   userProfile: UserProfile;
   history: ScanHistoryItem[];
-  onOpenProModal: () => void;
-  isProUser: boolean;
 }
 
 export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
   userProfile,
-  history,
-  onOpenProModal,
-  isProUser
+  history
 }) => {
   const lang = userProfile.language || 'en';
   const t = (key: string, fallback?: string) => getTranslation(lang, key, fallback);
@@ -123,7 +118,7 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
             {t('dashboardTitle', 'Personal Health & Additive Exposure Dashboard')}
           </h2>
           <p className="text-sm text-slate-300 mt-1 max-w-xl">
-            {t('dashboardSubtitle', 'Real-time telemetry of scanned groceries, skincare formulations, allergen intercepts, and ultra-processed food burden.')}
+            {t('dashboardSubtitle', 'A simple view of your scans, ingredient flags, and product patterns over time.')}
           </p>
         </div>
 
@@ -134,7 +129,7 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
             className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-900 text-xs font-bold shadow-sm transition-all border border-slate-200"
           >
             <FileText className="w-4 h-4 text-blue-600" />
-            <span>{t('clinicalReportBtn', 'Clinical Dietitian Report')}</span>
+            <span>{t('personalReportBtn', 'Personal report')}</span>
           </button>
         </div>
       </div>
@@ -344,7 +339,7 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
             <div className="h-full bg-blue-600" style={{ width: `${safeRatio}%` }} />
           </div>
           <p className="text-[11px] text-slate-500 font-medium">
-            {t('fdaGras', 'Verified Safe Databases')}
+            {t('referenceDatabases', 'Reference databases')}
           </p>
         </div>
       </div>
@@ -491,26 +486,6 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
             </div>
           </div>
 
-          {/* Pro Upgrade Banner */}
-          {!isProUser && (
-            <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-blue-900 to-indigo-900 text-white flex items-center justify-between gap-3 shadow-sm">
-              <div className="space-y-0.5">
-                <h4 className="font-bold text-xs flex items-center space-x-1.5 text-amber-300">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>{t('upgradeToPro', 'Upgrade to Pro')}</span>
-                </h4>
-                <p className="text-[11px] text-slate-300">
-                  {t('tagline', 'Unlock multi-member profiles & AI smart swaps.')}
-                </p>
-              </div>
-              <button
-                onClick={onOpenProModal}
-                className="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold shrink-0 transition-colors shadow-2xs"
-              >
-                {t('upgradeToPro', 'Go Pro')}
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
@@ -521,10 +496,10 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
             {/* Header */}
             <div className="p-6 bg-slate-900 text-white flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400">
-                  {t('clinicalReportBtn', 'Clinical Document Export')}
-                </span>
-                <h3 className="text-xl font-bold">{t('clinicalReportBtn', 'Personalized Assessment Report')}</h3>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400">
+                    {t('personalReportBtn', 'Personal report')}
+                  </span>
+                <h3 className="text-xl font-bold">{t('personalReportTitle', 'Personal safety summary')}</h3>
                 <p className="text-xs text-slate-400">{userProfile.name} • {new Date().toLocaleDateString()}</p>
               </div>
               <div className="flex items-center space-x-2">
@@ -548,8 +523,8 @@ export const HealthDashboardView: React.FC<HealthDashboardViewProps> = ({
             <div className="p-8 space-y-6 max-h-[70vh] overflow-y-auto text-xs leading-relaxed font-sans">
               <div className="border-b border-slate-200 pb-4 flex justify-between items-start">
                 <div>
-                  <h4 className="font-bold text-base text-slate-900">MedMatch Verified Safety Transcript</h4>
-                  <p className="text-slate-500">Clinical Telemetry Engine • OpenFoodFacts + USDA + PubMed Grounded</p>
+                  <h4 className="font-bold text-base text-slate-900">MedMatch scan summary</h4>
+                  <p className="text-slate-500">Product information and reference data from Open Food Facts, USDA and PubMed.</p>
                 </div>
                 <div className="text-right text-[11px] text-slate-500 font-mono">
                   Report ID: MEDMATCH-{Math.random().toString(36).substring(2, 9).toUpperCase()}

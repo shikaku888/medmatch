@@ -4,10 +4,11 @@ Used for INFERENCE of hidden interactions (plan3): if A inhibits/induces
 an enzyme that metabolizes B, we flag the pair even when no direct
 clinical study exists. trust=0.5 (plan3 tier: enzyme inference).
 
-Enzymes: 1A2, 2C9, 2C19, 2D6, 3A4, p_gp (P-glycoprotein).
-Only well-documented, high-confidence roles are included.
+Enzymes: 1A2, 2C9, 2C19, 2D6, 3A4, 2E1, p_gp (P-glycoprotein).
+Only well-documented, high-confidence roles are included. Figshare 2E1
+records are substrate evidence only; they do not imply inhibition or induction.
 """
-ENZYMES = ("1A2", "2C9", "2C19", "2D6", "3A4", "p_gp")
+ENZYMES = ("1A2", "2C9", "2C19", "2D6", "3A4", "2E1", "p_gp")
 
 # class_id -> {"substrates": [...], "inhibitors": [...], "inducers": [...]}
 CYP_CLASS_ROLES = {

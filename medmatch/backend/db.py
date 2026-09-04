@@ -28,7 +28,7 @@ EVIDENCE_MAP = {
 # Tables owned by the seeder (wiped on rebuild). Fetched tables such as
 # suppai_interactions are created by their importers and MUST NOT be listed
 # here — rebuilding seeds preserves them.
-SEED_TABLES = ("herbs", "drug_classes", "interactions", "drug_drug", "foods", "drug_food", "cyp_roles")
+SEED_TABLES = ("herbs", "drug_classes", "interactions", "drug_drug", "foods", "drug_food")
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS herbs (
@@ -115,8 +115,30 @@ def build_db(db_path: Path = DB_PATH) -> sqlite3.Connection:
 
     from .drug_drug_seed import DRUG_DRUG_RULES, DRUG_LEVEL_RULES  # noqa: E402
     conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     conn.executescript(SCHEMA)
+    # expand_drug_classes.py persists RxNorm micro-classes in this table.
+    # Keep them across canonical seed rebuilds so fetched SUPP.AI rows retain
+    # resolvable class references. Older DBs may only have the references, so
+    # reconstruct a minimal class row from each SUPP.AI drug name.
+    preserved_micro_classes = {
+        row[0]: row
+        for row in conn.execute(
+            "SELECT id, name_en, drugs, aliases FROM drug_classes WHERE id LIKE 'rxdrg:%'"
+        ).fetchall()
+    }
+    if conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='suppai_interactions'"
+    ).fetchone():
+        for class_id, drug_name in conn.execute(
+            "SELECT class_id, MIN(drug_name) FROM suppai_interactions"
+            " WHERE class_id LIKE 'rxdrg:%' GROUP BY class_id"
+        ):
+            preserved_micro_classes.setdefault(
+                class_id,
+                (class_id, drug_name, json.dumps([drug_name.lower()]), json.dumps([drug_name.lower()])),
+            )
     for t in SEED_TABLES:
         conn.execute(f"DELETE FROM {t}")
     conn.execute("DELETE FROM sqlite_sequence WHERE name IN (?,?)",
@@ -145,6 +167,11 @@ def build_db(db_path: Path = DB_PATH) -> sqlite3.Connection:
         conn.execute(
             "INSERT INTO drug_classes (id, name_en, drugs, aliases) VALUES (?,?,?,?)",
             (cid, name_en, json.dumps(drugs), json.dumps(aliases)),
+        )
+    for cid, name_en, drugs, aliases in preserved_micro_classes.values():
+        conn.execute(
+            "INSERT OR IGNORE INTO drug_classes (id, name_en, drugs, aliases) VALUES (?,?,?,?)",
+            (cid, name_en, drugs, aliases),
         )
 
     seen_pairs = set()
@@ -210,21 +237,48 @@ def build_db(db_path: Path = DB_PATH) -> sqlite3.Connection:
             for role, enzymes in roles.items():
                 for enz in enzymes:
                     conn.execute(
-                        "INSERT INTO cyp_roles (entity_type, entity_id, role, enzyme)"
+                        "INSERT OR IGNORE INTO cyp_roles (entity_type, entity_id, role, enzyme)"
                         " VALUES (?,?,?,?)",
                         (etype, eid, role.rstrip("s"), enz),
                     )
 
+    from .evidence_schema import ensure_schema
+    ensure_schema(conn)
+    # A seed-only database must still resolve the bundled multilingual terms.
+    # Full snapshots already carry this table and keep their imported rows.
+    conn.executescript(
+        "CREATE TABLE IF NOT EXISTS ingredient_synonyms ("
+        "kind TEXT NOT NULL, entity_id TEXT NOT NULL, synonym TEXT NOT NULL, "
+        "source TEXT NOT NULL, PRIMARY KEY (kind, entity_id, synonym));"
+    )
+    if not conn.execute("SELECT 1 FROM ingredient_synonyms LIMIT 1").fetchone():
+        from .unify import build_synonyms
+        build_synonyms(conn)
     conn.commit()
     return conn
 
 
 def get_conn(db_path: Path = DB_PATH) -> sqlite3.Connection:
     if not db_path.exists():
+        if os.environ.get("MEDMATCH_DB_READ_ONLY") == "1":
+            raise FileNotFoundError(f"read-only database does not exist: {db_path}")
         build_db(db_path)
-    conn = sqlite3.connect(db_path)
+    if os.environ.get("MEDMATCH_DB_READ_ONLY") == "1":
+        conn = sqlite3.connect(
+            f"file:{db_path.as_posix()}?mode=ro",
+            uri=True,
+            timeout=5,
+        )
+    else:
+        conn = sqlite3.connect(db_path, timeout=5)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")
+    if os.environ.get("MEDMATCH_DB_READ_ONLY") != "1":
+        from .evidence_schema import ensure_schema
+        ensure_schema(conn)
     return conn
+
+
 
 
 if __name__ == "__main__":
